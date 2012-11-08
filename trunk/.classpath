@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="txt"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/ICOM942/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar" sourcepath="C:/Users/icom942/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/C:/Users/icom942/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4-javadoc.jar!/"/>
+			<attribute name="maven.groupId" value="commons-lang"/>
+			<attribute name="maven.artifactId" value="commons-lang"/>
+			<attribute name="maven.version" value="2.4"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
