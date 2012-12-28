@@ -1,0 +1,651 @@
+CSCI-4500
+Spring 2009
+Programming Assignment
+
+                       -> RUNNING <-----\
+                      /                  v 
+                  WAITING<-------------BLOCKED
+
+
+Detect and Recover
+    Identify when a deadlock occurred, and then another procedure is used to deal with the blocked processes.
+Identify Deadlock
+    Maintain a resource allocation graph 
+        Identifies all processes and resources in the system
+        Identifies the relationships between 
+            Which processes exclusively own which resources
+            Which processes are blocked waiting for which resources
+        Nodes
+            Processes and Resources
+        Directed edges 
+            Indicates Resource ownership 
+            Indicates Pending resource requests 
+
+    Test the graph for the existence of a cycle. 
+    This test must be performed after each successful or unsuccessful allocation request by each process.
+
+Assignment
+
+    ALGORITHM
+        Initial
+            All processes start in the waiting queue 
+
+
+        for i = 0 to k      // time
+            If A is 1  // Process requests exclusive use of the resource identified by N
+                If resource(N).available
+                    process(P).connect(resource(N));
+                    continue;
+                Else
+                    blocked.insert(process(P));
+                    // It remains in the BLOCKED queue until the resource becomes available 
+                    // When process becomes available, place in the WAITING queue.
+
+            Else If A is 2
+                process(P).release(resource(N));
+                waiting.insert(blocked.remove());
+                waiting.insert(process(P));
+
+            Else If A is 3
+                process(P).compute();
+           
+    
+            If no more instructions
+                process(P).terminate();     // If any resources were owned by P, they remain unavailable
+        end
+
+
+
+    Simulate the execution of multiple processes 
+        With respect to their resource allocation and resource release requests
+    Detect when (or if) deadlock occurs. 
+        If deadlock occurs
+            Display a list of the processes and resources involved in the deadlock
+        Use any algorithm you wish to detect deadlock
+            That described in the textbook is recommended
+    Input 
+        Three types of process actions
+            A request for the exclusive use of a resource
+            A request to relinquish the exclusive use of a resource
+            A request to “compute” for some period of time while retaining exclusive use of a set of resources
+        No more than 25 pairs for any process
+        Will contain only integers 
+            Separated by whitespace (blanks, tabs, or end of line characters), 
+            Provide the data for one or more simulations. 
+            The first two integers for each simulation’s data 
+                NP and NR
+                For each of the NP processes there then follows an integer
+                    Indicates the number of integer pairs in its execution sequence
+                    Immediately followed by that many pairs of integers.
+                This sequence repeats (giving data for additional simulations) until NP is 0 and NR is 0. 
+
+    Only one instance of each type of resource in system
+        One process successfully allocates a unit of a resource
+            Other processes attempting to allocate a unit of the same type of resource must wait (in the blocked state).
+
+
+Process and Resource Descriptions
+
+    There is only a single CPU
+
+    Process 
+        Identified by a unique unsigned integer from 1 to NP
+            NP is a value specified in the input
+        The priority of processes is ignored
+        No more than 10 processes in the system in any simulation (NP ≤ 10)
+        No more than 25 pairs for any process
+        All processes start in the waiting queue 
+            Increasing process number order
+        Will be correct input
+            All processes will have at least one execution item
+            Will NOT attempt to release a resource it does not already possess
+            Will NOT attempt to obtain a resource it already possesses
+
+    Resource 
+        Identified by an integer in the range 1 to NR
+            NR is a value specified in the input
+        Each is assumed to be unique
+            Only one unit of each resource available in the system
+        No more than 20 resources in any simulation (NR ≤ 20)
+
+    Action taken by process 
+        Pair of integers (A,N) in the input
+            "A" 
+                What action the process is to take
+            "N" 
+                Depends on the value of A
+                If A is 1
+                    Process requests exclusive use of the resource identified by N
+                    If the resource is available when the process requests its use
+                        Process is given exclusive use of the resource and is allowed to continue. 
+                    Else
+                        Process is blocked and placed at the end of a first-in first-out queue of processes waiting on the resource. 
+                        It remains on the queue until the resource becomes available 
+                        Process is at the head of the queue of ready processes. 
+                        First process to block while requesting use of a resource is  moved to the READY STATE when the resource again becomes available.
+        
+                Else If A is 2
+                    Process relinquishes its exclusive use of the resource identified by N. 
+
+                    Action will also move a blocked process from the head of the ready process queue to the end of the waiting queue. 
+                    NOTE: Immediately after this ready process moves to the end of the waiting queue
+                        Process that just released the resource will be moved to the end of the waiting queue
+                            Just after the process that was at the head of the waiting queue
+                Else If A is 3
+                    Process “computes” for N units of time
+                    Maintains exclusive use of any resources it may have previously obtained but not yet released
+                    N will never be smaller than 1
+                        There will never be any vacuous “compute” actions in a process.
+
+        Process terminates after it has successfully executed each of the actions specified
+        NOTE: We make the (unusual) assumption that if a process terminates 
+              while still having exclusive use of one or more resources, then 
+              those resources are forever unavailable (at least until the next simulation)!
+    
+    Time
+        First time unit is numbered 0
+
+EXAMPLE: suppose process 1 is described by the following sequence of pairs:
+
+    (1,1) (1,2) (3,10) (2,1)     (2,2)
+
+    Process requests exclusive use of resource 1
+    Process requests exclusive use of resource 2. 
+    (At this point the process has exclusive use of both resources 1 and 2.) 
+    Process “computes” for 10 units of time (holding resources 1 and 2), 
+    Process relinquishes its use of resources 1 and 2 (in that order).
+    Each process will have its own sequence of integer pairs describing its execution
+    Requires a total of 14 time units to complete
+    Process in the example will terminate after time unit 13
+
+    Each successful request for 
+        Exclusive use of a resource by a process || Release of a resource by a process 
+            Requires one unit of time to complete
+
+        compute() 
+            requires the number of units of time specified by N for that action
+
+    Execution
+        Round-Robin
+        Quantum size of one time unit
+            One unit of time given to each process
+                Starts with Process1
+                Then Process2
+                ...
+                Finally ProcessNP
+                Back to Process1 (assuming it did not block or terminate in the previous execution)
+
+        When a process completes or becomes blocked
+            No longer given units of execution time
+            If Process P requests Resource R but cannot immediately obtain exclusive use of R
+                Process P is blocked while waiting for R to become available
+                When R is available
+                    The first process in the waiting queue 
+                        Moved to the end of the queue of ready processes
+
+                        NOTE: This does not guarantee that Process P will successfully obtain 
+                              the resource when it next runs, since another ready process 
+                              (ahead of p in the waiting queue) may run and request exclusive use 
+                              of the resource before p is selected for execution.
+
+EXAMPLE: Suppose we have three processes, with execution sequences as follows:
+
+        3 3
+        5    1 1     1 2    3 2   2 1     2 2
+        5    1 1     1 2    3 2   2 1     2 2
+        4    1 3     3 5    2 3   3 2
+
+        3 Processes 3 Resources
+        Process 1: 5 Cycles: (1,1) (1,2) (3,2) (2,1) (2,2)
+        Process 2: 5 Cycles: (1,1) (1,2) (3,2) (2,1) (2,2)
+        Process 3: 4 Cycles: (1,3) (3,5) (2,3) (3,2)
+
+        Simulation 1
+        0: process 1: (1,1)
+               (resource 1 allocated)
+        1: process 2: (1,1)
+               (resource 1 unavailable)
+        1: process 3: (1,3)
+               (resource 3 allocated)
+        2: process 1: (1,2)
+               (resource 2 allocated)
+        3: process 3: (3,5)
+        4: process 1: (3,2)
+        5: process 3: (3,4)
+        6: process 1: (3,1)
+        7: process 3: (3,3)
+        8: process 1: (2,1)
+               (resource 1 released)
+               (process 2 unblocked)
+        9: process 3: (3,2)
+        10: process 2: (1,1)
+               (resource 1 allocated)
+        11: process 1: (2,2)
+               (resource 2 released)
+               (process 1 terminated)
+        12: process 3: (3,1)
+        13: process 2: (1,2)
+               (resource 2 allocated)
+        14: process 3: (2,3)
+               (resource 3 released)
+        15: process 2: (3,2)
+        16: process 3: (3,2)
+        17: process 2: (3,1)
+        18: process 3: (3,1)
+               (process 3 terminated)
+        19: process 2: (2,1)
+               (resource 1 released)
+        20: process 2: (2,2)
+               (resource 2 released)
+               (process 2 terminated)
+
+
+        // Process requests
+            // Granted
+                // ++clock
+            // Unavailable
+                // Blocked
+                // Queue
+        // 
+
+        3 Processes 3 Resources
+        Process 1: 5 Cycles: (1,1) (1,2) (3,2) (2,1) (2,2)
+        Process 2: 5 Cycles: (1,1) (1,2) (3,2) (2,1) (2,2)
+        Process 3: 4 Cycles: (1,3) (3,5) (2,3) (3,2)
+
+        0: 
+                process 1: (1,1)
+               (resource 1 allocated)
+
+        1: 
+                process 2: (1,1)
+               (resource 1 unavailable)
+                Blocked
+                Placed in the queue
+
+                // NOTICE 3 gets a turn in this clock cycle
+                process 3: (1,3)
+               (resource 3 allocated)
+
+        2: 
+                process 1: (1,2)
+               (resource 2 allocated)
+
+        3: 
+                process 2: Still BLOCKED
+                process 3: (3,5) COMPUTE
+
+        4:
+                process 1: (3,2) COMPUTE
+
+        5: 
+                process 2: Still BLOCKED
+                process 3: (3,4) COMPUTE
+
+        6: 
+                process 1: (3,1) COMPUTE
+        7: 
+                process 2: Still BLOCKED
+                process 3: (3,3) COMPUTE
+        
+        8:
+                process 1: (2,1)
+               (resource 1 released)
+               (process 2 unblocked)
+                process 2: READY
+
+        9:
+                process 3: (3,2) COMPUTE
+
+        10: 
+                // Is it blocked? No.
+                // Is it in the waiting queue? Yes.
+                    // If no, try allocation
+                // else    
+                    // Is it at the front of the waiting queue? 
+                        // try allocation
+                    // else
+                        // Move on
+                process 2: (1,1)
+               (resource 1 allocated)
+
+        11: 
+                process 1: (2,2)
+               (resource 2 released)
+
+               (process 1 terminated)
+                // Increment clock cycles
+
+        12: 
+                process 3: (3,1) COMPUTE
+
+        13: 
+                process 2: (1,2)
+               (resource 2 allocated)
+
+        14: 
+                process 3: (2,3)
+               (resource 3 released)
+
+        15: 
+                process 2: (3,2) COMPUTE
+
+        16: 
+                process 3: (3,2) COMPUTE
+
+        17: 
+                process 2: (3,1) COMPUTE
+        
+        18: 
+                process 3: (3,1) COMPUTE
+               (process 3 terminated)
+
+        19: 
+                process 2: (2,1)
+               (resource 1 released)
+
+        20: 
+                process 2: (2,2)
+               (resource 2 released)
+               (process 2 terminated)
+
+
+The set of processes does not deadlock, but obviously other sequences can (see the samples for several such sequences). 
+
+To detect deadlock, your program must build a resource allocation graph 
+    (with nodes for processes and resources, and directed edges indicating resource ownership and pending resource requests), 
+    Test the graph for the existence of a cycle. 
+    This test must be performed after each successful or unsuccessful allocation request by each process.
+
+The Assignment
+    Simulate multiple processes executing the sequences of resource requests and execution specified by the input data
+    Check after each resource allocation request for the existence of deadlock 
+    Look for a cycle in the resource allocation graph. 
+    If no deadlocks occur during execution
+        Indicate the time when each process executes its last action 
+        Indicate total execution time required for each process. 
+    Else 
+        Indicate 
+            That there was a deadlock
+            The time when the deadlock was detected
+            The identification of the processes and resources involved in the circular wait
+
+Graduate Student Assignment
+    Complete the assignment as described above. 
+    Display a trace of execution as shown in the samples below. 
+    The trace facility is turned off if there are two or more command line arguments 
+        Which are otherwise ignored
+
+    The trace output consists of two types of information
+        Each time an action is attempted
+            The trace displays 
+                The time
+                The process
+                The action
+                The parameter 
+                    Resource number or computation time
+        The computation time parameter will continually be reduced as the process makes progress toward completion.
+
+        The second type of information (shown in parentheses in the example output)  
+            Indicates 
+                When a resource is allocated
+                When an allocation was unsuccessful
+                When a resource was deallocated (released),
+                When a process was unblocked (awakened) because a resource on which it was waiting was deallocated,
+                When a process terminated. 
+                
+                
+
+Details
+    The due date for this assignment is April 21, 2009.
+    No invalid execution sequences will appear
+   
+Sample Input and Output
+The sample input and output shown below was produced from the instructor’s solution for this
+assignment. The executable form of this solution is available in the file /home/stanw/csci4500/prog2 on
+vulcan, and the sample data shown here is available in the file /home/stanw/csci4500/prog2input.txt.
+The program reads the input data from the standard input and writes its results to the standard output.
+
+Any arbitrary command line argument to the program will cause it to display the trace information
+shown in the output (between the simulation number heading line, and the line indicating if there was
+successful completion of the processes or deadlock). 
+
+No extraneous output (e.g. debugging information)
+should appear in your program’s output, and the tracing information must not appear unless requested
+with the extra command line argument.
+The file /home/stanw/csci4500/template.c on vulcan shows one way to structure your solution. It
+includes code to read and display the data for each simulation.
+Sample Input
+        1 2
+        5    1 1     1 2    3 10     2 1    2 2
+        3 3
+        5    1 1     1 2    3 2   2 1     2 2
+        5    1 1     1 2    3 2   2 1     2 2
+        4    1 3     3 5    2 3   3 2
+        2 2
+        5    1 1     1 2    3 2   2 1     2 2
+        5    1 2     1 1    3 2   2 2     2 1
+        3 3
+        6    1 1   3 3    1 2    3 3   2 1    2 2
+        6    1 2   3 3    1 3    3 3   2 2    2 3
+        6    1 3   3 3    1 1    3 3   2 3    2 1
+        7 6
+        7    1 1     3  5   1  2  3  5    2 1     2 2   3 3
+        4    3 3     1  3   3  5  2  3
+        5    3 3     1  2   3  2  2  2    3 3
+        6    1 4     3  6   1  3  2  4    3 2     2 3
+        6    1 3     3  5   1  5  2  3    2 5     3 2
+        7    1 6     3  5   1  2  3  2    2 2     2 6   3 3
+        7    1 5     3  2   1  4  3  5    2 5     3 2   2 4
+        0 0
+
+Expected Output for the Sample Input (without trace)
+        Simulation 1
+        All processes successfully terminated.
+        Process 1: run time = 14, ended at 13
+
+        Simulation 2
+        All processes successfully terminated.
+        Process 1: run time = 6, ended at 11
+        Process 2: run time = 6, ended at 20
+        Process 3: run time = 9, ended at 18
+
+        Simulation 3
+        Deadlock detected at time 2 involving...
+            processes: 1 2
+            resources: 2 1
+
+        Simulation 4
+        Deadlock detected at time 12 involving...
+            processes: 1 2 3
+            resources: 2 3 1
+
+        Simulation 5
+        Deadlock detected at time 40 involving...
+            processes: 4 5 7
+            resources: 3 5 4
+
+
+
+
+Expected Output for the Sample Input (with trace)
+
+        Simulation 1
+        0: process 1: (1,1)
+               (resource 1 allocated)
+        1: process 1: (1,2)
+               (resource 2 allocated)
+        2: process 1: (3,10)
+        3: process 1: (3,9)
+        4: process 1: (3,8)
+        5: process 1: (3,7)
+        6: process 1: (3,6)
+        7: process 1: (3,5)
+        8: process 1: (3,4)
+        9: process 1: (3,3)
+        10: process 1: (3,2)
+        11: process 1: (3,1)
+        12: process 1: (2,1)
+               (resource 1 released)
+        13: process 1: (2,2)
+               (resource 2 released)
+               (process 1 terminated)
+        All processes successfully terminated.
+        Process 1: run time = 14, ended at 13
+
+
+
+        Simulation 2
+        0: process 1: (1,1)
+               (resource 1 allocated)
+        1: process 2: (1,1)
+               (resource 1 unavailable)
+        1: process 3: (1,3)
+               (resource 3 allocated)
+        2: process 1: (1,2)
+               (resource 2 allocated)
+        3: process 3: (3,5)
+        4: process 1: (3,2)
+        5: process 3: (3,4)
+        6: process 1: (3,1)
+        7: process 3: (3,3)
+        8: process 1: (2,1)
+               (resource 1 released)
+               (process 2 unblocked)
+        9: process 3: (3,2)
+        10: process 2: (1,1)
+               (resource 1 allocated)
+        11: process 1: (2,2)
+               (resource 2 released)
+               (process 1 terminated)
+        12: process 3: (3,1)
+        13: process 2: (1,2)
+               (resource 2 allocated)
+        14: process 3: (2,3)
+               (resource 3 released)
+        15: process 2: (3,2)
+        16: process 3: (3,2)
+        17: process 2: (3,1)
+        18: process 3: (3,1)
+               (process 3 terminated)
+        19: process 2: (2,1)
+               (resource 1 released)
+        20: process 2: (2,2)
+               (resource 2 released)
+               (process 2 terminated)
+        All processes successfully terminated.
+        Process 1: run time = 6, ended at 11
+        Process 2: run time = 6, ended at 20
+        Process 3: run time = 9, ended at 18
+
+
+
+
+
+        Simulation 3
+        0: process 1: (1,1)
+               (resource 1 allocated)
+        1: process 2: (1,2)
+               (resource 2 allocated)
+        2: process 1: (1,2)
+               (resource 2 unavailable)
+        2: process 2: (1,1)
+               (resource 1 unavailable)
+        Deadlock detected at time 2 involving...
+            processes: 1 2
+            resources: 2 1
+        Simulation 4
+        0: process 1: (1,1)
+               (resource 1 allocated)
+        1: process 2: (1,2)
+               (resource 2 allocated)
+        2: process 3: (1,3)
+               (resource 3 allocated)
+        3: process 1: (3,3)
+        4: process 2: (3,3)
+        5: process 3: (3,3)
+        6: process 1: (3,2)
+        7: process 2: (3,2)
+        8: process 3: (3,2)
+        9: process 1: (3,1)
+        10: process 2: (3,1)
+        11: process 3: (3,1)
+        12: process 1: (1,2)
+               (resource 2 unavailable)
+        12: process 2: (1,3)
+               (resource 3 unavailable)
+        12: process 3: (1,1)
+               (resource 1 unavailable)
+        Deadlock detected at time 12 involving...
+            processes: 1 2 3
+            resources: 2 3 1
+
+
+
+
+        Simulation 5
+        0: process 1: (1,1)
+               (resource 1 allocated)
+        1: process 2: (3,3)
+        2: process 3: (3,3)
+        3: process 4: (1,4)
+               (resource 4 allocated)
+        4: process 5: (1,3)
+               (resource 3 allocated)
+        5: process 6: (1,6)
+               (resource 6 allocated)
+        6: process 7: (1,5)
+               (resource 5 allocated)
+        7: process 1: (3,5)
+        8: process 2: (3,2)
+        9: process 3: (3,2)
+        10: process 4: (3,6)
+        11: process 5: (3,5)
+        12: process 6: (3,5)
+        13: process 7: (3,2)
+        14: process 1: (3,4)
+        15: process 2: (3,1)
+        16: process 3: (3,1)
+        17: process 4: (3,5)
+        18: process 5: (3,4)
+        19: process 6: (3,4)
+        20: process 7: (3,1)
+        21: process 1: (3,3)
+        22: process 2: (1,3)
+               (resource 3 unavailable)
+        22: process 3: (1,2)
+               (resource 2 allocated)
+        23: process 4: (3,4)
+        24: process 5: (3,3)
+        25: process 6: (3,3)
+        26: process 7: (1,4)
+               (resource 4 unavailable)
+        26: process 1: (3,2)
+        27: process 3: (3,2)
+        28: process 4: (3,3)
+        29: process 5: (3,2)
+        30: process 6: (3,2)
+        31: process 1: (3,1)
+        32: process 3: (3,1)
+        33: process 4: (3,2)
+        34: process 5: (3,1)
+        35: process 6: (3,1)
+        36: process 1: (1,2)
+               (resource 2 unavailable)
+        36: process 3: (2,2)
+               (resource 2 released)
+               (process 1 unblocked)
+        37: process 4: (3,1)
+        38: process 5: (1,5)
+               (resource 5 unavailable)
+        38: process 6: (1,2)
+               (resource 2 allocated)
+        39: process 1: (1,2)
+               (resource 2 unavailable)
+        39: process 3: (3,3)
+        40: process 4: (1,3)
+               (resource 3 unavailable)
+        Deadlock detected at time 40 involving...
+            processes: 4 5 7
+            resources: 3 5 4
+

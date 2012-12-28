@@ -1,0 +1,37 @@
+Program -> Function Program
+| .
+Function -> func id ( Params ) Slist endfunc .
+Params -> id Moreidentifiers .
+Slist -> Labledstatement ; Morelabledstatements .
+Labledstatement -> id : Fid .
+Fid -> : Statement
+| equals Expression .
+Moreidentifiers -> comma identifier Moreidentifiers
+| .
+Statement -> id equals Expression
+| read ( id )
+| write ( Idorstring )
+| if ( Test ) to id .
+Idorstring -> id
+| string .
+Test -> eq Test2
+| ne Test2
+| true
+| lt Test2
+| le Test2
+| gt Test2
+| ge Test2 .
+Test2 -> ( id comma id ) .
+Expression ->	 Term FTerm .
+FTerm ->	+ Expression
+|	minus Expression
+|	.
+Term ->	Factor FFactor .
+FFactor ->	* Term
+|	/ Term
+|	.
+Factor ->	( Expression )
+|	id
+|	integer .
+Morelabledstatements ->	 Labledstatement ; Morelabledstatements
+|	.

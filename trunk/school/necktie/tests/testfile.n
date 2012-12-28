@@ -1,0 +1,27 @@
+// Integer square root
+Func sqrt( num )
+          n = 0;
+          n=0;
+          n = 0;n=0;
+          // If num == n, then go to the "endit" statement
+          // If(EQ(num, n)) to endit;
+          N = num / 2 + 1; // Starting estimate
+          N1 = ( n+ ( num / n )) / 2;
+
+// This is a “while” loop, in reality
+Again:    If ( GE( n1, n ) ) to endit;
+          n = n1;
+          N1 = ( n + ( num / n )) / 2;
+          // If ( TRUE ) to again;
+Endit:    sqrt = n; // sets the return value
+Endfunc
+
+// Main code starts below.
+Func main()
+     Write( "Enter a \"number\":" );
+     Read( X );
+     S = sqrt( x );
+Test:     Write("The square root is:" );
+Test2     Write( x );
+
+Endfunc
