@@ -145,6 +145,62 @@ public class EulerUtils {
         BigInteger rval = BigInteger.valueOf(n);
         return BigInteger.valueOf(3).multiply(rval.pow(2)).subtract(rval).divide(BigInteger.valueOf(2));
     }
+    
+    public static boolean isPentagonal(long n) {
+        double[] quad = quadratic(3, -1, -(n * 2));
+       
+        double root1 = quad[0];
+        double root2 = quad[1];
+       
+        // Test first root
+        String[] root1Arr = (new String(root1 + "")).split("\\.");
+        
+        Long decimal = 0L;
+        
+        if(root1Arr.length > 1)
+            decimal = Long.parseLong(root1Arr[1]);
+        
+        if(decimal == 0)
+            return true;
+       
+        // Test second root
+        String[] root2Arr = (new String(root2 + "")).split("\\.");
+        
+        decimal = 0L;
+        
+        if(root2Arr.length > 1)
+            decimal = Long.parseLong(root2Arr[1]);
+        
+        if(decimal == 0)
+            return true;
+        
+        return false;
+    }
+  
+    /**
+     * quadratic
+     * --
+     * Quadratics come in the form of 
+     *     aX^2 + bY + Z
+     *     
+     * @param a
+     * @param b
+     * @param Z
+     * @return
+     */
+    public static double[] quadratic(double a, double b, double c) {
+        
+        
+        //Finding out the roots
+        double sqroot = Math.sqrt(b * b - 4 * a * c);
+ 
+        double root1 = (-b +  sqroot) / (2*a) ;
+        double root2 = (-b -  sqroot) / (2*a) ;
+
+        double[] rval = {root1, root2};
+       
+        return rval;
+    }
    
     /**
      * numberOfDivisors
