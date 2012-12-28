@@ -1,11 +1,5 @@
 package net.projecteuler.problem51;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
-import net.projecteuler.utils.EulerUtils;
-
 import org.junit.Test;
 
 
@@ -13,20 +7,20 @@ public class Problem51 {
     
     @Test
     public void testPrime() {
-        HashMap<Integer, Integer> primes = EulerUtils.seive(2000);
+    
+        // [1][3]
+        // Two digits 
+        int[] twoDigits = new int[2];
         
-        @SuppressWarnings("rawtypes")
-        Iterator it = primes.entrySet().iterator();
-        while(it.hasNext()) {
-            @SuppressWarnings("rawtypes")
-            Map.Entry pairs = (Map.Entry)it.next();
-            @SuppressWarnings("unused")
-            String prime = pairs.getValue() + "";
+        int limit = twoDigits.length;
+        for(int i = limit; i >= 0; --i) {
+            for(int j = 0; j < 10; ++j) {
+                
+                
+                
+            }
             
-            System.out.println(pairs.getKey() + " = " + pairs.getValue());
-            it.remove();
         }
-        
         
     }
 }
