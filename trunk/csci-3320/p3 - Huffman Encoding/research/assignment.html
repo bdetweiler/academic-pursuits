@@ -1,0 +1,129 @@
+<html>
+<body>
+<h2> 
+Huffman encoding and decoding
+</h2>
+
+The book has the full algorithm and an example starting on page 395.
+Huffman is a fairly standard compression algorithm, and it is still 
+commonly used.
+<p>
+In order to do this you need a very simple tree.  The nodes need a char
+and a number of occurances ( I used an unsigned short in mine ).  The
+tree does not need any of the standard BST methods, but you will need to
+be able to create a tree from two existing trees.  All data is stored in
+the leaf nodes, frequency information is stored in every node in the tree.
+
+<h3>
+Huffman tree algorithm
+</h3>
+Place each char/frequency pair in a group of trees.  As long as there
+are more than one tree left, combine the two smallest ( by frequency )
+trees, the frequency of the new tree is the sum of the combined two.
+The tree you are left with is the huffman tree.
+
+<p>
+The standard algorithm states that you use a priority queue ( aka
+heap ) to store the trees.  Use a heap of tree pointers instead, 
+it makes combining the trees much easier, and since they are pointers
+you don't have to copy any tree data.  Any other structure would be less
+efficient.
+
+<h3> Encoding </h3>
+
+This is a two pass problem.  The first pass is to collect the letter
+frequencies.  You need to use that information to create the Huffman
+tree ( I also created a map to go from char to Huffman code ).  Note
+that char values range from -128 to 127.  I stored the data as unsigned
+chars to solve for this problem, then the range is 0 to 255.
+<p>
+Open the output file and write the frequency table to it.  
+Open the input file, read characters from it, get the codes, and write
+the encoding into the output file.
+
+<h3> Decoding </h3>
+
+This can be done in one pass.  Open the encoded file and read the
+frequency data out of it.  Create the Huffman tree base on that
+information ( The total number of encoded bytes is the frequency at the
+root of the huffman tree. ).  Read data out of the file and search the
+tree to find the correct char to decode ( a 0 bit means go left, 1 go
+right ).  This gets tricky since you read in 8 bit blocks, but the codes
+can be shorter or longer than that and there are no seperators.
+
+<h3> Huffman codes to binary data  </h3>
+
+Since they are arbitrary in length, Huffman codes can be difficult to
+represent.  The string datatype has major advantages, the length can 
+be changed, characters can be appended to them, or removed from them at
+either end.
+<p>
+While you will probably use strings to represent the codes, you are not going
+to write a string of ones and zeros to the file.  That would defeat the point
+of the program, which is file compression.  You will need to convert from a
+string of length 8 to a char value which can written to the file, and do there
+reverse process as well.
+
+<h3> Binary file I/O </h3>
+
+You are going to need to do binary file I/O for this assignment.  When
+doing binary file input you can read and write entire blocks of data in
+one command, or use get and put.  This also gives you some flexibility
+as far as what type of data is in the file.  Some operations do not make
+sense with binary data, getline would be a good example.
+
+<pre><code>
+ifstream fin ( in.c_str(), ios::binary );
+// read in the entire frequency array 
+unum freq[256];
+fin.read ( (char*)(freq), sizeof(freq) );
+// read the remaining characters until end of file
+while( fin.get(ch) )
+{
+        ;// do your thing here
+}
+fin.close();
+</pre></code>
+
+Note that write is the opposite of read.
+
+<h3> Program arguments </h3>
+Your program must use the following command line arguments.  They can be
+input in any order.
+<ul>
+<li> -i input_file  : required
+<li> -o output_file : required
+<li> -e  : turn on encoding mode ( default )
+<li> -d  : turn on decoding mode
+<li> -v  : verbose mode, displays the huffman tree
+</ul>
+
+<h3> Source code </h3>
+<a href="start.sh">Here is a shell archive</a>, it contains a Makefile, 
+test script, sample input, some helper functions, and the driver.  You
+are not required to use it, but it should be helpful as a framework.
+
+<br>
+<a href="sample.run">Here is a sample run from mine</a><br>
+
+<h3> Programming tip </h3>
+Start by generating the huffman tree based on the input.  If you can't
+do that, the rest of it won't work anyway.  Then work on
+encoding and decoding the actual data.
+
+<p>
+This program is due October 18th.<br>
+You are required to turn in all source files needed to compile, 
+a Makefile, and a short analysis paper.
+
+<h3>Goals</h3>
+<ul>
+<li> use non search trees in an algorithm
+<li> properly and consistantly generate the dynamic huffman tree 
+<li> perform huffman encoding and decoding
+<li> use indirect storage 
+<li> provide a basic analysis
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>Graph theory: undirected graphs - The Code Project - C++ / MFC</title>
+
+
+
+
+<!-- base -->
+<meta http-equiv="Reply-to" content="mailto:webmaster@codeproject.com">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="MS.LOCALE" content="en-US">
+<meta name="Description" content="Graph theory: undirected graphs">
+<meta name="Search.TopicType" content="kbArticle">
+<meta name="Author" content="includeh10">
+<meta name="Search.PublishDate" content="30 Mar 2006 14:00:00 GMT">
+<meta name="Search.RevisedDate" content="30 Mar 2006 14:00:00 GMT">
+
+<meta name="keywords" content="Free source code, , Visual C++, MFC, Windows, vertex edge graphs Dijkstra Floyd algorithm">
+<meta name="Copyright" content="Article content copyright includeh10, 2006, everthing else Copyright © CodeProject, 1999-2007, All Rights Reserved.">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Lounge Postings" href="http://www.codeproject.com/webservices/LoungeRSS.aspx">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - All topics" href="http://www.codeproject.com/webservices/articlerss.aspx?cat=1">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - MFC / C++" href="http://www.codeproject.com/webservices/articlerss.aspx?cat=2">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - C#" href="http://www.codeproject.com/webservices/articlerss.aspx?cat=3">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - ASP.NET" href="http://www.codeproject.com/webservices/articlerss.aspx?cat=4">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - .NET" href="http://www.codeproject.com/webservices/articlerss.aspx?cat=5">
+<link rel="alternate" type="application/rss+xml" title="CodeProject Latest articles - VB.NET" href="http://www.codeproject.com/webservices/articlerss.aspx?cat=6">
+<link rel="search" type="application/opensearchdescription+xml" title="The Code Project" href="http://www.codeproject.com/info/OpenSearch.xml">
+<link rel="icon" href="http://www.codeproject.com/favicon.ico" type="image/ico">
+<link rel="SHORTCUT ICON" href="http://www.codeproject.com/favicon.ico">
+<link rel="stylesheet" type="text/css" href="graphtheoryud0.asp_files/global.css">
+
+<link rel="stylesheet" type="text/css" href="graphtheoryud0.asp_files/netscape6.css">
+
+<script language="javascript" src="graphtheoryud0.asp_files/oncopy.js"></script>
+<script language="javascript">
+if (top != self) top.location.href = location.href;
+if (typeof(DemoUrl) != "undefined")
+	document.write('<me' + 'ta http' + '-equiv="re' + 'fresh" con' + 'tent="1;url=' + DemoUrl + '">');
+</script></head><body style="margin: 0pt; background-color: rgb(255, 255, 255);" oncopy="return copyCode();" alink="red" bgcolor="white" link="blue" text="black" vlink="navy">
+
+<script src="graphtheoryud0.asp_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-1735123-1";
+urchinTracker();
+</script>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+<tbody><tr>
+	<td class="HeaderLogo"><a href="http://www.codeproject.com/"><img alt="Home" src="graphtheoryud0.asp_files/codeproject225x90.gif" border="0" height="90"></a></td>
+	<td class="HeaderBanner"><span id="AdBanner4"><script language="javascript">document.write("<a href=\"/script/admentor/admentorredir.asp?id=3766&way=ban\" target=_blank><img src=\"/script/ann/ServeImg.aspx?File=%2Fscript%2Fadmentor%2Fimages%2FScaleout%5FSSI%5F728x90%5Fv2%2Egif&C=False&id=3766&cb=1472478\" alt=\"\" border=0 width=728 height=90></a>");</script><a href="http://www.codeproject.com/script/admentor/admentorredir.asp?id=3766&amp;way=ban" target="_blank"><img src="graphtheoryud0.asp_files/ServeImg.htm" alt="" border="0" height="90" width="728"></a></span></td>
+</tr>
+<tr><td colspan="2">
+<table class="MemberNavBar" border="0" cellpadding="5" cellspacing="0" width="100%">
+<tbody><tr valign="middle">
+
+<td class="smallText" style="font-weight: bold;">4,288,739 members and growing! &nbsp;
+19,028 now online.
+</td>
+
+
+<td class="userNavText" align="right">
+
+
+<script type="text/javascript">
+function signup(){document.location.href="/script/profile/modify.asp";}
+function ShowJoin()
+{
+document.write("<input type=\"button\" class=FormButton onclick=\"return signup();\" value='Join!'>");
+document.write("<input type=\"hidden\" name=\"fld_quicksign\" value=\"true\" />");
+}
+</script>
+<form name="subForm" id="subForm" action="/script/profile/process_logon.asp" method="post" style="margin: 0pt; padding: 0pt;">
+Email <input class="tinyText" name="Email" id="Email" style="width: 100px;" type="text">
+Password <input class="tinyText" name="Password" id="Password" style="width: 60px;" type="password">
+<input value="Sign in" class="FormButton" type="submit">
+<script type="text/javascript">ShowJoin();</script><input class="FormButton" onclick="return signup();" value="Join!" type="button"><input name="fld_quicksign" value="true" type="hidden">
+<input checked="checked" name="cookie" id="RememberMeCheck" type="checkbox"><label for="RememberMeCheck">Remember me?</label>
+<a href="http://www.codeproject.com/script/profile/forgot.asp"><img src="graphtheoryud0.asp_files/HLP.GIF" align="absmiddle" border="0" height="16" width="16">
+Password problem?</a>
+</form>
+
+
+</td>
+</tr>
+</tbody></table></td></tr>
+<tr><td colspan="2">
+<table class="SiteNavBar" id="tblSiteToolbar" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td><a href="http://www.codeproject.com/">Home</a></td>
+<td nowrap="nowrap"><a href="http://www.codeproject.com/index.asp?cat=2">MFC/C++</a></td>
+<td><a href="http://www.codeproject.com/index.asp?cat=3">C#</a></td>
+<td nowrap="nowrap"><a href="http://www.codeproject.com/index.asp?cat=4">ASP.NET</a></td>
+<td nowrap="nowrap"><a href="http://www.codeproject.com/index.asp?cat=6">VB.NET</a></td>
+<td nowrap="nowrap"><a href="http://www.codeproject.com/index.asp?cat=8">Architect</a></td>
+<td nowrap="nowrap"><a href="http://www.codeproject.com/index.asp?cat=9">SQL</a></td>
+<td class="SelCat" nowrap="nowrap"><a href="http://www.codeproject.com/index.asp?cat=1">All Topics</a></td>
+<td width="100%">&nbsp;</td>
+<td>
+	<div id="MenuPos" style="position: relative; width: 300px; height: 22px; top: 1px;">
+	<table id="MPH" style="border-width: 0pt; height: 20px; display: none;" cellpadding="0" cellspacing="0" width="300">
+	<tbody><tr valign="middle">
+		<td style="border-width: 0pt;" nowrap="nowrap"><a href="http://www.codeproject.com/info/faq.asp">Help!</a></td>
+		<td style="border-width: 0pt;" nowrap="nowrap"><a href="http://www.codeproject.com/info/latest.asp">Articles</a></td>
+		<td style="border-width: 0pt;" nowrap="nowrap"><a href="http://www.codeproject.com/script/comments/forums.asp">Message Boards</a></td>
+		
+		<td style="border-width: 0pt;" nowrap="nowrap"><a href="http://www.codeproject.com/lounge.asp">Lounge</a></td>
+	</tr>
+	</tbody></table>
+	</div>
+</td>
+</tr>
+</tbody></table>
+<script type="text/javascript">function Go(){return}</script>
+<script type="text/javascript" src="graphtheoryud0.asp_files/cpmenu_var.js"></script>
+<script type="text/javascript" src="graphtheoryud0.asp_files/menu10_com.js"></script>
+<script type="text/javascript">
+var MPH = document.getElementById("MPH");
+if (MPH) MPH.style.display='none';
+</script>
+</td></tr>
+
+
+<tr><td colspan="2">
+
+	<table class="ArticleUneditedHeader" cellpadding="3" cellspacing="0" width="100%">
+	<tbody><tr valign="top">
+		<td class="smallText" style="padding-right: 10px;"><a href="http://www.codeproject.com/?cat=1">All Topics</a>, <a href="http://www.codeproject.com/?cat=2">MFC/C++</a> &gt;&gt; <a href="http://www.codeproject.com/cpp/">C++ / MFC</a> &gt;&gt; <a href="http://www.codeproject.com/cpp/#Unedited+Reader+Contributions">Unedited Reader Contributions</a><br>
+			
+			<br>
+			<div style="font-weight: bold; font-size: 16pt;">Graph theory: undirected graphs</div>
+			<b>By <a href="http://www.codeproject.com/script/Articles/list_articles.asp?userid=41047">includeh10</a></b>.
+			
+			<br><br><div style="font-size: 12px;">Graph theory: undirected graphs</div>
+		</td>
+		<td class="smallText" style="width: 200px;">
+			C++<br> Windows<br> Win32, VS<br> Dev<br>
+			<span style="padding-right: 2ex;">Posted</span>: <b>31 Mar 2006</b><br>
+			<span style="padding-right: 3ex;">Views</span>: <b>13,656</b>
+		</td>
+	</tr>
+	
+	
+	<tr class="ArticleUneditedHeader"><td colspan="2">
+
+		<table cellpadding="0" cellspacing="0" width="100%"><tbody><tr>	
+			<td class="smallText" width="100%">
+			
+			<b>Note: <a title="Click here for more information" href="http://www.codeproject.com/info/unedited.asp">This is an unedited reader contribution</a></b>
+			
+			</td>
+			<td class="SmallText" nowrap="nowrap">&nbsp;</td>
+		</tr></tbody></table>
+	
+
+	</td></tr>
+
+
+</tbody></table>
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr valign="top">
+
+	
+	<td rowspan="2" class="LHNavBar">
+	
+	<!-- Yes, there are IE hacks that will allow us to create a min-width DIV 
+	     (eg http://www.webreference.com/programming/min-width/) but I couldn't
+	     be arsed. Wait for it in v2.0 -->
+	
+	<div class="FeatureBlockHeader">Announcements</div>
+<div class="FeatureBlockContent RHFeatureBar">
+
+
+<div style="padding-top: 5px;"><img src="graphtheoryud0.asp_files/prize_winner_sm.gif" alt="Comp" style="float: left; margin-left: 5px; padding-right: 10px; margin-right: 10px;" height="20" width="10"><a href="http://www.codeproject.com/script/competitions/monthly/">Monthly Competition</a></div>
+
+</div>	<center>
+<script language="javascript">document.write("<a href=\"/script/admentor/admentorredir.asp?id=3765&way=ban\" target=_blank><img src=\"/script/ann/ServeImg.aspx?File=%2Fscript%2Fadmentor%2Fimages%2FChangeSigExtTowerApr07%5F160x600%2Egif&C=False&id=3765&cb=1472481\" alt=\"The intellisense upgrade for Visual Studio .NET - make your IDE as smart as you.\" border=0 width=160 height=600></a>");</script><a href="http://www.codeproject.com/script/admentor/admentorredir.asp?id=3765&amp;way=ban" target="_blank"><img src="graphtheoryud0.asp_files/ServeImg_002.htm" alt="The intellisense upgrade for Visual Studio .NET - make your IDE as smart as you." border="0" height="600" width="160"></a>
+</center>
+<br><br>
+
+	
+	<img src="graphtheoryud0.asp_files/t.gif" height="1" width="160">
+	
+	</td>
+	
+
+	<td width="100%">
+
+		<table class="SearchHeaderBar" cellspacing="0" width="100%">
+<tbody><tr>
+<td align="right" nowrap="nowrap" valign="middle" width="60%">
+
+	<form method="post" action="/info/search.asp" name="Search" style="margin: 0pt;">
+	<b>Search &nbsp;</b><input class="smallText" name="target" style="width: 200px;">
+	<select style="font-weight: bold; font-size: 8pt;" name="st">
+		<option value="kw">Articles</option>
+		<option value="au">Authors</option>
+	</select>
+	<input style="font-weight: bold; font-size: 8pt;" value=" Go! " type="submit"> &nbsp;
+	</form>
+</td>
+
+<td class="tinyText" nowrap="nowrap">
+<a href="http://www.codeproject.com/info/search.asp">Advanced Search</a><br>
+<a href="http://www.codeproject.com/script/articles/sections.asp">Sitemap</a> 
+
+
+</td>
+</tr>
+</tbody></table>
+		
+		<table width="100%">
+		<tbody><tr valign="top">
+		<td class="SmallText" nowrap="nowrap"><table><tbody><tr><td class="smallText" nowrap="nowrap"><img src="graphtheoryud0.asp_files/print.gif" align="absmiddle"> <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?print=true" target="_print">Print</a></td><td class="smallText" nowrap="nowrap"><img src="graphtheoryud0.asp_files/sitebuild_icon.gif" align="absmiddle"><a href="http://www.codeproject.com/script/submit/ReportProblem.asp?GUID=graphtheoryud0%2Fcpp3%2F31%2F2006">Broken Article?</a></td><td class="smallText" nowrap="nowrap"><img src="graphtheoryud0.asp_files/link.gif" align="absmiddle"><a href="http://www.codeproject.com/script/profile/add_bookmark.asp?t=0&amp;ct=%2Fuseritems%2Fgraphtheoryud0%2Easp&amp;guid=graphtheoryud0%2Fcpp3%2F31%2F2006">Bookmark</a></td><td class="smallText" nowrap="nowrap"><img src="graphtheoryud0.asp_files/mail_small.gif" align="absmiddle"> <a href="#__comments">Discuss</a></td><td class="smallText" nowrap="nowrap"><img src="graphtheoryud0.asp_files/mail.gif" align="absmiddle"> <a href="http://www.codeproject.com/script/recommend/form.asp?guid=graphtheoryud0%2Fcpp3%2F31%2F2006">Send to a friend</a></td></tr></tbody></table>
+		</td>
+		<td align="right" nowrap="nowrap"><a name="__top"></a><table><tbody><tr><td class="smallText" align="right">7 votes  for this article.</td><td>
+<table border="2" cellpadding="0" cellspacing="0"><tbody><tr>
+<td><img src="graphtheoryud0.asp_files/red.gif" border="0" height="5" width="20"></td>
+<td><img src="graphtheoryud0.asp_files/red.gif" border="0" height="5" width="20"></td>
+<td><img src="graphtheoryud0.asp_files/white.gif" border="0" height="5" width="20"></td>
+<td><img src="graphtheoryud0.asp_files/white.gif" border="0" height="5" width="20"></td>
+<td><img src="graphtheoryud0.asp_files/white.gif" border="0" height="5" width="20"></td>
+</tr></tbody></table>
+</td></tr><tr><td colspan="2" class="smallText" align="right"><a href="http://www.codeproject.com/script/articles/top_articles.asp?st=2" title="Calculated as rating x Log10(# votes)">Popularity: 1.69</a>. Rating: <b>2</b> out of 5.</td></tr></tbody></table></td></tr>
+		</tbody></table>
+		
+			
+	</td>
+</tr>
+
+<tr>
+	<td class="ArticlePane">
+
+<span id="intelliTXT">
+<div id="contentdiv">
+
+
+<!-- Article Starts -->
+
+
+<h2><b><font color="#ff9700">Graph theory: undirected graphs</font></b></h2>
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td width="4%"><img src="graphtheoryud0.asp_files/download.gif"></td>
+<td width="96%">Download <a href="http://www.codeproject.com/useritems/graphtheoryud0/source.zip"><u>source</u></a> file - 37 kb</td></tr>
+<tr>
+<td width="4%"></td>
+<td width="96%">&nbsp;<br>Source file contains 2 programs about undirected graph tree: 
+<ol style="margin-top: 0px; margin-bottom: 0px;">
+<li style="margin-top: 0px; margin-bottom: 0px;">Shortest-path between 2 nodes 
+</li><li style="margin-top: 0px; margin-bottom: 0px;">Minimum-spanning-tree </li></ol>Which can be compiled and executed under UNIX or DOS, please refer to <a href="#command">command line</a> </td></tr></tbody></table><br><br><font style="font-size: 16pt; color: rgb(255, 151, 0);"><b>Introduction</b></font> <br>Graphic theory is called <b>vertex-edge</b> theory also, which includes <b>undirected</b> and <b>directed</b> graphs.&nbsp;&nbsp;<br>Programming for directed and undirected graphs is almost the same, if you understand one, you know another one at once. <br>This article discusses undirected graphs, please refer to picture bellow.<br><br><img src="graphtheoryud0.asp_files/main.gif" border="0" height="164" width="262">&nbsp;<br><br>An undirected graph contains several nodes (or vertexes) and edges, value between 2 nodes is often called <b>weight</b>. <br><br>Normally,
+calculation about the graph targets to "minimum" (such as shortest-path
+or minimum-spanning-tree), but in some cases, calculation may target to
+"maximum" also.<br>Both calculations about minimum and maximum are the same from programming point of view.<br>Followings explain how to calculate minimum value about undirected-graph tree.<br>&nbsp; <br><font style="font-size: 16pt; color: rgb(255, 151, 0);"><b>Key of algorithm: weight between 2 sets&nbsp;</b></font> <br><b>Tentative</b> and <b>fixed</b> sets are key technology for graph theory.<br>&nbsp;<br><a name="Steps0"><b>Steps</b></a> <b>of graph algorithm:</b> 
+<ol>
+<li>At beginning, all nodes are added to tentative set and fixed set is empty. 
+</li><li>Move one special node into fixed set according to purpose of algorithm (initialize - refer to <a href="#Example">example</a> bellow) 
+</li><li>In the moment, there is only one node (special node) in fixed set.<br>find
+minimum value between all nodes in tentative set to the special node in
+fixed set,&nbsp; then move the node, which owns the minimum value, from
+tentative set to fixed set. </li><li>In the moment, there are 2 nodes in fixed set.<br>find
+minimum value between all nodes in tentative set to the 2 nodes in
+fixed set,&nbsp; then move the node, which owns the minimum value, from
+tentative set, to fixed set.&nbsp; </li><li>In the moment, there are 3 nodes in fixed set.<br>find
+minimum value between all nodes in tentative set to the 3 nodes in
+fixed set,&nbsp; then move the node, which owns the minimum value, from
+tentative set to fixed set.&nbsp; </li><li>And so on until purpose of graph algorithm reaches (such as finding target node).<br>&nbsp; </li></ol><b>Please note:</b> 
+<blockquote>Steps 3, 4, 5 and 6 above are the same, which calculate
+minimum value between the 2 sets - or minimum value between all nodes
+in one set to all nodes in another set.<br>Those steps must be in a programming loop, such as while() or do.<br>Many people think step 2 belongs to the loop also.&nbsp;<br>&nbsp; </blockquote><font style="font-size: 16pt; color: rgb(255, 151, 0);"><b><a name="Example">Example</a>: find shortest path from node A to M</b></font> <br>First of all, we define a struct for all node:<br>struct Path&nbsp;<br>{
+<blockquote style="margin-top: 0px; margin-bottom: 0px;">
+<table style="margin-top: 0px; margin-bottom: 0px;" border="0" cellpadding="0" cellspacing="0" width="62%">
+<tbody style="margin-top: 0px; margin-bottom: 0px;">
+<tr>
+<td width="50%">char chNode;&nbsp;</td>
+<td width="50%">//the node</td></tr>
+<tr>
+<td width="50%">char chNodePrevious;&nbsp;</td>
+<td width="50%">//the node's previous node</td></tr>
+<tr>
+<td width="50%">int iWeightToStart;</td>
+<td width="50%">//total weight to target node</td></tr></tbody></table></blockquote>};<br>&nbsp;<br>The struct is initialized as, for example,&nbsp; 
+<blockquote>node H: {H,0,infinite).<br>node B: {B,0,infinite}. </blockquote>Infinite is a very large number, which can be initialized as zero rather than infinite, but most people like to use infinite.<br>&nbsp; <br><b><a name="Steps1">Steps</a>: (refer to previous <a href="#Steps0">steps</a>)</b> 
+<ol>
+<li>Initialize all nodes for struct Path as described above.<br>Field chNodePrevious is used as flag also to identify if the node is in <b>tentative</b> set (if the field is <b>zero)</b> or in <b>fixed</b> set (if the field is <b>non-zero)</b>.<br>So all nodes are in tentative set and fixed set is empty in the moment. 
+</li><li>Move node A to fixed set (initializing) by setting its field&nbsp;<br>chNodePrevious=A; and iWeightToStart=0; 
+</li><li>Find minimum weight between 2 sets and related node in tentative set,&nbsp; which is F<br>Set fields of node F as: 
+<blockquote>chNodePrevious=A;&nbsp; //because it is related to node A of fixed set.<br>iWeightToStart=0+5; //0 is node A's value of the field, 5 is its weight to node A </blockquote>
+</li><li>In the moment, fixed set has 2 nodes: A and F<br>Calculate
+minimum value between 2 sets, or enumerate all nodes in tentative set
+to all nodes in fixed set to find minimum value and related node.<br>Value is defined as, for example, B to A is:<br>value = A's&nbsp; iWeightToStart + wight of B to A.<br>So the node found in tentative set is H, then set fields of node H as 
+<blockquote>chNodePrevious=A;&nbsp; //because it is related to node A of fixed set.<br>iWeightToStart=0+8; //0 is node A's value of the field, 8 is weight of H to A </blockquote>
+</li><li>In the moment, fixed set has 3 nodes: A, F and H&nbsp;<br>Enumerate again between 2 sets, node G in tentative set is found,&nbsp; then set its fields as 
+<blockquote>chNodePrevious=H;&nbsp; //because it is related to node H of fixed set.<br>iWeightToStart=8+4; //8 is node H's value of the field, 4 is weight of G to H </blockquote><br>Enumerate again and again&nbsp;as above, finally, node M is moved to fixed set.<br>Currently nodes and fields in 2 sets are: 
+<table border="1" bordercolor="#a0a0a0" cellpadding="0" cellspacing="0" width="521">
+<tbody>
+<tr>
+<td width="71"><font size="2">Fixed</font></td>
+<td width="53"><font size="2">A(A,0)</font></td>
+<td width="50"><font size="2">B(A,12)</font></td>
+<td width="59"><font size="2">E(E,23)</font></td>
+<td width="45"><font size="2">F(A,5)</font></td>
+<td width="48"><font size="2">H(A,8)</font></td>
+<td width="53"><font size="2">G(H,12)</font></td>
+<td width="65"><font size="2">&nbsp;</font></td>
+<td width="53"><font size="2">M(G,25)</font></td></tr>
+<tr>
+<td width="71"><font size="2">Tentative</font></td>
+<td width="53"><font size="2">&nbsp;</font></td>
+<td width="50">&nbsp;</td>
+<td width="59">&nbsp;</td>
+<td width="45">&nbsp;</td>
+<td width="48">&nbsp;</td>
+<td width="53">&nbsp;</td>
+<td width="65"><font size="2">K(0,inf)</font></td>
+<td width="53"><font size="2">&nbsp;&nbsp;</font></td></tr></tbody></table>OK, we can say:<br>Shortest path between A and M is: M--G--H--A, weight is 25.<br>&nbsp;<br><b>Please note:</b> 
+<ol>
+<li>process above should be backward (initialize node M first), but it doesn't matter for the example. 
+</li><li>shortest-path may not be unique. </li></ol></li></ol><br><font style="font-size: 16pt; color: rgb(255, 151, 0);"><b>Source code and <a name="command">command</a> line</b></font> 
+<ul>
+<li>For simplifying program code, the program simply add 26 nodes from A to Z, even some nodes may not exist in vertex-edge tree.<br>There is another field iExist in struct Path above, which is used as flag to identify if a node exists.&nbsp;<br>For example, the filed for node Z in picture above is zero to identify the node does not exist in the pictue.<br>If
+without the flag, we have to dynamically create nodes according to
+number of nodes in graph, which will increase a little complex for
+coding. </li><li>If you unzip files downloaded, you will see 3 files in output directory: 
+<ol>
+<li>data.txt<br>which defines graph tree, each line in the file defines weight between&nbsp;2 nodes, such as&nbsp;<b><br>A,H,8</b>: A and H are nodes, 8 is weight between them.<br>You can modify the file, but only A to Z can be used for nodes. 
+</li><li>project.exe<br>Executable file of source code compiled under DOS environment. 
+</li><li>run.bat<br>You can run executable file (project.exe) by double-clicking the file under Windows.<br>Text inside the file is <b>command line</b> for running executable file. </li></ol></li></ul><b><font style="font-size: 16pt; color: rgb(255, 151, 0);">Directed graphs</font></b>&nbsp; 
+<blockquote>Programming for directed graphs is the same as for
+undirected graphs as described above, only difference is that weight
+has "direction", i.e. weight from node A to B may be different as from
+B to A. </blockquote><b>Key words:</b> 
+<blockquote>Dijkstra algorithm<br>Floyd algorithm </blockquote>
+
+<!-- Article Ends -->
+
+
+
+</div>
+</span>
+
+<script type="text/javascript" src="graphtheoryud0.asp_files/togglePre.js"></script>
+
+<h2>About includeh10</h2>
+<div style="overflow: hidden;"><table border="0"><tbody><tr valign="top"><td class="smallText" nowrap="nowrap"><img src="graphtheoryud0.asp_files/ADC6C9F9-EF39-4CD3-9CD8-9149DA88745C.bmp"><br></td><td class="smallText"><hr color="#ff9700" size="3">Please visit our <a href="http://www.syncedit.com/"><b><u>Download Home</u></b></a> to obtain many interesting software for free ...<br><hr color="#ff9700" size="3"><br><p class="smallText">Click <a href="http://www.codeproject.com/script/profile/whos_who.asp?vt=arts&amp;id=41047">here</a> to view includeh10's online profile.</p></td></tr></tbody></table></div><br>
+<table border="0" cellpadding="4" width="100%"><tbody><tr valign="top">
+<td width="100%"><h2>Other popular C++ / MFC articles:</h2><ul><li><a href="http://www.codeproject.com/cpp/FastDelegate.asp">Member Function Pointers and the Fastest Possible C++ Delegates</a><div class="smallText">A comprehensive tutorial on member function pointers, and an implementation of delegates that generates only two ASM opcodes!</div></li><li><a href="http://www.codeproject.com/cpp/exceptionhandler.asp">How a C++ compiler implements exception handling</a><div class="smallText">An indepth discussion of how VC++ implements exception handling. Source code includes exception handling library for VC++.</div></li><li><a href="http://www.codeproject.com/cpp/Differentiation.asp">Symbolic Differentiation</a><div class="smallText">This article demonstrates differentiating expressions using a stack and displaying the input expression and its derivative.</div></li><li><a href="http://www.codeproject.com/cpp/pointers.asp">A Beginner's Guide to Pointers</a><div class="smallText">An article showing the use of pointers in C and C++</div></li></ul></td>
+<td width="360">
+<script language="javascript">document.write("<IFRAME src=\"/script/ann/ServeHTML.aspx?C=False&id=2257&cb=1472487\" border=0 frameborder=0 scrolling=no width=300 height=250></IFRAME>");</script><iframe src="graphtheoryud0.asp_files/ServeHTML.htm" border="0" frameborder="0" height="250" scrolling="no" width="300"></iframe>
+</td>
+</tr></tbody></table>
+
+		<form action="/script/rating/code/app/insert_vote.asp" method="post">
+		<input name="vote_name" value="graphtheoryud0/cpp3/31/2006" type="hidden">
+		<input name="goal" value="/useritems/graphtheoryud0.asp" type="hidden">
+
+<table bgcolor="#ff9900" border="0" cellpadding="1" cellspacing="0" width="100%">
+<tbody><tr><td width="100%">
+<table bgcolor="#fbedbb" border="0" cellpadding="4" cellspacing="0" width="100%"><tbody><tr>
+<td class="smalltext" valign="middle">[<a href="#__top">Top</a>]</td>
+<td align="right" nowrap="nowrap" valign="middle">
+<a href="http://www.codeproject.com/script/profile/logon.asp?ct=%2Fuseritems%2Fgraphtheoryud0%2Easp"><b>Sign in</b></a> to vote for this article:&nbsp;&nbsp;&nbsp;&nbsp; <i>Poor</i><input value="1" style="" name="rate" type="radio"><input value="2" style="" name="rate" type="radio"><input value="3" style="" name="rate" type="radio"><input value="4" style="" name="rate" type="radio"><input value="5" style="" name="rate" type="radio"><i>Excellent</i>&nbsp;&nbsp;<input value="Vote" class="FormButton" style="" type="submit">
+</td></tr>
+</tbody></table></td></tr></tbody></table>
+</form>
+<center>
+<table border="0" cellpadding="0" cellspacing="0"><tbody><tr>
+<td style="padding: 2px; background-color: rgb(238, 238, 238);" height="60" width="120"><div align="center">
+<script language="javascript">document.write("<a href=\"/script/admentor/admentorredir.asp?id=3486&way=ban\" target=_blank><img src=\"/script/ann/ServeImg.aspx?File=%2Fscript%2Fadmentor%2Fimages%2Fcp%5Fdaily%5F120x60%2Egif&C=False&id=3486&cb=1472491\" alt=\"\" border=0 width=120 height=60></a>");</script><a href="http://www.codeproject.com/script/admentor/admentorredir.asp?id=3486&amp;way=ban" target="_blank"><img src="graphtheoryud0.asp_files/ServeImg_004.htm" alt="" border="0" height="60" width="120"></a>
+</div></td>
+<td width="100">&nbsp;</td>
+<td height="60" width="468"><span id="AdBanner5"><script language="javascript">document.write("<a href=\"/script/admentor/admentorredir.asp?id=3755&way=ban\" target=_blank><img src=\"/script/ann/ServeImg.aspx?File=%2Fscript%2Fadmentor%2Fimages%2FDundas%5FStarterBundle%5Fbottom%5F468x60%2Egif&C=False&id=3755&cb=1472478\" alt=\"\" border=0 width=468 height=60></a>");</script><a href="http://www.codeproject.com/script/admentor/admentorredir.asp?id=3755&amp;way=ban" target="_blank"><img src="graphtheoryud0.asp_files/ServeImg_003.htm" alt="" border="0" height="60" width="468"></a></span></td>
+</tr></tbody></table></center>
+
+<a name="__comments"></a>
+
+<script language="JavaScript">
+var Selected = "";
+
+var AdTime = new Date();
+
+
+// Ensures the expanded message appears reasonably close to where 
+// it should appear: on screen, and if possible, under the mouse cursor.
+function SwitchMessage(e)
+{
+   if ( !e ) e = window.event;
+   var target = e.target ? e.target : e.srcElement;
+
+   // is it a post?
+   while ( target && target.id != 'DynMessLink' )
+      target = target.parentNode;
+   if ( !target || target.id != 'DynMessLink' )
+      return;
+
+   if (Selected)
+   {
+      var body = document.getElementById(Selected + "_h1");
+      if (body)
+         body.style.display = 'none';
+      var head = document.getElementById(Selected + "_h0");
+      if (head)
+         head.bgColor = '#FEF9E7';
+   }
+
+   if (Selected == target.name) // just collapse
+      Selected="";
+   else
+   {
+      Selected = target.name;
+      var body = document.getElementById(Selected + "_h1");
+      if (body)
+      {
+         if (body.style.display=='none')
+            body.style.display='';
+         else
+            body.style.display = 'none';
+      }
+      var head = document.getElementById(Selected + "_h0");
+      if (head)
+         head.bgColor = '#99CCFF';
+
+      if ( body && head && body.style.display != 'none' )
+      {
+         // the bit that keeps the post on-screen and under the cursor
+         //var dif = (getRealPos(head, "Top") + head.offsetHeight/2) - (document.body.scrollTop+e.clientY);
+         //document.body.scrollTop += dif;
+         document.body.scrollTop = getRealPos(head, "Top") - document.body.clientHeight/10;
+         EnsureMessageVisible(target.name, true);
+      }
+   }
+
+   if ( e.preventDefault )
+      e.preventDefault();
+   else
+      e.returnValue = false;
+   return false;
+}
+
+// does its best to make a message visible on-screen (vs. scrolled off somewhere).
+function EnsureMessageVisible(msgID, bShowTop) {
+   var msgHeader = document.getElementById(msgID + "_h0");
+   var msgBody = document.getElementById(msgID + "_h1");
+
+   // determine scroll position of top and bottom
+   var scrollContainer = document.body;
+   var top = getRealPos(msgHeader, 'Top');
+   var bottom = getRealPos(msgBody, 'Top') + msgBody.offsetHeight;
+
+   // if not already visible, scroll to make it so
+   if ( scrollContainer.scrollTop > top && !bShowTop)
+      scrollContainer.scrollTop = top - document.body.clientHeight/10;
+   if ( scrollContainer.scrollTop+scrollContainer.clientHeight < bottom )
+      scrollContainer.scrollTop = bottom-scrollContainer.clientHeight;
+   if ( scrollContainer.scrollTop > top && bShowTop)
+      scrollContainer.scrollTop = top - document.body.clientHeight/10;
+}
+
+// utility
+function getRealPos(i,which)
+{
+   iPos = 0
+   while (i!=null)
+   {
+      iPos += i["offset" + which];
+      i = i.offsetParent;
+   }
+   return iPos
+}
+
+
+</script>
+<div id="_MessageBoard" onclick="SwitchMessage(event)"><table bgcolor="#ff9900" border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td width="100%"><table id="ForumTable" bgcolor="#ff9900" border="0" cellpadding="0" cellspacing="1" width="100%"><tbody><tr><td class="smallText" bgcolor="#ffcc99"><b class="forum_hilite">Note</b>: You must <a href="http://www.codeproject.com/script/profile/logon.asp?ct=%2Fuseritems%2Fgraphtheoryud0%2Easp"><b>Sign in</b></a> to post to this message board.</td></tr><form action="/script/comments/app/do_filtermessages.asp?main=/useritems/graphtheoryud0.asp&amp;df=100&amp;forumid=286697" method="post"></form><tr><td><table bgcolor="white" border="0" cellpadding="3" cellspacing="0" width="100%"><tbody><tr bgcolor="#fbedbb"><td class="smalltext" nowrap="nowrap"><a href="http://www.codeproject.com/script/comments/faq.asp"><img src="graphtheoryud0.asp_files/forum_faq.GIF" align="absmiddle" border="0" height="16" width="16"> <b>FAQ</b></a>&nbsp;</td><td class="smalltext" align="right" nowrap="nowrap" valign="top">Message score threshold <select size="1" name="noise" class="smalltext"><option value="1">1.0 </option>
+<option value="2">2.0</option>
+<option selected="selected" value="3">3.0</option>
+<option value="4">4.0</option>
+<option value="5">5.0</option>
+</select>&nbsp;&nbsp;</td><td class="smalltext" colspan="2" align="right" nowrap="nowrap" valign="middle"><a href="http://www.codeproject.com/script/comments/search_comments.asp?forumid=286697"><img src="graphtheoryud0.asp_files/forum_search.gif" border="0" height="15" width="16"> Search comments</a> &nbsp;</td><td align="right" valign="top"><input value="Set Options" name="submit" class="FormButton" type="submit"></td></tr><tr bgcolor="#ff9900"><td width="100%">&nbsp;</td><td class="smalltext" align="right" nowrap="nowrap" valign="top">View <select size="1" name="expand" class="smalltext"><option value="0">Normal (slow)</option>
+<option value="2">Preview (slow)</option>
+<option selected="selected" value="5">Message View</option>
+<option value="6">Topic View</option>
+<option value="1">Thread View</option>
+<option value="3">Expanded</option>
+</select>&nbsp;&nbsp;</td><td class="smalltext" nowrap="nowrap" valign="top">Per page <select size="1" name="perpage" class="smalltext"><option value="10">10</option>
+<option selected="selected" value="25">25</option>
+<option value="50">50 (must logon)</option>
+</select></td><td colspan="2">&nbsp;</td></tr></tbody></table>
+</td></tr><tr bgcolor="#fbedbb"><td><a name="xx0xx"></a><table bgcolor="#fbedbb" border="0" cellpadding="2" width="100%"><tbody><tr><td>&nbsp;</td><td class="messagetitle">Msgs 1 to 2 of 2 (Total: 2) (<a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?df=100&amp;forumid=286697">Refresh</a>)</td><td align="right" nowrap="nowrap"><font class="messagetitle"><span class="HoverLink">First</span> <span class="HoverLink">Prev</span> <span class="HoverLink">Next</span> <span class="HoverLink">&nbsp;&nbsp;&nbsp;&nbsp;</span> </font></td></tr></tbody></table>
+</td></tr><tr bgcolor="white"><td><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="2" bgcolor="#fbedbb" width="70%"><table border="0" cellpadding="2" cellspacing="0" width="100%"><tbody><tr><td class="messagetitle">Subject&nbsp;</td></tr></tbody></table></td><td bgcolor="#fbedbb" width="140"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="graphtheoryud0.asp_files/t.gif" border="0" height="1" width="1"></td></tr><tr><td class="messagetitle">Author&nbsp;</td></tr><tr><td><img src="graphtheoryud0.asp_files/t.gif" border="0" height="1" width="1"></td></tr></tbody></table></td><td bgcolor="#fbedbb" width="12%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="graphtheoryud0.asp_files/t.gif" border="0" height="1" width="1"></td></tr><tr><td class="messagetitle" align="right">Date&nbsp;</td></tr><tr><td><img src="graphtheoryud0.asp_files/t.gif" border="0" height="1" width="1"></td></tr></tbody></table></td></tr>
+<tr><td colspan="4"><img src="graphtheoryud0.asp_files/t.gif" border="0" height="5" width="1"></td></tr><tr id="1430977_h0" bgcolor="#fef9e7"><td width="70%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td bgcolor="white"><a name="xx1430977xx"></a><img src="graphtheoryud0.asp_files/news_general.gif" align="absmiddle">&nbsp;</td>
+<td class="messagetitle" width="100%"><a class="messagetitle" id="DynMessLink" name="1430977" href="http://www.codeproject.com/useritems/graphtheoryud0.asp?df=100&amp;forumid=286697&amp;select=1430977#xx1430977xx"><b>BGL</b></a></td></tr></tbody></table></td><td nowrap="nowrap" valign="bottom"><a href="http://www.codeproject.com/script/profile/whos_who.asp?id=1892756"><img src="graphtheoryud0.asp_files/userinfo.gif" title="Click for User Profile" border="0" height="15" width="14"></a>&nbsp;</td><td nowrap="nowrap" width="140"><font class="messagetitle"><b>Stephen Hewitt</b>&nbsp;</font></td><td align="right" nowrap="nowrap" width="12%"><font class="messagetitle"><b>5:27 31 Mar '06</b>&nbsp;</font></td></tr>
+<tr id="1430977_h1" style="display: none;"><td colspan="4" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="graphtheoryud0.asp_files/news_blank.gif" align="absmiddle">&nbsp;</td><td bgcolor="#d5eaff" width="100%"><table border="0" cellpadding="0" cellspacing="5" width="100%"><tbody><tr><td><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="2"><font class="messagecontent">You should checkout the BGL - Boost Graph Library. Here's a <a href="http://www.boost.org/libs/graph/doc/table_of_contents.html" rel="nofollow">link</a>[<a href="http://www.boost.org/libs/graph/doc/table_of_contents.html" target="_blank" rel="nofollow">^</a>]. It's mind bogglingly cool. <br><br>Steve<br>&nbsp;</font></td></tr><tr valign="top"><td class="messagetitle">[<a href="http://www.codeproject.com/script/profile/logon.asp?ct=%2Fuseritems%2Fgraphtheoryud0%2Easp">Sign in</a> | <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?df=100&amp;tid=1430977&amp;forumid=286697&amp;select=1430977#xx1430977xx" title="View only messages within this thread">View Thread</a> | <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?msg=1430977#xx1430977xx" title="Get the URL for this message">PermaLink</a> | <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?msg=1430977#xx1430977xx" title="Go to Thread Start">Go to Thread Start</a>]</td><td class="messagetitle" align="right"></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr>
+<tr><td colspan="4"><img src="graphtheoryud0.asp_files/t.gif" border="0" height="5" width="1"></td></tr><tr height="1"><td colspan="4" bgcolor="#ff9900"><img src="graphtheoryud0.asp_files/t.gif" height="1" width="1"></td></tr><tr id="1430655_h0" bgcolor="#fef9e7"><td width="70%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td bgcolor="white"><a name="xx1430655xx"></a><img src="graphtheoryud0.asp_files/news_general.gif" align="absmiddle">&nbsp;</td>
+<td class="messagetitle" width="100%"><a class="messagetitle" id="DynMessLink" name="1430655" href="http://www.codeproject.com/useritems/graphtheoryud0.asp?df=100&amp;forumid=286697&amp;select=1430655#xx1430655xx"><b>Notice from author</b></a></td></tr></tbody></table></td><td nowrap="nowrap" valign="bottom"><a href="http://www.codeproject.com/script/profile/whos_who.asp?id=41047"><img src="graphtheoryud0.asp_files/userinfo.gif" title="Click for User Profile" border="0" height="15" width="14"></a>&nbsp;</td><td nowrap="nowrap" width="140"><font class="messagetitle"><b>includeh10</b>&nbsp;</font></td><td align="right" nowrap="nowrap" width="12%"><font class="messagetitle"><b>1:40 31 Mar '06</b>&nbsp;</font></td></tr>
+<tr id="1430655_h1" style="display: none;"><td colspan="4" width="100%"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><img src="graphtheoryud0.asp_files/news_blank.gif" align="absmiddle">&nbsp;</td><td bgcolor="#d5eaff" width="100%"><table border="0" cellpadding="0" cellspacing="5" width="100%"><tbody><tr><td><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td colspan="2"><font class="messagecontent">If you need more explains, please visit <b>Tutorial of C/C++ programs</b><br>on our <a href="http://www.syncedit.com/"><b><u>website</u></b></a>.<br><br>Thank you<br> <br><br></font><hr><font class="messagecontent"><br>A special <a href="http://www.syncedit.com/software/imagecopier/" target="_new"><u>image tool</u></a> for <i>Windows C++  programmers</i>, don't miss it!<br>The world unique <i>Software Label Maker</i> is <a href="http://www.syncedit.com/software/paperlabelmaker/" target="_new"><u>waiting</u></a><a> for <i>you and me</i> ... <br>A nice </a><a href="http://www.syncedit.com/software/hypercare/" target="_new"><u>hyper tool</u></a> for optimizing <i>your Microsoft html-help</i> contents.<br><br>&nbsp;</font></td></tr><tr valign="top"><td class="messagetitle">[<a href="http://www.codeproject.com/script/profile/logon.asp?ct=%2Fuseritems%2Fgraphtheoryud0%2Easp">Sign in</a> | <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?df=100&amp;tid=1430655&amp;forumid=286697&amp;select=1430655#xx1430655xx" title="View only messages within this thread">View Thread</a> | <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?msg=1430655#xx1430655xx" title="Get the URL for this message">PermaLink</a> | <a href="http://www.codeproject.com/useritems/graphtheoryud0.asp?msg=1430655#xx1430655xx" title="Go to Thread Start">Go to Thread Start</a>]</td><td class="messagetitle" align="right"></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr>
+<tr><td colspan="4"><img src="graphtheoryud0.asp_files/t.gif" border="0" height="5" width="1"></td></tr></tbody></table></td></tr><tr bgcolor="#fbedbb"><td><table cellpadding="2" width="100%"><tbody><tr><td class="messagetitle">Last Visit: 4:05 Monday 9th July, 2007</td><td align="right" nowrap="nowrap"><font class="messagetitle"><span class="HoverLink">First</span> <span class="HoverLink">Prev</span> <span class="HoverLink">Next</span> <span class="HoverLink">&nbsp;&nbsp;&nbsp;&nbsp;</span> </font></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>
+</div><p class="smallText"><img src="graphtheoryud0.asp_files/news_general.gif" align="absmiddle"> General comment &nbsp;&nbsp; <img src="graphtheoryud0.asp_files/news_info.gif" align="absmiddle"> News / Info &nbsp;&nbsp; <img src="graphtheoryud0.asp_files/news_question.gif" align="absmiddle"> Question &nbsp;&nbsp; <img src="graphtheoryud0.asp_files/news_answer.gif" align="absmiddle"> Answer &nbsp;&nbsp; <img src="graphtheoryud0.asp_files/news_game.gif" align="absmiddle"> Joke / Game &nbsp;&nbsp; <img src="graphtheoryud0.asp_files/news_sticky.gif" align="absmiddle"> Admin message</p>
+<br>
+
+
+<table cellspacing="5" width="100%">
+<tbody><tr valign="top"><td class="smallText">
+
+Updated: 31 Mar 2006
+</td><td class="SmallText" align="right">
+Article content copyright includeh10, 2006<br>
+everything else Copyright © <a href="mailto:webmaster@codeproject.com">CodeProject</a>, 1999-2007.
+
+<br>
+Web16 |
+<a href="http://www.codeproject.com/info/MediaKit">Advertise on The Code Project</a> | <a href="http://www.codeproject.com/info/privacy.asp">Privacy</a>
+
+</td></tr>
+</tbody></table>
+
+</td></tr></tbody></table>
+
+
+<script type="text/javascript" src="graphtheoryud0.asp_files/front.gif"></script>
+<br>
+<center>
+<table border="0" cellpadding="0" cellspacing="0" width="95%">
+<tbody><tr><td bgcolor="#ff9900" height="1"><img src="graphtheoryud0.asp_files/space.gif" height="1"></td></tr>
+<tr>
+<td align="center"><font size="1">
+
+<a href="http://www.theultimatetoolbox.com/">The Ultimate Toolbox</a> &#8226;
+<a href="http://www.aspalliance.com/">ASP Alliance</a> &#8226;
+<a href="http://www.developerfusion.co.uk/">Developer Fusion</a> &#8226;
+<a href="http://www.developersdex.com/">Developersdex</a> &#8226;
+<a href="http://www.devguru.com/">DevGuru</a> &#8226;
+<a href="http://www.programmersheaven.com/">Programmers Heaven</a> &#8226;
+<a href="http://www.planet-source-code.com/">Planet Source Code</a> &#8226;
+<a href="http://www.tek-tips.com/">Tek-Tips Forums</a> &#8226;
+
+</font>	
+</td>
+</tr>
+</tbody></table>
+</center>
+</td></tr></tbody></table><div style="position: absolute; visibility: visible; background-color: rgb(72, 142, 0); z-index: 101; width: 298px; height: 22px; top: 124px; left: 700px;"><div style="border: 0pt none rgb(72, 142, 0); overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 40px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 2px;">Help!</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 55px; height: 16px; padding-left: 5px; padding-top: 2px; left: 50px; top: 2px;">Articles</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 115px; height: 16px; padding-left: 5px; padding-top: 2px; left: 113px; top: 2px;">Message Boards</div><div style="border: 0pt none rgb(72, 142, 0); overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 55px; height: 16px; padding-left: 5px; padding-top: 2px; left: 236px; top: 2px;">Lounge</div></div><div style="position: absolute; visibility: hidden; background-color: rgb(72, 142, 0); z-index: 102; width: 194px; height: 98px; top: 0pt; left: 0pt;"><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 185px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 2px;">What is 'The Code Project'?</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 185px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 21px;">General FAQ</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 185px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 40px;">Post a Question</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 185px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 59px;">Site Directory</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 185px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 78px;">About Us</div></div><div style="position: absolute; visibility: hidden; background-color: rgb(72, 142, 0); z-index: 102; width: 154px; height: 136px; top: 0pt; left: 0pt;"><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 2px;">Latest</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 21px;">Most Popular</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 40px;">Search</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 59px;">Site Directory</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 78px;">Submit an Article</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 97px;">Update an Article</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 145px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 116px;">Article Competition</div></div><div style="position: absolute; visibility: hidden; background-color: rgb(72, 142, 0); z-index: 102; width: 174px; height: 459px; top: 0pt; left: 0pt;"><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 2px;">Windows Vista</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 21px;">Visual C++</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 40px;">ATL / WTL / STL</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 59px;">COM</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 78px;">C++/CLI</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 97px;">C#</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 116px;">ASP.NET</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 135px;">VB.NET</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 154px;">Web Development</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 173px;">.NET Framework</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 192px;">Mobile Development</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 211px;">SQL / ADO / ADO.NET</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 230px;">XML / XSL</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 249px;">OS / SysAdmin</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 268px;">Work Issues</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 287px;">Article Requests</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 306px;">Collaboration</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 325px;">General Discussions</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 344px;">Hardware</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 363px;">Algorithms / Math</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 382px;">Design and Architecture</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 401px;">Subtle Bugs</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 420px;">Suggestions</div><div style="overflow: hidden; position: absolute; visibility: inherit; cursor: pointer; background-color: rgb(72, 142, 0); color: rgb(255, 255, 255); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; font-weight: bold; font-style: normal; text-align: left; width: 165px; height: 16px; padding-left: 5px; padding-top: 2px; left: 2px; top: 439px;">The Soapbox</div></div></body></html>

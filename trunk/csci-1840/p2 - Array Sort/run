@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/bdetweiler/c/program2/rand 0 100 21 | /home/bdetweiler/c/program2/array_sort

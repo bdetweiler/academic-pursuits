@@ -1,0 +1,503 @@
+/* vBulletin 3 CSS For Style 'GIDBlue' (styleid: 1) */
+body
+{
+	background: #3870A8;
+	color: #000000;
+	font: 10pt verdana,geneva,lucida,'lucida grande', arial, helvetica, sans-serif;
+	margin: 5px 15px 15px 15px;
+}
+a:link
+{
+	color: #22229C;
+}
+a:visited
+{
+	color: #22229C;
+}
+a:hover, a:active
+{
+	color: #FF4400;
+}
+.page
+{
+	background: #FFFFFF;
+	color: #000000;
+}
+td, th, p, li
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.tborder
+{
+	background: #D1D1E1;
+	color: #000000;
+	border: 1px solid #0B198C;
+}
+.tcat
+{
+	background: #869BBF url(../../images/gradients/gradient_tcat.gif) repeat-x top left;
+	color: #FFFFFF;
+	font: bold 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.tcat a:link
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.tcat a:visited
+{
+	color: #ffffff;
+	text-decoration: none;
+}
+.tcat a:hover, .tcat a:active
+{
+	color: #FFFF66;
+	text-decoration: underline;
+}
+.thead
+{
+	background: #5C7099 url(../../images/gradients/gradient_thead.gif) repeat-x top left;
+	color: #FFFFFF;
+	font: bold 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.thead a:link
+{
+	color: #FFFFFF;
+}
+.thead a:visited
+{
+	color: #FFFFFF;
+}
+.thead a:hover, .thead a:active
+{
+	color: #FFFF00;
+}
+.tfoot
+{
+	background: #3E5C92;
+	color: #E0E0F6;
+}
+.tfoot a:link
+{
+	color: #E0E0F6;
+}
+.tfoot a:visited
+{
+	color: #E0E0F6;
+}
+.tfoot a:hover, .tfoot a:active
+{
+	color: #FFFF66;
+}
+.alt1, .alt1Active
+{
+	background: #EEF2F6;
+	color: #000000;
+}
+.alt2, .alt2Active
+{
+	background: #FFFFFF;
+	color: #000000;
+}
+td.inlinemod
+{
+	background: #FFFFCC;
+	color: #000000;
+}
+.wysiwyg
+{
+	background: #FFFFFF;
+	color: #000000;
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+textarea, .bginput
+{
+	font: 10pt verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.button
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+select
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+option, optgroup
+{
+	font-size: 11px;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.smallfont
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.time
+{
+	color: #666686;
+}
+.navbar
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.highlight
+{
+	color: #FF0000;
+	font-weight: bold;
+}
+.fjsel
+{
+	background: #3E5C92;
+	color: #E0E0F6;
+}
+.fjdpth0
+{
+	background: #F7F7F7;
+	color: #000000;
+}
+.panel
+{
+	background: #E4E7F5 url(../../images/gradients/gradient_panel.gif) repeat-x top left;
+	color: #000000;
+	padding: 10px;
+	border: 2px outset;
+}
+.panelsurround
+{
+	background: #D5D8E5 url(../../images/gradients/gradient_panelsurround.gif) repeat-x top left;
+	color: #000000;
+}
+legend
+{
+	color: #22229C;
+	font: 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.vbmenu_control
+{
+	background: #738FBF;
+	color: #FFFFFF;
+	font: bold 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	padding: 3px 6px 3px 6px;
+	white-space: nowrap;
+}
+.vbmenu_control a:link
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:visited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:hover, .vbmenu_control a:active
+{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+.vbmenu_popup
+{
+	background: #FFFFFF;
+	color: #000000;
+	border: 1px solid #0B198C;
+}
+.vbmenu_option
+{
+	background: #BBC7CE;
+	color: #000000;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vbmenu_option a:link
+{
+	color: #22229C;
+	text-decoration: none;
+}
+.vbmenu_option a:visited
+{
+	color: #22229C;
+	text-decoration: none;
+}
+.vbmenu_option a:hover, .vbmenu_option a:active
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite
+{
+	background: #8A949E;
+	color: #FFFFFF;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	white-space: nowrap;
+	cursor: pointer;
+}
+.vbmenu_hilite a:link
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:visited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:hover, .vbmenu_hilite a:active
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+/* ***** styling for 'big' usernames on postbit etc. ***** */
+.bigusername { font-size: 14pt; }
+
+/* ***** small padding on 'thead' elements ***** */
+td.thead, div.thead { padding: 4px; }
+
+/* ***** basic styles for multi-page nav elements */
+.pagenav a { text-decoration: none; }
+.pagenav td { padding: 2px 4px 2px 4px; }
+
+/* ***** define margin and font-size for elements inside panels ***** */
+.fieldset { margin-bottom: 6px; }
+.fieldset, .fieldset td, .fieldset p, .fieldset li { font-size: 11px; }
+
+/* ***** don't change the following ***** */
+form { display: inline; }
+label { cursor: default; }
+.normal { font-weight: normal; }
+.inlineimg { vertical-align: middle; }
+/**   JDS EDITED   **/
+/********************/
+
+/* */
+div#divSTGA728 {
+  background-color:#FFFFFF;
+  border:1px solid #F7F7F7;
+  border-top:2px solid #E5E5E5;
+  border-left:2px solid #E5E5E5;
+  margin-top:6px; margin-bottom:13px;
+  padding-top:13px; padding-bottom:13px;
+  text-align:center;
+}
+div#divSTGA728 table { margin:auto; }
+
+/* GIDAd, showthread, top: tableGIDadstgtop */
+table#tableGIDadstgtop { background-color:white; margin:0px 0px 13px 0px; width:auto; }
+table#tableGIDadstgtop td  { background-color:white; border:0px none white; padding:3px; }
+table#tableGIDadstgtop a div#divGIDAd1 { color:black; text-decoration:none; }
+table#tableGIDadstgtop div#divGIDAd1 { cursor:pointer; font:normal 13px verdana,arial,sans-serif; width:500px; overflow:hidden; }
+table#tableGIDadstgtop div#divGIDAd2 { color:#22229C; font-weight:bold; margin-bottom:3px; text-decoration:underline; }
+table#tableGIDadstgtop div#divGIDAd3 { font-size:12px; }
+/* (end)GIDAd, showthread, top: tableGIDadstgtop */
+
+/* GIDBlog */
+p#pGIDBlog { margin-top:21px; text-align:center; vertical-align:center; }
+p#pGIDBlog span { font-size:12px; font-family:arial,sans-serif; border-collapse:collapse; border:1px solid #0040A4; }
+p#pGIDBlog span#spanA {  padding:5px; background-color:#3870A8; }
+p#pGIDBlog span#spanB { color:#999999; font-weight:bold; padding:5px 21px 5px 5px; background-color:#ffffee; }
+p#pGIDBlog a { text-decoration:none; }
+p#pGIDBlog span#spanA a { color:#FFFFFF; }
+p#pGIDBlog img { vertical-align:bottom; height:15px; width:9px; border-style:none; }
+/* (end) GIDBlog */
+
+div.editedby {
+  font-weight:normal;
+  font-family:sans-serif;
+  font-size:10px;
+  color:#666666;
+  margin-top:13px;
+}
+div#fulltop {
+  background-color:navy;
+  width:470px;
+  height:62px;
+  color:yellow;
+  text-align:left;
+}
+div#fulltop * {
+  color:yellow;
+  font-weight:bold;
+}
+
+h1.welcome, h2.welcome, div.welcome {
+	margin-left: 5px;
+	color: #333333;
+	font-family: verdana,arial,helvetica,sans-serif;
+}
+div.welcome {
+	font-family: verdana,arial,helvetica,sans-serif;
+	width: 728px;
+	margin: auto;
+}
+div.welcome h2 {
+	font-family: inherit;
+  	font-size: 15px;
+  	margin-top: 0px;
+  	padding-top: 0px;
+  	display: block;
+}
+div.welcome p {
+	font-family: inherit;
+}
+div.welcome a {
+	/*color:#222222;
+	text-decoration:underline;*/
+}
+div.welcome strong {
+	
+}
+
+h1 {
+  font-size:13px;
+  display:inline;
+}
+
+h1.welcome, h2.welcome {
+  font-size: 15px;
+  margin-top: 0px;
+  padding-top: 0px;
+  display: block;
+}
+
+div.lbtop {
+  margin:auto;
+  text-align:center;
+  background-color:transparent;
+}
+td.lbmid {
+  border-top:1px solid #F8F8F8;
+  padding-top:5px;
+  padding-bottom:8px;
+  /*text-align:center;*/
+}
+
+div.gctitle
+{
+  color:gray;
+  margin-bottom:2px;
+}
+div.snippet {
+  background-color:transparent;
+  font-weight:normal;
+  font-size:11px;
+  color:#595959;
+  padding:6px 2px 6px 6px;
+  margin:3px 0px 8px 0px;
+  border-top:2px solid #CCCCCC;
+  border-right:1px solid white;
+  border-bottom:1px solid white;
+  border-left:2px solid #CCCCCC;
+}
+h2 {
+  font-size:12px;
+  display:inline;
+}
+h3 {
+  font-size:11px;
+  display:inline;
+}
+
+pre.gid, pre.gidmarkup
+{
+  border-style:solid;
+  border-width:6px 2px 2px 2px;
+  padding:5px 15px;
+  font-size:13px;
+  width:612px;
+  overflow:auto;
+  margin:0px;
+}
+
+pre.gid		{  color:#603913; background-color:#FBFAF4; }
+pre.gidmarkup	{  color:#000000; background-color:#FDFFFE; }
+
+pre.csharp	{ border-color:#669933; }
+pre.css		{ border-color:#AA600E; }
+pre.cpp		{ border-color:navy; }
+pre.java	{ border-color:darkred; }
+pre.php		{ border-color:#9999CC; /*white-space:normal;*/	}
+pre.py		{ border-color:#99CCFF; }
+pre.vb		{ border-color:#FFCC66; }
+
+pre.csharp span.c, pre.cpp span.c, pre.java span.c, pre.vb span.c
+{
+  color:#009900;
+}
+pre.css span.c, pre.py span.c
+{
+  color:#FF8000;
+}
+pre.css span.v, pre.csharp span.q, pre.cpp span.q, pre.java span.q, pre.py span.q, pre.vb span.q
+{
+  color:#5555FF;
+}
+pre.css span.q
+{
+  color:#009900;
+}
+pre.css span.k, pre.csharp span.k, pre.cpp span.k, pre.java span.k, pre.py span.k, pre.vb span.k
+{
+  color:#800080;
+  font-weight:bold;
+}
+pre.csharp span.n, pre.vb span.n, pre.cpp span.n, pre.java span.n
+{
+  color:navy;
+}
+span.k span.c
+{
+  font-weight:normal;
+}
+span.nolink {
+  /*font:normal 13px 'courier new', mono;
+  color:gray;*/
+}
+span.sticky {
+  background-color:darkred;
+  color:yellow;
+  font-weight:bold;
+  padding:0px 6px;
+}
+
+form#gidadcbform {
+  display:none;
+}
+td.gidadcb {
+  border-top: 1px solid #EEF2F6;
+  border-right: 2px solid #DADADA;
+  border-bottom: 2px solid #DADADA;
+  border-left: 1px solid #EEF2F6;
+  background-color:#EEF2F6;
+  padding:9px 10px 10px 9px;
+  width:460px;
+  cursor:pointer;
+}
+td.gidadcb td {
+  font-family:'Luxi Sans','Bitstream Vera Sans','Lucida Grande',verdana,arial,helvetica,sans-serif;
+}
+td.gidadcbtitle {
+  font-size:12px;
+  font-weight:bold;
+  width:auto;
+  text-align:left;
+  color:#22229C;
+  text-decoration:underline;
+}
+td.gidadcburl {
+  font-size:10px;
+  width:auto;
+  text-align:right;
+  color:gray;
+}
+td.gidadcburl:hover {
+  text-decoration:underline;
+  color:#3870A8;
+}
+
+td.gidadcbdesc {
+  padding-top:3px;
+  font-size:11px;
+  color:#0A0A0A;
+  width:460px;
+}
+/********************/
+/**   JDS EDITED   **/

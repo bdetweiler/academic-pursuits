@@ -1,0 +1,25 @@
+2 3 +
+printf " 2 3 + 5 *" | ./
+ -->answer should be 25
+
+printf " 2 3 + 5 * 4 /" | ./
+ -->answer should be 6.25
+
+printf " 2 3 ^ 5 / 7 -" | ./
+ -->answer should be -5.4
+
+printf " 2 3 5 7 ^ / -" | ./
+ -->answer should be 1.999962
+
+printf " 2 0 /" | ./
+ -->answer should be ERROR
+
+printf " 2 3 5 * +" | ./
+ -->answer should be 17
+
+printf " 12 158 16 / -" | ./
+ -->answer should be 2.125
+
+printf " 2 3 + 5 -" | ./
+ -->answer should be 0
+

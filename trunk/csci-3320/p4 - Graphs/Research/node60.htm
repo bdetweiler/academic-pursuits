@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<html><head><!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds --><title>The Friendship Graph</title>
+
+
+
+
+<meta name="description" content="The Friendship Graph">
+<meta name="keywords" content="book">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<link rel="STYLESHEET" href="NODE60_files/book.css" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/book.css"></head><body lang="EN">
+ <a name="tex2html4043" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE61.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE61.HTM"><img alt="next" src="NODE60_files/NEXT_TIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/NEXT_TIF.GIF" align="bottom" height="24" width="37"></a> <a name="tex2html4041" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM"><img alt="up" src="NODE60_files/00000016.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/00000016.GIF" align="bottom" height="24" width="26"></a> <a name="tex2html4035" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM"><img alt="previous" src="NODE60_files/PS_MOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/PS_MOTIF.GIF" align="bottom" height="24" width="63"></a> <a name="tex2html4045" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK/NODE4.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK/NODE4.HTM"><img alt="contents" src="NODE60_files/CONTOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/CONTOTIF.GIF" align="bottom" height="24" width="65"></a> <a name="tex2html4046" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK5/NODE233.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK5/NODE233.HTM"><img alt="index" src="NODE60_files/INDEOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/INDEOTIF.GIF" align="bottom" height="24" width="43"></a> <a href="http://www2.toki.or.id/book/AlgDesignManual/INDEX.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/INDEX.HTM"><img alt="CD" src="NODE60_files/CDHOME08.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/CDHOME08.GIF" align="bottom"></a> <a href="http://www2.toki.or.id/book/AlgDesignManual/LEC/LECTURES/ALL.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/LEC/LECTURES/ALL.HTM"><img alt="CD" src="NODE60_files/LECHOME5.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/LECHOME5.GIF" align="bottom"></a> <a href="http://www2.toki.or.id/book/AlgDesignManual/WEBSITE/INDEX.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/WEBSITE/INDEX.HTM"><img alt="Algorithms" src="NODE60_files/ALGO0006.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/ALGO0006.GIF" align="bottom"></a> <br>
+<b> Next:</b> <a name="tex2html4044" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE61.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE61.HTM">Data Structures for Graphs</a>
+<b>Up:</b> <a name="tex2html4042" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM">Graph Algorithms</a>
+<b> Previous:</b> <a name="tex2html4036" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM">Graph Algorithms</a>
+<br> <p>
+</p><h1><a name="SECTION02410000000000000000">The Friendship Graph</a></h1>
+<p>
+</p><p><a name="4004">&nbsp;</a> <img alt="figure3999" src="NODE60_files/IMG495.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK17/IMG495.GIF" align="bottom" height="79" width="180"> <br>
+<strong>Figure:</strong> A portion of the friendship graph <a name="friendship">&nbsp;</a><br>
+</p><p>
+</p><p>
+To demonstrate the importance of proper modeling,
+let us consider a graph where the vertices are people, and there is an edge
+between two people if and only if they are friends.
+This graph is well-defined on any set of people, be they the people in
+your neighborhood, at your school or place of business, or even the
+entire world.
+There are many interesting aspects of people
+that are best understood as properties of
+this friendship graph.
+<a name="3405">&nbsp;</a>
+</p><p>
+We use this opportunity to define important graph theory terminology.
+``Talking the talk'' proves to be an important part of ``walking the walk''.
+</p><p>
+</p><ul><li> <b>If I am your friend, does that mean you are my friend?</b>
+<p>
+A graph is <em>undirected</em> if edge (<i>x</i>,<i>y</i>) always implies (<i>y</i>,<i>x</i>).
+Otherwise, the graph is said to be <em>directed</em>.
+The ``heard-of'' graph is directed, since many famous people
+who I have heard of have never heard of me! 
+The ``had-sex-with'' graph is presumably undirected, since the critical
+operation always requires
+a partner.
+I'd like to think that the ``friendship'' graph is always an undirected graph.
+<a name="3410">&nbsp;</a><a name="3411">&nbsp;</a>
+<a name="3412">&nbsp;</a>
+<a name="3413">&nbsp;</a></p></li><li> <b>Am I my own friend?</b>
+<p>
+An edge of the form (<i>x</i>,<i>x</i>) is said to be a <em>loop</em>.
+If <em>x</em> was <em>y</em>'s friend several times over, we can model this relationship
+using
+<em>multiedges</em>, multiple edges between the same pair of vertices.
+A graph is said to be <em>simple</em> if it contains no loops and
+no multiple edges.
+Simple graphs really are often simpler to 
+work with in practice.
+Therefore, we might be better off if no one
+was their own friend.
+<a name="3420">&nbsp;</a><a name="3421">&nbsp;</a><a name="3422">&nbsp;</a></p></li><li> <b>How close a friend are you?</b>
+<p>
+A graph is said to be <em>weighted</em> if each edge has an associated
+numerical attribute.
+We could model the strength of a friendship by associating each
+edge with an appropriate number, say
+from 0 (enemies) to 10 (blood brothers).
+The edges of a road network graph might be weighted with 
+their length, drive-time, or speed limit, depending upon the application.
+A graph is said to be <em>unweighted</em> if all edges are assumed
+to be of equal weight.
+</p><p>
+</p><p><a name="4010">&nbsp;</a> <img alt="figure4005" src="NODE60_files/IMG496.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK7/IMG496.GIF" align="bottom" height="47" width="352"> <br>
+<strong>Figure:</strong> Mel Brooks is my father's sister's husband's cousin <a name="melbrooks">&nbsp;</a><br>
+</p><p></p></li><li> <b>Am I linked by some chain of friends to a star?</b>
+<p>
+A <em>path</em> is a sequence of edges connecting two vertices.
+Since Mel Brooks is my father's sister's husband's cousin,
+there is a path in the friendship graph between me and him,
+shown in Figure <a href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE60.HTM#melbrooks" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE60.HTM#melbrooks"><img alt="gif" src="NODE60_files/CROSOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/CROSOTIF.GIF" align="bottom"></a>.
+This is true even though the two of us have never met.
+<a name="3433">&nbsp;</a></p></li><li> <b>How close is my link to that star?</b>
+<p>
+If I were trying to impress you with how tight I am with Mel
+Brooks, I would be much better off saying that my Uncle Lenny grew up with him
+than to go into the details of how connected I am to Uncle Lenny.
+Through Uncle Lenny, I have a path of length 2 to
+Cousin Mel, while the path is of length 4 by blood and marriage.
+I could make the path even longer by linking in people who know both
+me and my father, or are friends of Aunt Eve and Uncle Lenny.
+This multiplicity of paths hints at why finding the <em>shortest path</em>
+between two nodes is important and instructive, even in
+non-transportation applications.
+<a name="3436">&nbsp;</a></p></li><li> <b>Is there a path of friends between every two people in the world?</b>
+<p>
+The ``six degrees of separation'' theory argues that there is always 
+a short path linking every two people in the world.
+We say that a graph is <em>connected</em> if there is a path between any
+two vertices.
+A directed graph is <em>strongly connected</em> if there is always a
+directed path between any two vertices.
+<a name="3440">&nbsp;</a><a name="3441">&nbsp;</a>
+</p><p>
+If a graph is not connected, we call each connected piece a <em>connected
+component</em>.
+If we envision tribes in remote parts of the world that have yet not been
+encountered, each such tribe would form a connected component in the
+friendship graph.
+A remote hermit, or extremely unpleasant fellow (see Figure <a href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE60.HTM#friendship" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE60.HTM#friendship"><img alt="gif" src="NODE60_files/CROSOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/CROSOTIF.GIF" align="bottom"></a>)
+would represent a connected component of one vertex,
+or an <em>isolated</em> vertex.
+<a name="3445">&nbsp;</a></p></li><li> <b>Who has the most friends?  The fewest friends?</b>
+<p>
+The <em>degree</em> of a vertex is the number of edges adjacent to it.
+The most popular person defines the vertex of highest degree in
+the friendship graph.
+Remote hermits will be associated with degree-zero vertices.
+In <em>dense</em> graphs, most vertices have high degree,
+as opposed to <em>sparse</em> graphs with relatively few edges.
+In <em>regular graphs</em>, each vertex has exactly the same degree.
+A regular friendship graph would truly be the ultimate in social-ism.
+<a name="3451">&nbsp;</a><a name="3452">&nbsp;</a><a name="3453">&nbsp;</a></p></li><li> <b>What is the largest clique?</b>
+<p>
+A social clique is a group of mutual friends who all hang around together.
+A graph-theoretic <em>clique</em> is a complete subgraph,
+where each vertex pair has an edge between them.
+Cliques are the densest possible subgraphs.
+Within the friendship graph, we would expect to see large cliques corresponding
+to workplaces, neighborhoods, religious organizations, and schools.
+<a name="3456">&nbsp;</a></p></li><li> <b>How long will it take for my gossip to get back to me?</b>
+<p>
+A <em>cycle</em> is a path where the last vertex is adjacent to the first.
+A cycle in which no vertex repeats (such as 1-2-3-1 verus 1-2-3-2-1)
+is said to be <em>simple</em>.
+The shortest cycle in the graph defines the graph's <em>girth</em>, while a simple
+cycle that passes through every vertex once is said to be a <em>Hamiltonian
+cycle</em>.
+An undirected graph with no cycles is said to be a <em>tree</em> if it
+is connected;
+otherwise it is a forest.
+A directed graph with no directed cycles is said to be a <em>DAG</em>,
+or <em>directed acyclic graph</em>.
+<a name="3465">&nbsp;</a><a name="3466">&nbsp;</a><a name="3467">&nbsp;</a>
+<a name="3468">&nbsp;</a>
+</p><p>
+</p></li></ul><hr><a name="tex2html4043" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE61.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE61.HTM"><img alt="next" src="NODE60_files/NEXT_TIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/NEXT_TIF.GIF" align="bottom" height="24" width="37"></a> <a name="tex2html4041" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM"><img alt="up" src="NODE60_files/00000016.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/00000016.GIF" align="bottom" height="24" width="26"></a> <a name="tex2html4035" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM"><img alt="previous" src="NODE60_files/PS_MOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/PS_MOTIF.GIF" align="bottom" height="24" width="63"></a> <a name="tex2html4045" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK/NODE4.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK/NODE4.HTM"><img alt="contents" src="NODE60_files/CONTOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/CONTOTIF.GIF" align="bottom" height="24" width="65"></a> <a name="tex2html4046" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK5/NODE233.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK5/NODE233.HTM"><img alt="index" src="NODE60_files/INDEOTIF.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/INDEOTIF.GIF" align="bottom" height="24" width="43"></a> <a href="http://www2.toki.or.id/book/AlgDesignManual/INDEX.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/INDEX.HTM"><img alt="CD" src="NODE60_files/CDHOME08.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/CDHOME08.GIF" align="bottom"></a> <a href="http://www2.toki.or.id/book/AlgDesignManual/LEC/LECTURES/ALL.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/LEC/LECTURES/ALL.HTM"><img alt="CD" src="NODE60_files/LECHOME5.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/LECHOME5.GIF" align="bottom"></a> <a href="http://www2.toki.or.id/book/AlgDesignManual/WEBSITE/INDEX.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/WEBSITE/INDEX.HTM"><img alt="Algorithms" src="NODE60_files/ALGO0006.GIF" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/ICONS/ALGO0006.GIF" align="bottom"></a> <br>
+<b> Next:</b> <a name="tex2html4044" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE61.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE61.HTM">Data Structures for Graphs</a>
+<b>Up:</b> <a name="tex2html4042" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM">Graph Algorithms</a>
+<b> Previous:</b> <a name="tex2html4036" href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK2/NODE59.HTM" tppabs="http://evo.apm.tuwien.ac.at/AlgDesignManual/BOOK/BOOK2/NODE59.HTM">Graph Algorithms</a>
+<p></p><address>
+<i>Algorithms <br>
+Mon Jun  2 23:33:50 EDT 1997</i>
+</address>
+</body></html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><title>The Huffman Coding Procedure</title>
+
+  
+    
+    <link rel="stylesheet" type="text/css" href="algorithm_files/style.css"></head><body>
+    <div class="pagetitle">
+      huffman<img alt="dot" src="algorithm_files/title-dot.jpg" height="22" width="22"><i>algorithm</i>
+    </div>
+    <div class="sectiontitle">
+      To avoid a college assignment
+    </div>
+    <div class="regular">
+      The domain name of this website (www.huffmancoding.com) is from my
+      uncle&#8217;s algorithm. In nerd circles, his algorithm is pretty well
+      known. Often college computer science textbooks will refer to the
+      algorithm as an example when teaching programming techniques. I wanted
+      to keep the domain name in the family so I had to pay some domain
+      squatter for the rights to it.
+    </div>
+    <div class="regular">
+      Back in the early 1950&#8217;s, one of my uncle&#8217;s professors
+      challenged him to come up with an algorithm that would calculate the
+      most efficient way to represent data, minimizing the amount of memory
+      required to store that information. It is a simple question, but one
+      without an obvious solution. In fact, my <a href="http://www.huffmancoding.com/david/bio.html">uncle</a>
+      took the challenge from his professor to get out of taking the final.
+      He wasn&#8217;t told that no one had solved the problem yet.
+    </div>
+    <div class="regular">
+      I&#8217;ve written a simple <a href="http://www.huffmancoding.com/code/hctutorial/index.html">program</a> to demonstrate Huffman
+      Coding in Java. Because I have this web site, several times a year I
+      receive a frantic e-mail from a college student stating, basically,
+      &#8220;I have a homework assignment to code the Huffman Algorithm and
+      it is due next week. I am too lazy or clueless to do the work myself,
+      so can you just send me the source code so I can pass it off as my
+      own.&#8221; I don&#8217;t normally accommodate them, but perhaps this
+      will help them do their own homework.
+    </div>
+    <div class="sectiontitle">
+      A little of bit of background
+    </div>
+    <div class="regular">
+      Computers store information in zeros and ones: binary
+      &#8220;off&#8221;s and &#8220;on&#8221;s. The standard way of storing
+      characters on a computer is to give each character a sequence of 8 bits
+      (or &#8220;<i>bi</i>nary digi<i>ts</i>&#8221;) which can be 0&#8217;s
+      or 1&#8217;s. This allows for 256 possible characters (because 2 to the
+      8<sup>th</sup> power is 256). For example, the letter &#8220;A&#8221;
+      is given the unique code of 01000001. Unicode allocates 16 bits per
+      character and it handles even non-Roman alphabets. It is simply easier
+      for computers to handle characters when they all are the same size. The
+      more bits you allow per character the more characters you can support
+      in your alphabet.
+    </div>
+    <div class="regular">
+      But when you make every character the same size, it can waste space. In
+      written text, all characters are not created equal. The letter
+      &#8220;e&#8221; is pretty common in English text, but rarely does one
+      see a &#8220;Z.&#8221; But since it is possible to encounter both in
+      text, each has to be assigned a unique sequence of bits. But if
+      &#8220;e&#8221; was a 7-bit sequence and &#8220;Z&#8221; was 9 bits
+      then, on average, a message would be slightly smaller than otherwise
+      because there would be more short sequences than long sequences. You
+      could compound the savings by adjusting the size of every character and
+      by more than 1 bit.
+    </div>
+    <div class="regular">
+      Even before computers, Samuel Morse took this into account when
+      assigning letters to his code. The very common letter &#8220;E&#8221;
+      is the short sequence of &#8220;·&#8221; and the uncommon letter
+      &#8220;Q&#8221; is the longer sequence of &#8220;&#8212; &#8212;
+      · &#8212;.&#8221; He came up with Morse code by looking at the
+      natural distribution of letters in the English alphabet and guessing
+      from there. Morse code isn&#8217;t perfect because some common letters
+      have longer codes than less common ones. For example the letter
+      &#8220;O,&#8221; which is a long &#8220;&#8212; &#8212; &#8212;,&#8221;
+      is more common than the letter &#8220;I,&#8221; which is the shorter
+      code &#8220;· ·.&#8221; If these two assignments where
+      swapped, then it would be slightly quicker, on average, to transmit
+      Morse code. Huffman Coding is a methodical way for determining how to
+      best assign zeros and ones. It was one of the first algorithms for the
+      computer age. By the way, Morse code is not really a binary code
+      because it puts pauses between letters and words. If we were to put
+      some bits between each letter to represent pauses, it wouldn&#8217;t
+      result in the shortest messages possible.
+    </div>
+    <div class="regular">
+      This adjusting of the codes is called compression and sometimes the
+      computational effort in compressing data (for storage) and later
+      uncompressing it (for use) is worth the trouble. The more space a text
+      file takes up makes it slower to transmit from one computer to another.
+      Other types of files, which have even more variability than the English
+      language, compress even better than text. Uncompressed sound (.WAV) and
+      image (.BMP) files are usually at least ten times as big as their
+      compressed equivalents (.MP3 and .JPG respectively). Web pages would
+      take ten times as long to download if we didn't take advantage of data
+      compression. Fax pages would take longer to transmit. You get the idea.
+      All of these compressed formats take advantage of Huffman Coding.
+    </div>
+    <div class="regular">
+      Again, the trick is to choose a short sequence of bits for representing
+      common items (letters, sounds, colors, whatever) and a longer sequence
+      for the items that are encountered less often. When you average
+      everything out, a message will require less space if you come up with
+      good encoding dictionary.
+    </div>
+    <div class="sectiontitle">
+      Mixing art and computer science
+    </div>
+    <div class="regular">
+      You cannot just start assigning letters to unique sequences of
+      0&#8217;s and 1&#8217;s because there is a possibility of ambiguity if
+      you do not do it right. For example, the four most common letters of
+      the English alphabet are &#8220;E,&#8221; &#8220;T,&#8221;
+      &#8220;O,&#8221; and &#8220;A.&#8221; You cannot just assign 0 to
+      &#8220;E,&#8221; 1 to &#8220;T,&#8221; 00 to &#8220;O,&#8221; 01 to
+      &#8220;A,&#8221; because if you encounter
+      &#8220;&#8230;01&#8230;&#8221; in a message, you could not tell if
+      the original message contained &#8220;A&#8221; or the sequence
+      &#8220;ET.&#8221; The code for a letter cannot be the same as the front
+      part of a different letter. To avoid this ambiguity, we need a way of
+      organizing the letters and their codes that prevents this. A good way
+      of representing this information is something computer programmers call
+      a binary tree.
+    </div>
+    <div class="regular">
+      Alexander Calder is an American artist who builds mobiles and really
+      likes the colors red and black. One of his larger works hangs from the
+      East building atrium at the National Gallery, but he had made several
+      similar to it. The mobile hangs from a single point in the middle of a
+      pole. It slowly sways as the air circulates in the room. On each end of
+      the pole you&#8217;ll see either a weighted paddle or a connection to
+      the middle of another pole. Similarly, those lower poles have things
+      hanging off of them too. At the lowest levels, all the poles have
+      weights on their ends.
+    </div>
+    <div class="diagram">
+      <img alt="Calder mobile" src="algorithm_files/s-gallery.jpg" height="262" width="400">
+    </div>
+    <div class="regular">
+      Programmers would look at this mobile and think of a binary tree, a
+      common structure for storing program data. This is because every mobile
+      pole has exactly two ends. For the sake of this algorithm, one end of
+      the pole is considered &#8220;0&#8221; while the end is
+      &#8220;1.&#8221; The weights at the ends of the poles will have letters
+      associated with them. If an inchworm were to travel from the top of the
+      mobile to a letter, it would walk down multiple poles, sometimes
+      encountering the &#8220;0&#8221; and sometimes the &#8220;1.&#8221; The
+      sequence of binary digits to the letter ends up corresponding to the
+      encoding of that letter.
+    </div>
+    <div class="sectiontitle">
+      Let us build a mobile
+    </div>
+    <div class="regular">
+      So how do we build that perfectly balanced mobile? The first step of
+      Huffman Coding is to count the frequency of all the letters in the
+      text. Sticking with mobile analogy, we need to create a bunch of loose
+      paddles, each one painted with a letter in the alphabet. The weight of
+      each paddle is proportional to the number of times that letter appears
+      in the text. For example, if the letter &#8220;q&#8221; appears twice,
+      then its paddle should weight two ounces and the &#8220;e&#8221; paddle
+      would weigh 10 ounces if that many &#8220;e&#8221;s were present. Every
+      paddle has a loop for hanging.
+    </div>
+    <div class="regular">
+      For our example, lets assume that in our tiny file there were two
+      &#8220;q&#8221;, three &#8220;w&#8221;s, six &#8220;s&#8221;s, and ten
+      &#8220;e&#8221;s.
+    </div>
+    <div class="regular">
+      Now lets prepare some poles. We&#8217;ll need one fewer poles than
+      unique characters. For example, with 4 unique characters we&#8217;ll
+      need 3 poles. One end of each pole is &#8220;0&#8221; and the other end
+      is &#8220;1.&#8221; Each pole will have a hook on both ends for holding
+      things and a loop in the middle for being hung itself. In my imaginary
+      world, poles weigh nothing.
+    </div>
+    <div class="regular">
+      Now let us line up all the paddles then find the two lightest of them
+      and connect them to opposite ends of a pole. In the example below,
+      &#8221;q&#8220; and &#8221;w&#8220; were the lightest (least frequent).
+      From now on, we&#8217;ll consider those two paddles and their pole as
+      one inseparable thing. The weight of the &#8220;q+w&#8221; object is
+      the sum of the two individual paddles. Remember the pole itself weighs
+      nothing. We&#8217;ll put down the object then we&#8217;ll repeat the
+      process. The two lightest things in the room now may be an individual
+      paddle or possibly a previously connected contraption. In the picture
+      below, &#8220;q+w&#8221; (with a weight of 5) and &#8220;s&#8221; (with
+      a weight of 6) were the next two lightest objects. Then we are left
+      with a &#8220;q+w+s&#8221; (with a weight of 11) and &#8220;e&#8221;
+      (with a weight of 10) as the last two groupings. We&#8217;ll attach
+      those two together. We are attaching the poles from the bottom up.
+      We&#8217;ve hooked up the two lightest things until we&#8217;ve got
+      exactly one contraption that contains the weight of the entire text.
+    </div>
+    <div class="diagram">
+      <img alt="Binary Tree" src="algorithm_files/letter-mobile.gif" height="158" width="359">
+    </div>
+    <div class="sectiontitle">
+      So what do we do with this tree?
+    </div>
+    <div class="regular">
+      Now let&#8217;s hang up the mobile and admire our handiwork. The
+      heaviest paddles (like the frequent &#8220;e&#8221;) will have a
+      tendency to be nearer to the top because they were added later while to
+      the lightest paddles (the infrequent &#8220;q&#8221;) will be at the
+      bottom because they were grabbed first and connect to pole after pole,
+      and so forth. In other words, the path from the top to the common
+      letters will be the shortest binary sequence. The path from the top to
+      the rare letters at the bottom will be much longer. The code for
+      &#8220;e&#8221; is &#8220;0&#8221;, &#8220;s&#8221; is
+      &#8220;10&#8221;, &#8220;w&#8221; is &#8220;111&#8221; and
+      &#8220;q&#8221; is &#8220;110.&#8221; We have built a Huffman Coding
+      tree.
+    </div>
+    <div class="regular">
+      To finish compressing the file, we need to go back and re-read the
+      file. This time, instead of just counting the characters, we&#8217;ll
+      lookup, in our tree, each character encountered in the file and write
+      its sequence of zeros and ones to a new file. Later, when we want to
+      restore the original file, we&#8217;ll read the zeros and ones and use
+      the tree to decode them back into characters. This implies that when we
+      must have the tree around at the time we decompressing it. Commonly
+      this is accomplished by writing the tree structure at the beginning of
+      the compressed file. This will make the compressed file a little
+      bigger, but it is a necessary evil. You have to have the secret decoder
+      ring before you can pass notes in class.
+    </div>
+    <div class="sectiontitle">
+      Other ways of squeezing data
+    </div>
+    <div class="regular">
+      Since my uncle devised his coding algorithm, other compression schemes
+      have come into being. Someone noticed that the distribution of
+      characters may vary at different spots in the source, for example a lot
+      of &#8220;a&#8221;s around the beginning of the file but later there
+      might be a disproportionate number of &#8220;e&#8221;s. When that is
+      the case, it is occasionally worth the effort to adjust how the Huffman
+      tree hangs while running through the file. One could slice the file
+      into smaller sections and have different trees for each section. This
+      is called <i>Adaptive</i> Huffman Coding.
+    </div>
+    <div class="regular">
+      Three other guys (Lempel, Ziv and Welch) realized that certain
+      sequences of characters can be common, for example the letter
+      &#8220;r&#8221; is often followed by the letter &#8220;e&#8221;, so we
+      could treat the sequence &#8220;re&#8221; as just another letter when
+      assigning codes.
+    </div>
+    <div class="regular">
+      Sometimes it is <i>not</i> necessary to re-create the original source
+      exactly. For example, with image files the human eye cannot detect
+      every subtle pixel color difference. The JPEG (&#8220;Joint Photography
+      Expert Group&#8221;) format &#8220;rounds&#8221; similar hues to the
+      same value then applies the Huffman algorithm to the simplified image.
+      The MP3 music format uses a similar technique for sound files.
+    </div>
+    <div class="regular">
+      My uncle&#8217;s algorithm makes the world a smaller place.
+    </div>
+    <div class="footer">
+      <a class="plainlink" href="http://www.huffmancoding.com/family/index.html">huffman<img alt="dot" src="algorithm_files/title-dot.jpg" height="22" width="22"><i>family</i></a>
+    </div>
+  </body></html>

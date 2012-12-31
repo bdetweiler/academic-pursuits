@@ -1,0 +1,623 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html><head><title>CompSci 100, Fall 2006, Huffman Coding</title>
+
+  
+    
+    <link rel="stylesheet" type="text/css" href="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/compsci.css"></head><body bgcolor="white">
+    <h1>CompSci 100, Fall 2006, Huffman Coding</h1>
+
+<hr>
+
+
+<p>
+See the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/faq.html">FAQ</a>
+</p><hr>
+You are urged to work in groups of two. Each group should
+submit ONE program per group. Be sure to include name and login id of
+each person in your group in the README file that belongs with the
+submission. <em>Do not wait until the last minute to start this
+assignment</em>. 
+<p>
+<b>Every group member must submit a README, only one group member
+submits the code</b>
+</p><p>
+
+Snarf the <em>huff</em> project via Eclipse, or browse
+the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code">code directory</a> you can see
+the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/doc">javadoc here</a>.
+
+</p><hr>
+<p>
+</p><h1>Overview</h1>
+<p>
+
+For this assignment you'll implement several clasess to build what are
+conceptually two programs: one to compress (huff) and the other to
+uncompress (unhuff) files that are compressed by the first
+program. However, there is really just a single program with the choice
+of reading a compressed file or a normal file specified by choosing a
+menu-option in the GUI-based program.
+
+</p><p>
+The 
+<a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/Huff.java"><code>Huff</code></a> 
+class is a simple main that launches a GUI with a
+      connected model that you'll write. This will eventually
+be the single application/GUI you use to compress/huff files or 
+decompress/unhuff files.
+</p><p>
+Most of the work will be in the classes you implement that correspond to
+interfaces you're given as part of this assignment. You're free to
+ignore the interfaces and implement only the model described below, but
+the interfaces have been designed to help identify and develop code in
+chunks so you don't do too much at once (this is a conceptually large
+program.)
+</p><p>
+You're writing code based on the greedy Huffman
+algorithm discussed in class and in this <a href="http://www.cs.duke.edu/csed/poop/huff/info/"> detailed online
+explanation of Huffman Coding</a> 
+
+</p><p>
+The resulting program will be a complete and useful compression program
+although not, perhaps, as powerful as standard programs like
+<em>compress</em> or <em>zip</em> which use slightly different algorithms
+permitting a higher degree of compression than Huffman coding.
+</p><p>
+
+</p><h3>Programming Advice</h3>
+
+Because the compression scheme involves reading and writing in a
+bits-at-a-time manner as opposed to a char-at-a-time manner, the program
+can be hard to debug. In order to facilitate the design/code/debug
+cycle, you should take care to develop the program in an incremental
+fashion. If you try to write the whole program at once, you probably
+will not get a completely working program! 
+<p>
+<b>Design, develop, and test so
+that you have a working program at each step.</b>
+</p><p>
+<b>Build a program by adding working and tested pieces</b>.
+</p><p>
+
+
+</p><hr>
+<p>
+</p><h1>The Huffman Compression Program</h1>
+
+You'll probably implement several classes
+to create the program. 
+The classes and methods you write are
+completely up to you, but a good design will receive maximal points.
+<p>
+You're given several interfaces as part of the code framework. The only
+interface you must use is <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffModel.java"><code>
+IHuffModel</code></a>. However, the other interfaces will help you
+achieve a good design.
+
+</p><p>
+To compress you should use the
+<a href="http://www.cs.duke.edu/csed/poop/huff/info/">
+Huffman coding algorithm</a>. The algorithm has four steps. You should
+understand each of these steps before starting to code. The first three
+steps are the basis for <a href="#part1">Part I</a> which you should
+design, implement, and test before proceeding to the next part and step
+four.
+
+
+</p><p>
+First, the process of Huffman compression is discussed, then some details
+about the program follow.
+</p><p>
+
+</p><ol>
+<li> To compress a file, count how many times every character occurs in
+a file. These counts are used to build weighted nodes that will be
+leaves in the Huffman tree.  The word <em>character</em> is used,
+but we mean <em>8-bit chunk</em> and this chunk-size could change.
+<b>Do not use any variables of type char in your program.</b> Use only
+ints. 
+<p>
+<em>You might want to use
+an <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/ICharCounter.java"><code>ICharCounter</code></a>
+class to do the counting</em>, but you don't have to.
+</p><p>
+</p></li><li>
+From these counts build the Huffman tree. First create one
+node per character, weighted with the number of times the character
+occurs, and insert each node into a priority queue. Then choose two minimal
+nodes, join these nodes together as children of a newly created node,
+and insert the newly created node into the priority queue. The new node
+is weighted with the sum of the two minimal nodes taken from the
+priority queue. Continue this process until only one node is left in the
+priority queue.  This is the root of the Huffman tree.
+<p>
+<em>You might want to use
+an <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/ITreeMaker.java"><code>ITreeMaker</code></a>
+class to create the tree</em>, but you don't have to --- however, the
+code to create the tree must live somewhere.
+</p><p>
+
+</p></li><li>
+Create a table or map of characters (8-bit chunks) to codings.  The
+table of encodings is formed by traversing the path from the root of the
+Huffman tree to each leaf, each root-to-leaf path creates an encoding
+for the value stored in the leaf.  When going left in the tree append a
+zero to the path; when going right append a one.  All
+characters/encoding bit pairs may be stored in some kind of table or map
+to facilitate easy retrieval later.
+<p>
+The table can be an array of the appropriate size (roughly 256, but be
+careful of PSEUDO_EOF) or you can use a <tt>Map</tt> subclass. An array
+is the simplest approach for this part of the huff/compress process,
+	  using a Map is not necessary.
+</p><p>
+<em>You might want to use
+an <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffEncoder.java"><code>IHuffEncoder</code></a>
+class to create the table from the tree</em>, 
+but you don't have to -- however, the
+code to create the table/map from the tree must live somewhere.
+
+</p><p>
+</p></li><li>
+Finally, read the input file a second time. For each character/8-bit
+chunk read, write the encoding of
+the character (obtained from the map of encodings) to the compressed
+file.
+<b>This part is NOT necessary</b> for <a href="#part1">Part I</a>
+  </li>
+</ol>
+<p>
+To uncompress the file later, you must recreate the same Huffman tree
+that was used to compress (so the codes you send will match). This tree
+might be stored directly in the compressed file
+(e.g., using a preorder traversal), or it might be created
+from character counts stored in the compressed file. In either case,
+this information must be coded and transmitted along with the compressed
+data (the tree/count data will be stored first in the compressed file,
+to be read by <tt>unhuff</tt>. There's more information below
+on storing/reading information to re-create the tree.
+</p><p>
+<a name="part1"><h1>Part I</h1></a>
+</p><p>
+For part one you should implement a class that implements the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffModel.java"><code>IHuffModel</code></a> interface so
+that all methods <em>except write</em> work. You don't actually turn in
+Part I separately, but it's a very good idea to make this part work
+before proceeding to Part II and completion of the entire program.
+</p><p>
+<a href="http://www.cs.duke.edu/csed/poop/huff/fall06/part1details.html">More Part I details are here</a>, but read
+the general description below first.
+</p><p>
+Specifically, for part one your <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffModel.java">
+<code>IHuffModel</code></a> implementation
+class must be connected to the GUI/Viewer and must
+implement three of the methods from the 
+<a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffModel.java"><code>IHuffModel</code></a>
+interface:
+
+</p><ul>
+<li> <b>Implement <code>initialize</code></b>.
+<p>
+This involves reading a stream and updating local state. You'll need to
+store counts of characters in some local state (you may want to
+investigate the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/ICharCounter.java">
+<code>ICharCounter</code></a> interface.
+</p><p>
+The GUI should display something
+similar to the screen shot below when the reading
+	starts and when it is nearly finished --- this will happen
+	  automatically if you read from the <code>InputStream</code>
+passed to <code>initialize</code>.
+
+</p><p>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/readshot.jpg">
+</p><p>
+</p></li><li> <b>Implement <code>showCounts</code></b>.
+<p>
+This should call the view's <code>update</code> method, displaying
+per-character counts via the view/display. The counts represent the data
+read during initialization. Here's a screen shot. Recall that you pass a
+<code>Collection</code>, e.g., an <code>ArrayList</code> to the
+<code>HuffViewer.update</code> method, where the list contains strings
+that will be displayed. The strings should contain all int values with
+associated counts for chars/ints in the alphabet (e.g., 0-255). The
+screen shot below on the left shows how
+to choose "show character counts" from the <em>Options</em>
+menu; the screen on the right shows character counts for the file
+<tt>kjv10.txt</tt>, note that there are 17,911 occurrences of an
+uppercase 'A' whose unicode/ASCII value is 65.
+
+</p><p>
+<table>
+<tbody><tr><td>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/charcountchoose.jpg">
+</td><td>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/charcountskjv10.jpg">
+</td></tr></tbody></table>
+</p><p>
+</p></li><li> <b>Implement <code>showCodings</code></b>.
+<p>
+Displaying per-character encodings via view/display. Each
+line shown gives a character/chunk number and the encoding for that
+value based on the huffman tree that comes from the counts. You'll need
+to make a tree and a map/table (see below) to get these encodings. In
+	  the screen shot you can see the encoding for 'A' is smaller in
+	  length then encoding for 'F' (ASCII/unicode 70) which makes
+	  sense given the number of occurrences shown above.
+</p><p>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/charcodingskjv10.jpg">
+</p><p>
+</p></li><li> <b>Implement <code>setViewer</code></b>. 
+<p>
+You must implement this method, or the viewer will fail to attach itself to
+the model. You'll need to store a viewer in the model's private state.
+</p></li></ul>
+<p>
+
+For more information about Part I code and design, 
+<a href="http://www.cs.duke.edu/csed/poop/huff/fall06/part1details.html">see the details here</a>.
+</p><p>
+</p><hr>
+
+<h1>Part II: Writing and Reading Compressed Files</h1>
+
+<p>
+To complete the program, you'll need to write a compressed file based on
+the encodings and you'll need to read a compressed file and uncompress
+it.
+</p><p>
+When you uncompress, the uncompression program/methods must be able to
+recreate the Huffman tree which was used to compress the file
+originally, then use this tree to recreate the original (uncompressed)
+file. Using the interfaces described in Part I, and here, will help
+ensure you don't duplicate too much code in writing the
+compress/uncompress classes and code.
+
+</p><p>
+Your compression and uncompression methods work together. A file
+compressed using someone else's compression code probably can't be
+uncompressed by your code unless you agree on several standards that
+aren't part of this assignment.
+</p><p>
+
+</p><h2>Writing a Compressed File</h2>
+
+There are three steps in writing a compressed file from the information
+your code stored/maintained in Part I (the counts and encodings).
+<p>
+</p><ol>
+<li> Write a <em>magic number</em> at the beginning of the compressed
+	file. This is explained more fully below, but your code uses the
+	magic number to determine if a compressed file was created by
+	your program when uncompressing.
+<p>
+</p></li><li> Write information after the magic number that allows the Huffman
+tree to be recreated. The simplest thing to do here is write
+<code>ALPH_SIZE</code> counts as <code>int</code> values, but you can
+also write the tree. This is described more fully below.
+<p>
+</p></li><li> Write the bits needed to encode each character of the input
+file. For example, if the coding for <tt>'a'</tt> is "01011" then your
+code will have to write 5 bits, in the order 0, 1, 0, 1, 1 every time
+the program is compressing/encoding the chunk 'a'.
+</li></ol>
+<p>
+
+</p><h3>Magic Numbers</h3>
+<p>
+One easy way to ensure that both programs work in tandem is to write a
+<em>magic number</em> at the beginning of a compressed file. This could
+be any number of bits that are specifically written as the first
+<em>N</em> bits of a huffman-compressed file (for some <em>N</em>). The
+corresponding decompression program first reads <em>N</em> bits, if the
+bits do not represent the "magic number" then the compressed file is not
+properly formed. You can read/write bits using the classes declared in
+the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/BitInputStream.java">BitInputStream</a> and <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/BitOutputStream.java">BitOutputStream</a> classes.
+</p><p>
+For example, in my working program I have the following lines in
+different parts of my class that implements
+the <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffHeader.java">IHuffHeader</a> interface.
+</p><p>
+<xmp class="code">
+     // write out the magic number
+     out.write(BITS_PER_INT, MAGIC_NUMBER);
+</xmp>
+then in another part of the class (in another method)
+<xmp class="code">
+     int magic = in.read(BITS_PER_INT);
+     if (magic != MAGIC_NUMBER){
+         throw new IOException("magic number not right");
+     }
+</xmp>
+</p><p>
+In general, a file with the wrong magic number should not generate an
+error, but should notify the user. For example, in my program the
+exception above ultimately causes the user to see what's shown
+below. This is because the exception is caught and the viewer's
+<code>showError</code> method called appropriately. Your code should
+at least print a message, and ideally generate an error dialog as shown.
+</p><p>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/magicnumberproblem.jpg">
+
+</p><p>
+</p><h2>Storing the Huffman Tree</h2>
+
+<p>For decompression to work with Huffman coding, information must be
+stored in the compressed file which allows the Huffman tree to be
+re-created so that decompression can take place. There are many options
+here. You can store all codes and lengths as normal (32 bit) int values
+or you can try to be inventive and save space. For example, it is possible
+to store just chunk/character counts and recreate the codes from the
+counts (i.e., store 256 counts, one for
+each 8-bit character). It's also possible to store code-lengths and codes using
+bit-at-a-time operations. Any solution to storing information in the
+compressed file is acceptable, but full credit requires some attempt to
+save space/storage.  Space-saving techniques are defined as those using
+less space than simply storing 256 counts as 32 bit ints. One useful
+technique is to write the tree to the file using a preorder traversal.
+You can use a 0 or 1 bit to differentiate between internal nodes and
+leaves, for example.  The leaves must store character values (in the
+general case using 9-bits because of the pseudo-eof character).
+</p><p>
+For example, the sequence of 0's and 1's below represents the tree on
+the right (if you write the 0's and 1's the spaces wouldn't appear, the
+spaces are only to make the bits more readable to humans.)
+<table>
+<tbody><tr><td>
+<pre>   0 0 1 001100001 1 000100000 1 001110100
+</pre>
+</td><td>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/smalltree.gif">
+</td></tr></tbody></table>
+</p><p>
+The first 0 indicates a non-leaf, the second 0 is the left child of the
+root, a non-leaf. The next 1 is a leaf, it is followed by 9 bits that
+represent 97 (001100001 is 97 in binary), the ASCII code for 'a'. Then
+there's a 1 for the right child of the left child of the root, it stores
+32 (000100000 is 32 in binary), the ASCII value of a space.  The next 1
+indicates the right child of the root is a leaf, it stores the ASCII
+value for a 't' which is 116 (001110100 is 116 in binary).
+</p><p>
+Your program can write these bits using a standard pre-order
+traversal. You can then read them by reading a bit, then recursively
+reading left/right subtrees if the bit is a zero (think about
+the 20-questions/animal program).
+</p><p>
+Even storing only non-zero counts qualifies as space-savings. To store
+non-zero counts, however, you'll need to store the character/chunk being
+counted and this might not save space. In my non-saving-space code, my
+header is written by the following code. Note that
+<code>BITS_PER_INT</code> is 32 in Java.
+<xmp class="code">
+      for(int k=0; k &lt; ALPH_SIZE; k++){
+          out.write(BITS_PER_INT, myCounter.getCount(k));
+      }
+</xmp>
+This header is then read as follows, this doesn't do much, but
+shows how reading/writing the header are related.
+<xmp class="code">
+      for(int k=0; k &lt; ALPH_SIZE; k++){
+          int bits = in.read(BITS_PER_INT);
+          charcounter.set(k,bits);
+      }
+</xmp>
+</p><p>
+In my code to read/write the header as a tree, the resulting header
+is much smaller. Both reading/writing are done in classes that
+implement 
+<a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffHeader.java"><code>IHuffHeader</code></a>,
+but that's a guide, not a requirement.
+</p><hr>
+
+<h3>Forcing Compression</h3>
+
+If compressing a file results in a file larger than the file being
+compressed (this is always possible) then no compressed file should be
+created and a message should be shown indicating that this is the
+case. Here's a screen shot from what happens in my program.
+<p>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/compressiontoobig.jpg">
+</p><p>
+
+If the user forces compression using the Options menu as shown
+below
+then compression occurs even if the compressed file is bigger.
+</p><p>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/compressionforced.jpg">
+
+
+</p><p>
+</p><h4>Determining If Compression Happens</h4>
+
+To determine if compression results in a smaller file, you'll need to
+calculate the number of characters/chunks in the original file (your
+program will compute this by determining character/chunk counts). The
+size of the compressed file can be calculated from the same 
+counts using the size of each character's encoded number of bits. You
+must also remember to calculate the file-header information stored in
+the compressed program. To be more precise, if there are 52 A's, and
+each A requires 4 bits to encode, then the A's contribute 52*4 = 108
+bits to the compressed file. You'll need to make calculations like this
+for all characters.
+<p>
+The 
+<a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffHeader.java"><code>IHuffHeader</code></a> interface
+specifies a method <code>headerSize</code> to help with keeping the code
+for headers in one place.
+
+</p><hr>
+
+<h2>Coding Details</h2>
+
+There are many details that you will need to think about as you code these
+programs.  Some of these are discussed here with some alternatives
+proposed.
+
+<h3>No <tt>char</tt> variables</h3>
+
+<p>Note, <b>do not use any variables of type char</b>! You should use int
+variables when you think you might need a char everywhere in your program.
+The only time you might want to use a char variable is to print for debugging
+purposes -- you can cast an int to a printable char as shown in the code
+fragment below.
+
+</p><pre>     int k = 'A';
+     System.out.println( (char) k);
+</pre>
+<p>
+
+
+</p><h3>Pseudo-EOF character</h3>
+<p>
+(for more details, see <a href="http://www.cs.duke.edu/csed/poop/huff/info/">
+the complete huffman coding discussion</a> and
+see <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/faq.html">the faq</a>.)
+</p><p>
+
+The operating system will buffer output, i.e., output to disk actually
+occurs when some internal buffer is full. In particular, it is not
+possible to write just one single bit to a file, all output is actually
+done in "chunks", e.g., it might be done in eight-bit chunks. In any
+case, when you write 3 bits, then 2 bits, then 10 bits, all the bits are
+eventually written, but you can not be sure precisely when they're
+written during the execution of your program. Also, because of
+buffering, if all output is done in eight-bit chunks and your program
+writes exactly 61 bits explicitly, then 3 extra bits will be written so
+that the number of bits written is a multiple of eight. Because of the
+potential for the existence of these "extra" bits when reading one bit
+at a time, you cannot simply read bits until there are no more left
+since your program might then read the extra bits written due to
+buffering. This means that when reading a compressed file, you CANNOT
+use code like this.
+<xmp>
+        int bits;
+        while ((bits = input.read(1) != -1)
+        {
+            // process bits
+        }
+</xmp>
+
+To avoid this problem, you can use a pseudo-EOF character and write a loop
+that stops when the pseudo-EOF character is read in (in compressed form). 
+The code below is pseudo-code for reading a compressed file using such
+a technique.
+<xmp>
+       int bits;
+       while (true)
+       {
+           bits = input.read(1);
+           if (bits == -1)
+           {
+               throw new IOException("unexpected end of input file");
+           }
+           else
+           { 
+               // use the zero/one value of the bit read
+               // to traverse Huffman coding tree
+               // if a leaf is reached, decode the character and print UNLESS
+               // the character is pseudo-EOF, then decompression done
+
+               if ( (bits &amp; 1) == 0) // read a 0, go left  in tree
+               else                  // read a 1, go right in tree
+
+               if (at leaf-node in tree)
+               {
+                   if (leaf-node stores pseudo-eof char) 
+                       break;   // out of loop
+                   else
+                       write character stored in leaf-node
+               }
+           }
+       }
+</xmp>
+
+When a compressed file is written the last bits written should be the
+bits that correspond to the pseudo-EOF char. You will have to write
+these bits explicitly. These bits will be recognized during the
+decompression process. This means that
+your decompression program will never actually run out of bits if it's
+processing a properly compressed file (you may need to think about this
+to really believe it).  In other words, when decompressing you will read
+bits, traverse a tree, and eventually find a leaf-node representing some
+character. When the pseudo-EOF leaf is found, the program can terminate
+because all decompression is done.  If reading a bit fails because there
+are no more bits (the bit-reading method returns -1) the compressed
+file is not well formed. <b>Your program should cope with
+files that are not well-formed, be sure to test for this</b>, i.e., test
+decompression with plain (uncompressed) files. My program generates this
+error when such a file is found.
+</p><p>
+<img src="CompSci%20100,%20Fall%202006,%20Huffman%20Coding_files/unexpectedeof.jpg">
+
+</p><p>
+In Huffman trees/tables you use in your programs, the pseudo-EOF
+character/chunk always has a count of one --- this should be done
+explicitly in the code that determines frequency counts. In other words,
+a pseudo-char EOF with number of occurrences (count) of 1 must be
+explicitly created.
+
+</p><p>In the file <a href="http://www.cs.duke.edu/csed/poop/huff/fall06/code/IHuffConstants.java">IHuffConstants</a><em> </em>the
+number of characters counted is specified by <code>ALPH_SIZE
+</code>which has value 256. Although only 256 values can be represented by
+8 bits, these values are between 0 and 255, inclusive.  One character is
+used as the pseudo-EOF character -- it must be a value not-representable
+with 8-bits, the smallest such value is 256 which requires 9 bits to
+represent.  However, ideally your program should be able to work with
+n-bit chunks, not just 8-bit chunks.
+
+</p><p>
+
+</p><hr>
+
+<h1>Grading</h1>
+
+
+The program is worth 55 points.
+
+<center>
+<table border="2">
+<caption><font size="+1"> <strong> Huffman Coding Grading Standards</strong>
+</font> </caption>
+<tbody><tr>
+   <th> description
+   </th><th> points
+</th></tr><tr>
+   <td> compression of any text file
+   </td><td> 10 points
+</td></tr><tr>
+   <td> compression of any file (including binary files)
+   </td><td> 5 points
+</td></tr><tr>
+   <td> decompression
+   </td><td> 10 points
+</td></tr><tr>
+   <td> robustness (does unhuff program crash on non-huffed files?)
+   </td><td> 5 points
+</td></tr><tr>
+   <td> program style (class design/implementation, program design)
+   </td><td> 10 points
+</td></tr><tr>
+   <td> char count/char codings (Part I)
+   </td><td> 10 points
+</td></tr><tr>
+   <td> README
+   </td><td> 5 points
+</td></tr></tbody></table>
+</center>
+<p>
+Your README file should include the names of all the people with
+whom you collaborated, and the TAs/UTAs you consulted with. You should
+include an estimate of how long you spent on the program and what your
+thoughts are about the assignment.
+</p><p>
+Submit your README and all of your source code using Eclipse with
+assignment name <em>huff</em>. Remember that each person in a group
+should submit a separate README, this must include the names of the
+people in the group. Only one group member submits code.
+
+</p><p>
+
+
+
+
+
+  </p></body></html>

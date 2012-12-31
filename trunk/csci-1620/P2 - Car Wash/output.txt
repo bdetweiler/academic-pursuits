@@ -1,0 +1,54 @@
+[jclark@arioch car_wash]$ ./wash 
+How many hours is the car wash open? 1
+How many minutes does it take to wash a car? 4
+What is the chance of a car each mintue ( percentage )? 30
+the car wash is OPEN 
+new car at time 8
+at time 8 started washing car that waited 0 mintues 
+new car at time 9
+new car at time 10
+new car at time 11
+new car at time 12
+at time 12 started washing car that waited 3 mintues 
+new car at time 13
+new car at time 16
+at time 16 started washing car that waited 6 mintues 
+new car at time 17
+at time 20 started washing car that waited 9 mintues 
+new car at time 21
+at time 24 started washing car that waited 12 mintues 
+at time 28 started washing car that waited 15 mintues 
+new car at time 31
+at time 32 started washing car that waited 16 mintues 
+new car at time 33
+new car at time 36
+at time 36 started washing car that waited 19 mintues 
+new car at time 38
+new car at time 39
+at time 40 started washing car that waited 19 mintues 
+at time 44 started washing car that waited 13 mintues 
+new car at time 46
+at time 48 started washing car that waited 15 mintues 
+new car at time 49
+new car at time 52
+at time 52 started washing car that waited 16 mintues 
+new car at time 53
+new car at time 55
+new car at time 56
+at time 56 started washing car that waited 18 mintues 
+new car at time 57
+ no longer taking new cars 
+  there are 8 cars left
+  at time 60 started washing car that waited 21 mintues 
+  at time 64 started washing car that waited 18 mintues 
+  at time 68 started washing car that waited 19 mintues 
+  at time 72 started washing car that waited 20 mintues 
+  at time 76 started washing car that waited 23 mintues 
+  at time 80 started washing car that waited 25 mintues 
+  at time 84 started washing car that waited 28 mintues 
+  at time 88 started washing car that waited 31 mintues 
+  the car wash is CLOSED 
+  cars washed = 21
+  average wait = 16.4762
+  [jclark@arioch car_wash]$ exit
+

@@ -1,0 +1,537 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><head><!--base target="_top" href="http://www.everything2.com/"--> 
+
+
+  
+  <link rel="icon" href="http://www.everything2.com/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="http://www.everything2.com/favicon.ico" type="image/x-icon">
+ <link rel="alternate" type="application/atom+xml" title="Everything2 New Writeups" href="http://www.everything2.com/?node=New%20Writeups%20Atom%20Feed&amp;type=ticker">
+<link rel="stylesheet" type="text/css" href="index.pl_files/styledef.css"> 
+<meta name="keywords" content="" lang="en-us"><title>Huffman coding@Everything2.com</title>
+
+
+<style type="text/css">
+<!--
+.oddrow  { background-color: #cccc99; }
+.evenrow { background-color: ; }
+-->
+</style>
+
+
+<script type="text/javascript" src="index.pl_files/index.htm"></script><script type="text/javascript" src="index.pl_files/prototype.js"></script><script type="text/javascript" src="index.pl_files/scriptaculous.js"></script><script type="text/javascript" src="index.pl_files/builder.js"></script><script type="text/javascript" src="index.pl_files/effects.js"></script><script type="text/javascript" src="index.pl_files/dragdrop.js"></script><script type="text/javascript" src="index.pl_files/controls.js"></script><script type="text/javascript" src="index.pl_files/slider.js"></script><script type="text/javascript" src="index.pl_files/tiny_mce.js"></script></head><body topmargin="0" marginleft="2" leftmargin="2" marginright="2" rightmargin="2" alink="#cccc99" bgcolor="#ffffff" link="#003366" marginheight="0" marginwidth="0" text="#000000" vlink="#7f7f66">
+
+<!-- hey kids!  Time to pay the bills -->
+<center>
+<script type="text/javascript"><!--
+google_ad_client = "pub-3290994517499171";
+google_ad_width = 728;
+google_ad_height = 90;
+google_ad_format = "728x90_as";
+google_ad_type = "text_image";
+google_ad_channel = "";
+google_page_url = "http://everything2.com/?node_id=144778";
+//--></script>
+<script type="text/javascript" src="index.pl_files/show_ads.js">
+</script><iframe name="google_ads_frame" src="index.pl_files/ads.htm" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="90" scrolling="no" width="728"></iframe>
+
+</center>
+<script src="index.pl_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-1314738-1";
+urchinTracker();
+</script>
+
+
+
+<!-- stats tracking -->
+<script src="index.pl_files/a" type="text/javascript"></script>
+
+
+<!-- TABLE #1 Creates the header -->
+
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody><tr>
+      <td colspan="2" bgcolor="#003366"><img src="index.pl_files/clear.gif" alt=" " border="0" height="5" width="1"></td>
+    </tr>
+    <tr bgcolor="#cccc99">
+      <td valign="bottom"><a href="http://www.everything2.com/index.pl?node_id=124"><img src="index.pl_files/e2_others_01.gif" alt="Everything2" border="0" height="42" width="350"></a></td>
+      <td valign="middle">
+        <!-- This font size will make the search box smaller on linux, does
+             not affect win/mac machines -->
+        <font size="2">
+    <table cellpadding="0" cellspacing="0"><tbody><tr valign="middle"><form method="post" action="/index.pl" enctype="multipart/form-data"></form>
+<td><input name="node" tabindex="1" size="28" maxlength="80" type="text"><input name="lastnode_id" value="144778" type="hidden"></td><td><input name="searchy" alt="search" src="index.pl_files/search_button.gif" align="middle" type="image"></td><td style="font-family: sans-serif;">
+<label><input name="soundex" value="1" tabindex="2" type="checkbox"></label><small><small>Near Matches</small></small><br>
+<label><input name="match_all" value="1" tabindex="3" default="0" type="checkbox"></label><small><small>Ignore Exact</small></small></td></tr></tbody></table>       
+        </font>
+      </td>
+    </tr>
+    <tr bgcolor="#ffffff">
+      <td colspan="2"><a href="http://www.everything2.com/index.pl?node_id=124"><img src="index.pl_files/e2_others_02.gif" alt="Everything2" border="0" height="8" width="350"></a></td>
+    </tr>
+  </tbody></table>
+  
+<!-- TABLE #1 Ends here -->
+<!-- TABLE #2 Creates the actual body of the page, and yes it is has few
+     nested tables... -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <tbody><tr>
+<!-- used to have {shownodelets} here -->
+    <td valign="top" width="99%">
+      <!-- Here's the current node and back to prev node -->
+      <h1 class="topic">Huffman coding</h1>
+
+
+<h2 class="topic" id="firmlink"></h2>
+	<h2 class="topic" id="isalso"></h2>
+
+	<form method="post" action="/index.pl" enctype="multipart/form-data">
+<input name="node_id" value="144778" type="hidden">
+
+<p style="padding: 0pt 10px;"> <a name="author_4743"></a><a name="node_id_144777"></a><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>(<a href="http://www.everything2.com/index.pl?node_id=144777">thing</a>) by <a name="Magenta"><strong></strong></a><strong><a href="http://www.everything2.com/index.pl?node_id=4743">Magenta</a></strong> <small>(6.3 y)</small> (<a href="http://www.everything2.com/index.pl?node_id=144777&amp;displaytype=printable">print</a>)</td><td align="center"></td><td align="center"><span style="white-space: nowrap;" nowrap="nowrap"><strong>&nbsp; <a title="E2 FAQ: Why Don't I Have Votes Today?" href="http://www.everything2.com/index.pl?node=E2%20FAQ%3A%20Why%20Don%27t%20I%20Have%20Votes%20Today%3F">?</a> &nbsp;</strong></span></td><td align="center"></td><td align="right"><small>Sat Nov 13 1999 at 14:43:07</small></td></tr></tbody></table>
+</p><table><tbody><tr><td class="writeup_text" style="padding: 10px;"><!-- google_ad_section_start --><!-- 144777{ --><a title="Huffman" href="http://www.everything2.com/index.pl?node=Huffman">Huffman</a> came up with this <a title="algorithm" href="http://www.everything2.com/index.pl?node=algorithm">algorithm</a>: you build a <a title="tree" href="http://www.everything2.com/index.pl?node=tree">tree</a> where each <a title="node" href="http://www.everything2.com/index.pl?node=node">node</a>'s value is the sum of all child nodes, and each <a title="leaf" href="http://www.everything2.com/index.pl?node=leaf">leaf</a> contains an <a title="element" href="http://www.everything2.com/index.pl?node=element">element</a> to be compressed and a relative <a title="frequency" href="http://www.everything2.com/index.pl?node=frequency">frequency</a>. The tree is built by making a new <a title="node" href="http://www.everything2.com/index.pl?node=node">node</a> which is the <a title="parent" href="http://www.everything2.com/index.pl?node=parent">parent</a> to the two lowest-valued nodes. By traversing the <a title="tree" href="http://www.everything2.com/index.pl?node=tree">tree</a>, 0 for <a title="left" href="http://www.everything2.com/index.pl?node=left">left</a> and 1 for <a title="right" href="http://www.everything2.com/index.pl?node=right">right</a>,
+you get unique, optimal binary codes for each compressed element (the
+lower the frequency, the longer the code). There exist many <a title="variations" href="http://www.everything2.com/index.pl?node=variations">variations</a> as well.<!-- }144777 --><!-- google_ad_section_end --><div id="belowwriteup__144777"></div>
+	</td></tr></tbody></table><hr style="border: 0pt none ; color: black; background-color: black; height: 1px;"><p style="padding: 0pt 10px;"> <a name="author_473380"></a><a name="node_id_932679"></a><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>(<a href="http://www.everything2.com/index.pl?node_id=932679">idea</a>) by <a name="bitter_engineer"><strong></strong></a><strong><a href="http://www.everything2.com/index.pl?node_id=473380">bitter_engineer</a></strong> <small>(5.4 y)</small> (<a href="http://www.everything2.com/index.pl?node_id=932679&amp;displaytype=printable">print</a>)</td><td align="center"></td><td align="center"><span style="white-space: nowrap;" nowrap="nowrap"><strong>&nbsp; <a title="E2 FAQ: Why Don't I Have Votes Today?" href="http://www.everything2.com/index.pl?node=E2%20FAQ%3A%20Why%20Don%27t%20I%20Have%20Votes%20Today%3F">?</a> &nbsp;</strong></span></td><td align="center">4 <strong>C!</strong>s</td><td align="right"><small>Wed Jan 31 2001 at 7:20:02</small></td></tr></tbody></table>
+</p><table><tbody><tr><td class="writeup_text" style="padding: 10px;"><!-- google_ad_section_start --><!-- 932679{ -->This is how <a title="pkzip" href="http://www.everything2.com/index.pl?node=pkzip">pkzip</a> and many other popular <a title="compression" href="http://www.everything2.com/index.pl?node=compression">compression</a> programs work.  I shall give an <a title="example" href="http://www.everything2.com/index.pl?node=example">example</a>, for those like me who have a hard time just <a title="visualizing" href="http://www.everything2.com/index.pl?node=visualizing">visualizing</a> the process:
+<p>I wish to encode my <a title="alias" href="http://www.everything2.com/index.pl?node=alias">alias</a>, bitter_engineer.
+</p><ol>
+<li>I look at the <a title="frequency" href="http://www.everything2.com/index.pl?node=frequency">frequency</a> of the letters, and create a table:
+<pre>e - 4
+i - 2
+n - 2
+r - 2
+t - 2
+b - 1
+g - 1
+_ - 1
+</pre>
+</li><li>I start building a table, from the ground-up.  I can do this <a title="recursive" href="http://www.everything2.com/index.pl?node=recursive">recursive</a>ly, by combining the two lowest nodes, then listing the new symbol in the new table:
+
+<pre>                e - 4
+  g_            i - 2
+ /  \           n - 2
+g    _          r - 2
+                t - 2
+               g_ - 2
+                b - 1
+</pre>
+</li><li>So now I can create a new symbol, which is bg_.  The next one would be rt, then ni, then rtgb_, then nie, then finally rtgb_nie:
+<pre>                      15
+                     /  \
+                    /    \
+                   /      \
+                  /        \
+                 7          8
+                / \        / \
+               /   \      /   \
+              3     4    4     4
+             / \   / \   |\     e
+             2 1   2  2  2 2
+            /| b   r  t  n  i
+           1 1
+           g _  
+</pre>
+Numbers at the junctions are sums of all appearances of symbols below
+in the string. It turns out that it makes no difference in the final
+compressoin if the tree looks any different, as long as it follows the
+rule of combining the least-used nodes.
+</li><li>Now I create a table of letters, giving the path from the top of the <a title="tree" href="http://www.everything2.com/index.pl?node=tree">tree</a> down to each letter.  Left hand turns are zeros, right hand turns are ones:
+<pre>e - 11
+i - 101
+n - 100
+r - 010
+t - 011
+b - 001
+g - 0000
+_ - 0001
+</pre>Note that even though the codes are of different lengths, they
+all lead to a dead end if followed from the top. As long as you don't
+lose your place in the <a title="bitstream" href="http://www.everything2.com/index.pl?node=bitstream">bitstream</a>, you will always get a unique answer.
+</li><li>Finally, I encode my name into a <a title="bitstream" href="http://www.everything2.com/index.pl?node=bitstream">bitstream</a>, ignoring <a title="byte" href="http://www.everything2.com/index.pl?node=byte">byte</a> width.  Spaces are byte separators.  different encodings are separated by <b>bold</b> and normal fonts.
+<pre> b  i  t   t e  r   _  e  n   g   i   n e e  r
+<b>001</b>101<b>01 1</b>011<b>11</b>01 0<b>0001</b>11<b>1 00</b>0000<b>10 1</b>100<b>11</b>11 <b>010</b><i>00000</i></pre>
+<p>The last five 0s are just padding to an even byte width.
+</p></li></ol>
+The resulting string is 6 bytes long (if you exclude the table). In
+ASCII, it would be 15 bytes long. Even if I used an even 3 bit encoding
+for each of the 8 symbols that appear in the string, the encoded string
+would be 15*3 = 45 bits, 2 bits longer than Huffman.
+<p>Huffman encoding works best on inputs that have a heavy statistical distribution of certain symbols over others (such as <a title="text" href="http://www.everything2.com/index.pl?node=text">text</a> or <a title="bitmap" href="http://www.everything2.com/index.pl?node=bitmap">bitmap</a>s),
+so that advantage can be taken of giving shorter strings to more common
+symbols. In fact, Huffman encoding will not work at all unless the most
+frequent symbol is greater than the frequency of the two least frequent
+symbols. Like most compression algorithms, Huffman encoding fails
+miserably on <a title="pseudorandom" href="http://www.everything2.com/index.pl?node=pseudorandom">pseudorandom</a> input data in which all symbol frequencies are similar.  Since <a title="jpeg" href="http://www.everything2.com/index.pl?node=jpeg">jpeg</a> images already use Huffman encoding, they usually encode very poorly using this method.<!-- }932679 --><!-- google_ad_section_end --></p><div id="belowwriteup__932679"></div>
+	</td></tr></tbody></table><hr style="border: 0pt none ; color: black; background-color: black; height: 1px;"><p style="padding: 0pt 10px;"> <a name="author_1546022"></a><a name="node_id_1164351"></a><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>(<a href="http://www.everything2.com/index.pl?node_id=1164351">idea</a>) by <a name="18thCandidate"><strong></strong></a><strong><a href="http://www.everything2.com/index.pl?node_id=1546022">18thCandidate</a></strong> <small>(4.3 wk)</small> (<a href="http://www.everything2.com/index.pl?node_id=1164351&amp;displaytype=printable">print</a>)</td><td align="center"></td><td align="center"><span style="white-space: nowrap;" nowrap="nowrap"><strong>&nbsp; <a title="E2 FAQ: Why Don't I Have Votes Today?" href="http://www.everything2.com/index.pl?node=E2%20FAQ%3A%20Why%20Don%27t%20I%20Have%20Votes%20Today%3F">?</a> &nbsp;</strong></span></td><td align="center">2 <strong>C!</strong>s</td><td align="right"><small>Mon Sep 24 2001 at 0:47:31</small></td></tr></tbody></table>
+</p><table><tbody><tr><td class="writeup_text" style="padding: 10px;"><!-- google_ad_section_start --><!-- 1164351{ --><p>Huffman codes are a widely used and very effective technique for the <a title="compression" href="http://www.everything2.com/index.pl?node=compression">compression</a> of <a title="electronic" href="http://www.everything2.com/index.pl?node=electronic">electronic</a> <a title="data" href="http://www.everything2.com/index.pl?node=data">data</a>.  Using the Huffman codes <a title="technique" href="http://www.everything2.com/index.pl?node=technique">technique</a>, savings of 20% to 90% are the norm depending on the <a title="characteristic" href="http://www.everything2.com/index.pl?node=characteristic">characteristic</a>s of the file being compressed.</p>
+
+<p>In order to understand what Huffman codes are and how exactly they can <a title="compress" href="http://www.everything2.com/index.pl?node=compress">compress</a> data so well, we need to consider the underlying problem of designing a <a title="binary" href="http://www.everything2.com/index.pl?node=binary">binary</a> character code.  A binary character code is a type of <a title="code" href="http://www.everything2.com/index.pl?node=code">code</a> in which each character in the alphabet is represented by a unique binary <a title="string" href="http://www.everything2.com/index.pl?node=string">string</a>
+(i.e., a unique sequence of 0's and 1's). Huffman codes are a
+particular type of binary code that are especially useful in some
+situations.</p>
+
+<p>For a simple example of a binary character code, let's assume we
+have a text file 100,000 characters in length. The entire file consists
+of just the letters a, b, c, d, e, and f, so the alphabet size of the
+file is 6.</p>
+
+<p>Since our alphabet is of size 6, it makes sense that we would only
+need six different binary strings (repeated over and over again in a
+particular order) to represent this text file on an electronic system.
+Let's assume that for simplicity's sake the binary strings should all
+be the same length, for ease of processing.</p>
+
+<p>If that is the case, each character must be represented with a
+binary string of length 3; length 2 doesn't provide enough unique
+strings to represent each letter, and length 4 wastes space with extra
+unused strings. Let's take a look at the following table, summarizing
+the contents of this file:</p>
+
+<pre>                             |  a  |  b  |  c  |  d  |  e  |  f  |
+-----------------------------|-----|-----|-----|-----|-----|-----|
+Frequency (in thousands)     | 53  | 11  | 10  | 14  |  7  |  5  |
+Fixed-length codeword        | 000 | 001 | 010 | 011 | 100 | 101 |
+</pre>
+
+<p>Using this scheme, it would take 300,000 (i.e., 3 bits/character x 100,000 characters) <a title="bit" href="http://www.everything2.com/index.pl?node=bit">bit</a>s to store the entire file.  This is pretty good, but this can easily be topped by using a <a title="variable" href="http://www.everything2.com/index.pl?node=variable">variable</a> length code.  Let's use the following variable length strings to represent the data file:</p>
+
+<pre>                             |   a   |   b   |   c   |   d   |   e   |   f   |
+-----------------------------|-------|-------|-------|-------|-------|-------|
+Frequency (in thousands)     |  53   |  11   |  10   |  14   |   7   |   5   |
+Fixed-length codeword        |  000  |  001  |  010  |  011  |  100  |  101  |
+variable-length codeword     |  0    |  101  |  100  |  111  |  1101 |  1100 |
+</pre>
+
+<p>With this variable length codeword, it would take 53,000 x 1 +
+(11,000 + 10,000 + 14,000) x 3 + (7,000 + 5,000) x 4 = 206,000 bytes to
+store the file, a savings of over 31% in storage space.</p>
+
+<p>This seems impressive, but there is a problem: how can we make sure
+that we can tell that each of the variable-length codewords can easily
+be told apart? With a fixed length codeword, it's easy to make sure
+which is which, as they can be <a title="delimited" href="http://www.everything2.com/index.pl?node=delimited">delimited</a> by their specific length.  With a variable-length codeword, length doesn't matter.</p>
+
+<p>In order to do this, we have to make sure that the variable-length code we use is a <a title="prefix" href="http://www.everything2.com/index.pl?node=prefix">prefix</a>
+code. In other words, we have to make sure that each codeword in the
+code is not a prefix of another codeword in that code. For example,
+since in the code above, 0 is used to represent a, no other code can
+begin with 0. Since 101, 100, and 111 are used to represent b, c, and
+d, no other codes can start with 101, 100, or 111, meaning the other
+codes must all start with 110, which the other two do (1101 and 1100
+for e and f, respectively).</p>
+
+<p><b>A Huffman code is, then, an optimal variable length code</b>,
+meaning that the most common member of the code has the shortest
+length, and the lengths of the codewords increase as the frequency of
+the codewords in the file decrease. A Huffman code is usually generated
+by constructing a <a title="binary tree" href="http://www.everything2.com/index.pl?node=binary%20tree">binary tree</a> using a simple <a title="greedy algorithm" href="http://www.everything2.com/index.pl?node=greedy%20algorithm">greedy algorithm</a>, which can be simply demonstrated as follows.</p>
+
+<p>Let's say we need to construct a binary tree using the characters from the file shown above:</p>
+
+<pre>(a: 53)  (b: 11)  (c: 10)  (d: 14)  (e: 7)  (f: 5)
+</pre>
+
+<p>Using a greedy algorithm to build a tree out of these means at each
+step, we choose the root that has the lowest value and merge it with
+the tree with the second lowest root value, creating a new root. We
+don't re-balance the tree; instead, we leave it as is. Let's get going;
+first, we merge e and f:</p>
+
+<pre>(a: 53)  (b: 11)  (c: 10)  (d: 14)       (12)
+                                         /  \
+                                        /    \
+                                    (e: 7)  (f: 5)
+</pre>
+
+<p>Next, we choose the two roots with the lowest value and merge again.  This time, c and b are the two lowest:</p>
+
+<pre>(a: 53)        (21)        (d: 14)       (12)
+               /  \                      /  \
+              /    \                    /    \
+         (b: 11)  (c: 10)           (e: 7)  (f: 5)
+</pre>
+
+<p>Now, d and the tree made up of e and f have the two lowest values, so we merge them as follows (note that switching <a title="left" href="http://www.everything2.com/index.pl?node=left">left</a> and <a title="right" href="http://www.everything2.com/index.pl?node=right">right</a> on each individual subtree does not matter while merely constructing the tree as long as proper parent-child relations remain):</p>
+
+<pre>(a: 53)        (21)                      (26)
+               /  \                      /  \
+              /    \                    /    \
+         (b: 11)  (c: 10)         (d: 14)    (12)
+                                             /  \
+                                            /    \
+                                        (e: 7)  (f: 5)
+</pre>
+
+<p>Merging 21 and 26, then merging this tree with a gives our final tree:</p>
+
+<pre>                    (100)
+                    /   \
+                   /     \
+              (a: 53)    (47)
+                         /  \
+                        /    \
+                       /      \
+                      /        \
+                   (21)        (26)
+                   /  \        /  \
+                  /    \      /    \
+             (b:11) (c:10) (12)  (d:14)
+                           /  \
+                          /    \
+                      (e: 7)  (f: 5)
+</pre>
+
+<p>Once you have assembled this tree, assigning a 1 to each right
+branch and a 0 to each left branch builds your Huffman codes for you,
+and builds them optimally, for the least frequent characters are the
+furthest from the root and thus have the longest strings. Also, given
+the nature of the binary tree assembled, each bitstring is unique and
+is not the prefix of another.</p>
+
+<p>Huffman codes, usually assembled by a binary tree as above, are used extremely regularly in <a title="modern" href="http://www.everything2.com/index.pl?node=modern">modern</a> <a title="computing" href="http://www.everything2.com/index.pl?node=computing">computing</a> for compression of data.  Whenever you listen to an <a title="mp3" href="http://www.everything2.com/index.pl?node=mp3">mp3</a> or use a <a title="zip" href="http://www.everything2.com/index.pl?node=zip">zip</a> file, you are utilizing Huffman codes.</p>
+                           
+                <!-- }1164351 --><!-- google_ad_section_end --><div id="belowwriteup__1164351"></div>
+	</td></tr></tbody></table><hr style="border: 0pt none ; color: black; background-color: black; height: 1px;"><p style="padding: 0pt 10px;"> <a name="author_1378125"></a><a name="node_id_1443625"></a><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>(<a href="http://www.everything2.com/index.pl?node_id=1443625">idea</a>) by <a name="telbij"><strong></strong></a><strong><a href="http://www.everything2.com/index.pl?node_id=1378125">telbij</a></strong> <small>(5.6 d)</small> (<a href="http://www.everything2.com/index.pl?node_id=1443625&amp;displaytype=printable">print</a>)</td><td align="center"></td><td align="center"><span style="white-space: nowrap;" nowrap="nowrap"><strong>&nbsp; <a title="E2 FAQ: Why Don't I Have Votes Today?" href="http://www.everything2.com/index.pl?node=E2%20FAQ%3A%20Why%20Don%27t%20I%20Have%20Votes%20Today%3F">?</a> &nbsp;</strong></span></td><td align="center"></td><td align="right"><small>Wed Mar 19 2003 at 2:03:52</small></td></tr></tbody></table>
+</p><table><tbody><tr><td class="writeup_text" style="padding: 10px;"><!-- google_ad_section_start --><!-- 1443625{ --><h3>Representing a Huffman Encoding</h3>
+
+<p>
+Since Huffman codes are built <a title="dynamic" href="http://www.everything2.com/index.pl?node=dynamic">dynamically</a> by considering the actual <a title="data" href="http://www.everything2.com/index.pl?node=data">data</a> to be compressed, an analysis of <a title="space complexity" href="http://www.everything2.com/index.pl?node=space%20complexity">memory savings</a> must also include the space required to represent the <a title="code" href="http://www.everything2.com/index.pl?node=code">encoding</a> itself.  In a <a title="Information Theory" href="http://www.everything2.com/index.pl?node=Information%20Theory">sufficiently random file</a>
+a Huffman encoding would not generate any savings (all the leaves could
+be at the same height resulting in a fixed-length code), and storing
+the encoding would actually cause the resulting '<a title="compression" href="http://www.everything2.com/index.pl?node=compression">compressed</a>' file to be larger.  Fortunately real-world files rarely have such an even distribution of symbols.
+</p>
+
+<p>
+As it turns out, a Huffman encoding requires (at least) <b>2n - 1 + n ceiling(lg n)</b> bits to represent it where n = the number of symbols.  Basically we are trying to store the <a title="data structures" href="http://www.everything2.com/index.pl?node=data%20structures">structure</a> of a Huffman <a title="tree" href="http://www.everything2.com/index.pl?node=tree">tree</a>
+as efficiently as possible. The critical thing to note about this tree
+is that any given node either has 2 children or no children. Since each
+node has only 2 possible configurations, we can represent each node
+with <a title="binary" href="http://www.everything2.com/index.pl?node=binary">one bit</a>.  The structure of the tree will then be <a title="imply" href="http://www.everything2.com/index.pl?node=imply">implied</a> by the order of the bits.  For example, take the following tree:
+</p>
+
+<pre>    ( )
+    / \
+   /   \
+ ( )   ( )
+       / \
+      /   \
+    ( )   ( )      
+</pre>
+
+<p>
+Say we assign a 1 for <a title="leaf" href="http://www.everything2.com/index.pl?node=leaf">leaves</a>
+(ie. nodes with no children) and 0 for non-leaves. If we define a
+method of traversing the tree, we can infer its structure. For example,
+say we start at the top and go left to right until we reach the
+bottom-rightmost node. Such an <a title="encoding" href="http://www.everything2.com/index.pl?node=encoding">encoding</a>
+would be 01011 for the example given. Now if you read the string left
+to right, you can reconstruct the tree starting with the <a title="rooted tree" href="http://www.everything2.com/index.pl?node=rooted%20tree">root</a> node, and adding <a title="child" href="http://www.everything2.com/index.pl?node=child">children</a> every time you come to a 0.  
+</p>
+
+<p>
+You can see this takes <b>2n-1</b> bits because there are <b>2n-1</b> nodes in any tree that is built this way.  <a title="disjoint set" href="http://www.everything2.com/index.pl?node=disjoint%20set">Another way to think of it is that you have n objects that need to be connected together</a>.  Each connection requires exactly one new node and merges exactly two previously seperated groups.  Therefore to connect <b>n</b> objects, you need <b>n-1</b> parent nodes, hence we have <b>2n-1</b>.
+</p>
+
+<p>
+The remaining <b>n ceiling(lg n)</b> bits required to complete the encoding constitute a <a title="mapping" href="http://www.everything2.com/index.pl?node=mapping">mapping</a> from your Huffman codes to fixed-length encodings that are globally recognized (eg. <a title="ASCII" href="http://www.everything2.com/index.pl?node=ASCII">ASCII</a>).  <b>ceiling(lg n)</b> is the number of bits it takes to provide a unique encoding for n different symbols and we have <b>n</b> of them.  Again, these can be mapped to the leaves in any clearly defined order to restore full meaning to the tree.
+</p>
+
+<p>
+This is a straightforward matter when you use a set of symbols with
+fixed-length encodings, but for more complex compression, the symbols
+may need to be defined in a longer format for efficiency. For example,
+if you were building a compressor for <a title="English" href="http://www.everything2.com/index.pl?node=English">English</a>
+text, you might want to define symbols for common words such as 'the'
+and 'of' in addition to single letters. You wouldn't want to use this
+simple representation, because it would require you to use enough bits
+to represent the largest element for all the elements. In this case you
+could add one more layer of <a title="abstraction" href="http://www.everything2.com/index.pl?node=abstraction">abstraction</a> connecting your <b>ceiling(lg n)</b> length codes to the actual symbols.
+</p><!-- }1443625 --><!-- google_ad_section_end --><div id="belowwriteup__1443625"></div>
+	</td></tr></tbody></table><hr style="border: 0pt none ; color: black; background-color: black; height: 1px;">
+<p style="padding: 10px; text-align: right;">
+<a href="http://www.everything2.com/index.pl?node_id=144778&amp;displaytype=printable&amp;lastnode_id=144778">printable version</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=144778&amp;displaytype=chaos&amp;lastnode_id=144778">chaos</a> 
+</p>
+
+
+<table border="0" cellpadding="0" cellspacing="10" width="100%"><tbody><tr><td valign="top"><table border="0" cellpadding="10" cellspacing="0" width="100%"><tbody><tr><td bgcolor="#ffffff">
+<a href="http://www.everything2.com/index.pl?node_id=1164350">Huffman code</a></td>
+<td bgcolor="#fbfbfb">
+<a href="http://www.everything2.com/index.pl?node_id=479513">run-length encoding</a></td>
+<td bgcolor="#f7f7f7">
+<a href="http://www.everything2.com/index.pl?node_id=83788">Catholic girl theory</a></td>
+<td bgcolor="#f4f4f4">
+<a href="http://www.everything2.com/index.pl?node_id=805763">English language letter frequencies</a></td>
+</tr>
+<tr><td bgcolor="#f0f0f0">
+<a href="http://www.everything2.com/index.pl?node_id=144879">Huffman</a></td>
+<td bgcolor="#ededed">
+<a href="http://www.everything2.com/index.pl?node_id=144771">David Huffman</a></td>
+<td bgcolor="#e9e9e9">
+<a href="http://www.everything2.com/index.pl?node_id=674133">/usr/dict/words</a></td>
+<td bgcolor="#e6e6e6">
+<a href="http://www.everything2.com/index.pl?node_id=501182">Vector Quantization</a></td>
+</tr>
+<tr><td bgcolor="#e2e2e2">
+<a href="http://www.everything2.com/index.pl?node_id=766540">How to choose the appropriate graphics format</a></td>
+<td bgcolor="#dfdfdf">
+<a href="http://www.everything2.com/index.pl?node_id=551463">Dijkstra's algorithm</a></td>
+<td bgcolor="#dbdbdb">
+<a href="http://www.everything2.com/index.pl?node_id=1452751">Lempel Ziv compression</a></td>
+<td bgcolor="#d8d8d8">
+<a href="http://www.everything2.com/index.pl?node_id=488321">MPEG1</a></td>
+</tr>
+<tr><td bgcolor="#d4d4d4">
+<a href="http://www.everything2.com/index.pl?node_id=1438689">A student, in hopes of understanding the Lambda-nature, came to Greenblatt</a></td>
+<td bgcolor="#d0d0d0">
+<a href="http://www.everything2.com/index.pl?node_id=1441205">Shannon-Fano coding</a></td>
+<td bgcolor="#cdcdcd">
+<a href="http://www.everything2.com/index.pl?node_id=506656">RFC 1217</a></td>
+<td bgcolor="#c9c9c9">
+<a href="http://www.everything2.com/index.pl?node_id=885944">non-compressibility of random data</a></td>
+</tr>
+<tr><td bgcolor="#c6c6c6">
+<a href="http://www.everything2.com/index.pl?node_id=254417">Homomorphic</a></td>
+<td bgcolor="#c2c2c2">
+<a href="http://www.everything2.com/index.pl?node_id=91326">JPEG</a></td>
+<td bgcolor="#bfbfbf">
+<a href="http://www.everything2.com/index.pl?node_id=633532">Lempel-Ziv algorithm</a></td>
+<td bgcolor="#bbbbbb">
+<a href="http://www.everything2.com/index.pl?node_id=41256">bzip</a></td>
+</tr>
+<tr><td bgcolor="#b8b8b8">
+<a href="http://www.everything2.com/index.pl?node_id=28776">element</a></td>
+<td bgcolor="#b4b4b4">
+<a href="http://www.everything2.com/index.pl?node_id=466938">PkZip</a></td>
+<td bgcolor="#b1b1b1">
+<a href="http://www.everything2.com/index.pl?node_id=309088">Pseudo-</a></td>
+<td bgcolor="#adadad">
+<a href="http://www.everything2.com/index.pl?node_id=502812">FTP from my dreams</a></td>
+</tr></tbody></table>
+</td></tr></tbody></table>
+
+
+
+<div style="padding: 10px;">
+	<table border="0" cellpadding="0" cellspacing="10" width="100%"><tbody><tr><td valign="top">Y'know, if you <a href="http://www.everything2.com/index.pl?node_id=109&amp;lastnode_id=144778">login</a>, you can write something here. You can also <a href="http://www.everything2.com/index.pl?node_id=101&amp;lastnode_id=144778">Create a New User</a> if you don't already have an account.</td></tr></tbody></table>
+</div>
+    </form></td>
+    <td bgcolor="#000000" width="2"><img src="index.pl_files/clear.gif" alt="" height="1" width="2"></td>
+<!-- google_ad_section_start(weight=ignore) -->
+<td width="2">&nbsp;</td><td valign="top" width="170">
+<img src="index.pl_files/epicenter.gif" alt="Epicenter" border="0" height="26" width="170"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td><span>
+
+
+<input name="node_id" value="144778" type="hidden">
+
+<input name="op" value="login" type="hidden">
+<table border="0">
+<tbody><tr>
+ <td><font size="2">Login:</font></td>
+ <td>
+<input name="user" tabindex="4" size="10" maxlength="20" type="text"> </td>
+</tr>
+<tr>
+ <td><font size="2">Password</font></td>
+ <td>
+<input name="passwd" tabindex="5" size="10" maxlength="10" type="password"> </td>
+</tr>
+</tbody></table>
+<font size="2"><label><input name="expires" value="+10y" tabindex="6" type="checkbox">remember me</label><input tabindex="7" name="login" value="Login" type="submit"><br><a title="What's my password?" href="http://www.everything2.com/index.pl?node=What%27s%20my%20password%3F">password reminder</a>
+<br><a href="http://www.everything2.com/index.pl?node_id=101&amp;lastnode_id=144778">Create a New User</a>
+</font><div><font size="2"><input name=".cgifields" value="expires" type="hidden"></font></div>
+<font size="2"><li><a href="http://www.everything2.com/index.pl?garbage=25631&amp;op=randomnode">Random Node</a></li><li><a href="http://www.everything2.com/index.pl?node_id=1065273&amp;lastnode_id=144778">E2 Scratch Pad</a></li>[<tt> * </tt>] <strong>Read Em Or Weep</strong><br>
+</font><ul><font size="2"><li><a title="E2 Quick Start" href="http://www.everything2.com/index.pl?node=E2%20Quick%20Start">Quick Start</a></li><li><a title="Everything FAQ" href="http://www.everything2.com/index.pl?node=Everything%20FAQ">Everything FAQ</a></li><li><a title="Voting/Experience System" href="http://www.everything2.com/index.pl?node=Voting%2FExperience%20System">Voting/Experience System</a></li><li><a title="E2 Mentoring Sign-Up" href="http://www.everything2.com/index.pl?node=E2%20Mentoring%20Sign-Up">E2 Mentoring Sign-Up</a></li></font></ul><font size="2"><br>
+</font><p style="text-align: right;" id="cooledby"></p><p style="text-align: center;" id="servertime"><font size="2">server time<br>
+Sunday, July 8, 2007 at 11:51:15</font></p></span></td></tr>
+<tr><td><img src="index.pl_files/random_nodes.gif" alt="Random Nodes" border="0" height="25" width="170"></td></tr><tr><td><span><em>Nodes your cousin would have liked:</em><br>
+<a href="http://www.everything2.com/index.pl?node_id=24128">Cerberus</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=1474095">Mitsubishi Colt</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=1512998">How do you get there?</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=265850">Italianate</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=262042">Inhearse</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=140369">1933 Chicago World's Fair</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=13186">MP3</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=1471004">Bösendorfer</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=349429">Tubeworm</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=1238178">Charles IX</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=147484">Night Court</a><br>
+<a href="http://www.everything2.com/index.pl?node_id=845513">And in time all this will pass</a><br>
+</span></td></tr>
+<tr><td><img src="index.pl_files/newwriteups.gif" alt="New Writeups" border="0" height="26" width="170"></td></tr><tr><td><span>
+<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1853982">kanoodle</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1491302">The Andy Griffith Show</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897439">thing</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1787490">shaogo</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1872803">Margaret Hamilton</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897408">person</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1895891">Little Tiger</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=58167">crush</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897375">person</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1895891">Little Tiger</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=17625">Lost</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897324">person</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1895891">Little Tiger</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=927539">Mistaken Identity</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897283">person</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1773465">animals</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=136636">Taipei</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897257">review</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1882339">santo</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=20056">Transformers</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897233">review</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=2654">Segnbora-t</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1544193">Catharine Maria Sedgwick</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897220">person</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1841194">Rai Tai</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=42667">Lush</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897200">place</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1518867">FerreroNutella</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1897170">grace kelly blues</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897175">poetry</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1787490">shaogo</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1897171">The Baroness Diet</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897173">fiction</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1347765">locke baron</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1817993">maiesiophilia</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897162">idea</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=970414">Simulacron3</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=100315">nervous system</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897137">essay</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1489024">artman2003</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=1897123">9/11 Conspiracy Theories</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897124">thing</a>)</small></td></tr>
+<tr bgcolor="#cccc99"><td class="oddrow" colspan="2" align="center"><strong><a href="http://www.everything2.com/index.pl?node_id=1740447">SyntaxVorlon</a></strong></td></tr><tr><td align="left"><a href="http://www.everything2.com/index.pl?node_id=22590">free association</a></td><td align="right"><small>(<a href="http://www.everything2.com/index.pl?node_id=1897077">personal</a>)</small></td></tr>
+</tbody></table>
+
+</span></td></tr>
+<tr><td><img src="index.pl_files/vitals.gif" alt="Vitals" border="0" height="25" width="170"></td></tr><tr><td><span>[<tt> * </tt>] <strong>Maintenance</strong><br>
+<ul><li><a title="Edit These E2 Titles" href="http://www.everything2.com/index.pl?node=Edit%20These%20E2%20Titles">Node Title Edit</a></li><li><a title="broken nodes" href="http://www.everything2.com/index.pl?node=broken%20nodes">Broken Writeups</a></li><li><a title="E2 Nuke Request" href="http://www.everything2.com/index.pl?node=E2%20Nuke%20Request">Writeup Deletion Request</a></li><li><a title="Nodeshells Marked for Destruction" href="http://www.everything2.com/index.pl?node=Nodeshells%20Marked%20for%20Destruction">Nodeshell Deletion Request</a></li><li><a title="Node Heaven" href="http://www.everything2.com/index.pl?node=Node%20Heaven">Node Heaven</a></li></ul><br>
+
+[<tt> * </tt>] <strong>Noding Information</strong><br>
+<ul><li><a title="E2 HTML Tags" href="http://www.everything2.com/index.pl?node=E2%20HTML%20Tags">E2 HTML Tags</a></li><li><a title="HTML symbol reference" href="http://www.everything2.com/index.pl?node=HTML%20symbol%20reference">HTML symbol reference</a></li><li><a title="Using Unicode on E2" href="http://www.everything2.com/index.pl?node=Using%20Unicode%20on%20E2">Using Unicode on E2</a></li><li><a title="Reference Desk" href="http://www.everything2.com/index.pl?node=Reference%20Desk">Reference Desk</a></li></ul><br>
+
+[<tt> * </tt>] <strong>Noding Utilities</strong><br>
+<ul><li><a title="E2 Scratch Pad" href="http://www.everything2.com/index.pl?node=E2%20Scratch%20Pad">E2 Scratch Pad</a></li><li><a title="Scratch Pad Viewer" href="http://www.everything2.com/index.pl?node=Scratch%20Pad%20Viewer">Scratch Pad Viewer</a></li><li><a title="E2 Source Code Formatter" href="http://www.everything2.com/index.pl?node=E2%20Source%20Code%20Formatter">Source Code Formatter</a></li><li><a title="Text Formatter" href="http://www.everything2.com/index.pl?node=Text%20Formatter">Text Formatter</a></li></ul><br>
+
+[<tt> * </tt>] <strong>Lists</strong><br>
+<ul><li><a title="Everything New Nodes" href="http://www.everything2.com/index.pl?node=Everything%20New%20Nodes">100 Newest Writeups</a></li><li><a title="Cool Archive" href="http://www.everything2.com/index.pl?node=Cool%20Archive">Cool Archive</a> <small>(C! writeups)</small></li><li><a title="Page of Cool" href="http://www.everything2.com/index.pl?node=Page%20of%20Cool">Page of Cool</a> <small>(Editor Picks)</small></li><li><a title="A Year Ago Today" href="http://www.everything2.com/index.pl?node=A%20Year%20Ago%20Today">A Year Ago Today</a></li><li><a title="Everything Finger" href="http://www.everything2.com/index.pl?node=Everything%20Finger">Everything Finger</a></li><li><a title="Everything User Search" href="http://www.everything2.com/index.pl?node=Everything%20User%20Search">Everything User Search</a></li><li><a title="News for Noders. Stuff that matters." href="http://www.everything2.com/index.pl?node=News%20for%20Noders.%20Stuff%20that%20matters.">Old News</a></li><li><a title="Everything's Most Wanted" href="http://www.everything2.com/index.pl?node=Everything%27s%20Most%20Wanted">Everything's Most Wanted</a></li><li><a title="Your nodeshells" href="http://www.everything2.com/index.pl?node=Your%20nodeshells">Your nodeshells</a></li><li><a title="Your filled nodeshells" href="http://www.everything2.com/index.pl?node=Your%20filled%20nodeshells">Your filled nodeshells</a></li><li><a title="Random nodeshells" href="http://www.everything2.com/index.pl?node=Random%20nodeshells">Random nodeshells</a></li></ul><br>
+
+[<tt> * </tt>] <strong>Miscellaneous</strong><br>
+<ul><li><a title="Voting/Experience System" href="http://www.everything2.com/index.pl?node=Voting%2FExperience%20System">Voting/Experience System</a></li><li><a title="Message Inbox" href="http://www.everything2.com/index.pl?node=Message%20Inbox">Message Inbox</a></li><li><a title="Java Chatterbox" href="http://www.everything2.com/index.pl?node=Java%20Chatterbox">Java Chatterbox</a></li><li><a title="chatterlight" href="http://www.everything2.com/index.pl?node=chatterlight">chatterlight</a></li><li><a title="Gab Central" href="http://www.everything2.com/index.pl?node=Gab%20Central">Gab Central</a></li><li><a title="E2 Gift Shop" href="http://www.everything2.com/index.pl?node=E2%20Gift%20Shop">E2 Gift Shop</a></li><li><a title="Everything User Poll" href="http://www.everything2.com/index.pl?node=Everything%20User%20Poll">Everything User Poll</a></li><li><a title="Everything Quote Server" href="http://www.everything2.com/index.pl?node=Everything%20Quote%20Server">Everything Quote Server</a></li></ul><br>
+
+<br>
+<a href="http://www.everything2.com/index.pl?node=Donation%20Box">Donation Box</a><br>
+<a title="Buy Stuff, E2 Gets Money" href="http://www.everything2.com/index.pl?node=Buy%20Stuff%2C%20E2%20Gets%20Money">E2 Merchandise</a></span></td></tr>
+<tr><td><img src="index.pl_files/personal_nodes.gif" alt="Personal Links" border="0" height="24" width="170"></td></tr><tr><td><span>You must log in first.
+
+</span></td></tr>
+<tr><td></td></tr></tbody></table>
+</td>
+
+<!-- google_ad_section_end -->
+  </tr>
+</tbody></table>
+
+<!-- TABLE #2 Ends here -->
+
+<!-- TABLE #3 The footer -->
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+<tbody><tr><td><img src="index.pl_files/clear.gif" alt="" height="25" width="1"></td></tr>
+<tr bgcolor="#cccc99"><td style="border: 1px solid black;" align="center">Everything 2 is brought to you by the letter C and <a href="http://everydevel.com/">The Everything Development Company</a><br></td></tr>
+<tr><td bgcolor="#003366"><img src="index.pl_files/clear.gif" alt=" " border="0" height="1" width="1"></td></tr>
+</tbody></table>
+
+<!--
+  <table cellpadding="3" cellspacing="0" border="0" width="100%">
+    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr><td>&nbsp;</td></tr>
+    <tr bgcolor="#cccc99"><td align="center">
+-->
+
+
+<!--
+</td></tr>
+    <tr>
+      <td bgcolor="#003366"><img src="/img/clear.gif" width="1" height="1" border="0" alt=" " /></td>
+    </tr>
+  </table>
+-->
+<!-- current node_id 144778 -->
+</body></html>

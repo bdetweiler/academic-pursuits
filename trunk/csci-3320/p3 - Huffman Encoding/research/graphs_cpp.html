@@ -1,0 +1,1173 @@
+<html><head><title>graphs.cpp -- C++ source file for KSI Constraint Graphs</title></head><body>/*
+
+
+
+
+<pre>*/
+/*
+ *
+ * Copyright (c) 1996
+ * Knowledge Science Institute, University of Calgary
+ *
+ * Permission to use, copy, modify, distribute and sell this software
+ * and its documentation for any purpose is hereby granted without fee,
+ * provided that the above copyright notice appear in all copies and
+ * that both that copyright notice and this permission notice appear
+ * in supporting documentation.  The Knowledge Science Institute makes no
+ * representations about the suitability of this software for any
+ * purpose.  It is provided "as is" without express or implied warranty.
+ *
+ */
+
+#ifdef __BCPLUSPLUS__ //---Borland C++
+#include <owl\owlpch.h>
+#pragma hdrstop
+#endif
+
+#include <graphs.h>
+#include <constraints.h>
+#include <fstream.h>
+#include <typeinfo.h>
+#include <algo.h>
+#include <merror.h>
+#include <mlexer.h>
+#include <mobjlib.h>
+#include <stdio.h>
+
+#define MAX_NAME 200
+
+extern ObjectLibrary<attribute,0>* AttributeTypeLibrary;
+extern ObjectLibrary<component0,0>* GraphsTypeLibrary;
+extern ObjectLibrary<validator,0>* ConstraintLibrary;
+
+/*******************************************************************************
+************************************ Attribute *********************************
+*******************************************************************************/
+/*<a name="classAttribute">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#ATTRIBUTE">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classAttribute">declaration</a> */
+
+ostream&amp; Attribute::printOn(ostream&amp; o) const
+  {
+  Lexer::writeQuotedString(o,Name);
+  Lexer::writeDelim(o);
+  Lexer::writeUnsigned(o,Priority);
+  Lexer::writeDelim(o);
+  Lexer::writeUnsigned(o,Flags);
+  return o;
+  }
+
+istream&amp; Attribute::readFrom(istream&amp; i)
+  {
+  Lexer::readQuotedString(i,Name);
+  Lexer::readDelim(i);
+  unsigned long temp;
+  Lexer::readUnsigned(i,temp);
+  Priority = temp;
+  Lexer::readDelim(i);
+  Lexer::readUnsigned(i,temp);
+  Flags = temp;
+  return i;
+  }
+
+/*******************************************************************************
+************************************ Terminal **********************************
+*******************************************************************************/
+/*<a name="classTerminal">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#TERMINAL">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classTerminal">declaration</a> */
+
+ostream&amp; Terminal::printOn(ostream&amp; o) const
+  {
+  o &lt;&lt; Anchor;
+  Lexer::writeDelim(o);
+  Lexer::writeUnsigned(o,Direction);
+  return o;
+  }
+
+istream&amp; Terminal::readFrom(istream&amp; i)
+  {
+  i &gt;&gt; Anchor;
+  Lexer::readDelim(i);
+  unsigned long temp;
+  Lexer::readUnsigned(i,temp);
+  Direction = temp;
+  return i;
+  }
+
+/*******************************************************************************
+************************************ Component0 ********************************
+*******************************************************************************/
+/*<a name="classComponent0">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#COMPONENT0">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classComponent0">declaration</a> */
+
+bool Component0::setAttr(Attribute* a)
+  { //returns true if the attribute is a new one, false if an attribute is replaced
+  MASSERT_COMPONENT(a);
+  Ref2<attribute> r(a);
+  pair<polysetofattributes::iterator,bool> res = Attributes.insert(r);
+  bool ret = res.second;
+  if (!ret) { // there was already such an attribute -- replace it
+    Attributes.erase(res.first);
+    Attributes.insert(r);
+    ret = true;
+    }
+  notify();
+  return ret;
+  }
+
+Component0::AttrIterator Component0::getAttr(const string&amp; name) const
+  {
+  Attribute a(name,0u,(Attribute::Attr_Flags)0);
+  Ref2<attribute> r(&amp;a);
+  PolySetOfAttributes::iterator i(Attributes.find(r));
+  return i;
+  }
+
+bool Component0::eraseAttr(const string&amp; name)
+  {
+  PolySetOfAttributes::iterator i(Attributes.find(Ref2<attribute>(Attribute(name,0u,(Attribute::Attr_Flags)0))));
+  bool ret;
+  if (i == Attributes.end())
+    ret = false;
+  else {
+    ret = true;
+    Attributes.erase(i);
+    notify();
+    }
+  return ret;
+  }
+
+Component0&amp; Component0::operator=(const Component0&amp; c)
+  {
+  Name = c.Name;
+  Level = c.Level;
+  PolySetOfAttributes::iterator i;
+  Attributes = c.Attributes;
+  Id = c.Id;
+  notify();
+  return *this;
+  }
+
+int Component0::operator==(const Component0&amp; c) const
+  {
+  return Id == c.Id;
+  }
+
+int Component0::operator&lt;(const Component0&amp; c) const
+  {
+  return Id &lt; c.Id;
+  }
+
+int Component0::addConstraint(const string&amp; constraintName)
+  {
+  int ret = 0;
+  AttrIterator ai = getAttr("constraints");
+  if (ai==endAttr()) {
+    setAttr(MakeAttribute("constraints",ConjunctionOfValidators(),100,0));
+    ai = getAttr("constraints");
+    }
+  AttributeValuePair<conjunctionofvalidators>* ap = dynamic_cast<attributevaluepair><conjunctionofvalidators>*&gt;(&amp;**ai);
+  MASSERT(ap);
+  ConjunctionOfValidators* v = &amp;(ConjunctionOfValidators&amp;)ap-&gt;getValue();
+  MASSERT(v);
+  MASSERT(ConstraintLibrary);
+  Validator* con = ConstraintLibrary-&gt;makeCopy(constraintName);
+  if (con) v-&gt;push_back(Ref2<validator>(con,true));
+  else {
+    ret = -7;
+    error(0,'E',"Unable to find constraint '%s' in ConstraintLibrary",constraintName.c_str());
+    }
+  return ret;
+  }
+
+ostream&amp; Component0::printOn(ostream&amp; out) const
+  {
+  Lexer::writeUnsigned(out,Id);
+  Lexer::writeDelim(out);
+  Lexer::writeQuotedString(out,Name);
+  Lexer::writeDelim(out);
+  Lexer::writeUnsigned(out,Level);
+  Lexer::writeDelim(out);
+  Lexer::writeDelim(out,'(');
+  for(AttrIterator i(Attributes.begin()); i!=Attributes.end(); i++) {
+    Lexer::writeDelim(out,'(');
+    Lexer::writeQuotedString(out,typeid(**i).name());
+    Lexer::writeDelim(out);
+    out &lt;&lt; **i;
+    Lexer::writeDelim(out,')');
+    }
+  Lexer::writeDelim(out,')');
+  return out;
+  }
+
+istream&amp; Component0::readFrom(istream&amp; in)
+  {
+  unsigned long temp;
+  Lexer::readUnsigned(in,temp); Id = temp;
+  Lexer::readDelim(in);
+  Lexer::readQuotedString(in,Name);
+  Lexer::readDelim(in);
+  Lexer::readUnsigned(in,temp); Level = temp;
+  Lexer::readDelim(in);
+  Lexer::readDelim(in,'(');
+  Attributes.erase(Attributes.begin(),Attributes.end()); //clear any current attributes
+  while (!Lexer::readDelim(in,'(')) {
+    string t;
+    Lexer::readQuotedString(in,t);
+    Lexer::readDelim(in);
+    Attribute* a = AttributeTypeLibrary-&gt;makeCopy(t);
+    if (a) {
+      in &gt;&gt; *a;
+      setAttr(a);
+      }
+    else error(0,'E',"Can't find %s in AttributeTypeLibrary",t.c_str());
+    Lexer::readDelim(in,')');
+    }
+  Lexer::readDelim(in,')');
+  return in;
+  }
+
+/*******************************************************************************
+*************************************** Arc0 ***********************************
+*******************************************************************************/
+/*<a name="classArc0">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#ARC0">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classArc0">declaration</a> */
+
+void Arc0::putAnchor(int n, ID_type c, Terminal::DIRECTION dir)
+  {
+  if (n&gt;=Terminals.size()) Terminals.insert(Terminals.end(),(n+1)-Terminals.size(),Terminal());
+  Terminals[n] = Terminal(c,dir);
+  MASSERT_THROW(Terminals.size() &gt; n,true);
+  MASSERT_THROW(Terminals[n].getAnchorID()==c,true);
+  MASSERT_THROW(Terminals[n].getDirection()==dir,true);
+  }
+
+int Arc0::findAnchor(ID_type id) //returns the matching terminal index; -1 on failure
+  {
+  int j=0;
+  for (TerminalIterator i=Terminals.begin(); i!=Terminals.end(); i++,j++) {
+    if ((*i).getAnchorID()==id) return j;
+    }
+  return -1;
+  }
+
+/*******************************************************************************
+********************************* ArcComponent *********************************
+*******************************************************************************/
+/*<a name="classArcComponent">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#ARC_COMPONENT">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classArcComponent">declaration</a> */
+
+void ArcComponent::verify()
+  {
+  Arc0::verify();
+  }
+
+ostream&amp; ArcComponent::printOn(ostream&amp; out) const
+  {
+  Component0::printOn(out);
+  Lexer::writeDelim(out);
+  Lexer::writeDelim(out,'(');
+  for (terminals_type::const_iterator i(Terminals.begin()); i!=Terminals.end(); i++) {
+    Lexer::writeDelim(out,'(');
+    out &lt;&lt; *i;
+    Lexer::writeDelim(out,')');
+    }
+  Lexer::writeDelim(out,')');
+  return out;
+  }
+
+istream&amp; ArcComponent::readFrom(istream&amp; in)
+  {
+  Component0::readFrom(in);
+  Lexer::readDelim(in);
+  Terminals.erase(Terminals.begin(),Terminals.end()); //clear any terminals
+  Lexer::readDelim(in,'(');
+  while (!Lexer::readDelim(in,'(')) {
+    Terminal t;
+    in &gt;&gt; t;
+    Terminals.push_back(t);
+    Lexer::readDelim(in,')');
+    }
+  Lexer::readDelim(in,')');
+  return in;
+  }
+
+/*******************************************************************************
+********************************** IsaComponent ********************************
+*******************************************************************************/
+/*<a name="classIsaComponent">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#ISA_COMPONENT">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classIsaComponent">declaration</a> */
+
+IsaComponent* IsaComponent::Prototype = NULL;
+
+void IsaComponent::verify()
+  {
+  ArcComponent::verify();
+  //These should all be handled by Validators
+  //MASSERT_COMPONENT(Terminals.size()==2);
+  //MASSERT_COMPONENT(getTerminalDir(0) == Terminal::FROM);
+  //MASSERT_COMPONENT(getTerminalDir(1) == Terminal::TO);
+  //MASSERT_COMPONENT(getTerminalID(0));
+  //MASSERT_COMPONENT(getTerminalID(1));
+  //MASSERT_COMPONENT(getName()=="isa"?true:!(getTerminalID(0)==getTerminalID(1)));
+  }
+
+Component0::AttrIterator IsaComponent::getAttr(const string&amp; name) const
+  {
+  AttrIterator ret = ArcComponent::getAttr(name);
+  if (ret==endAttr() &amp;&amp; Prototype &amp;&amp; Prototype-&gt;getID()!=getID()) {
+    AttrIterator ret2 = Prototype-&gt;getAttr(name);
+    if (!(ret2 == Prototype-&gt;endAttr())) ret = ret2;
+    }
+  return ret;
+  }
+
+/*******************************************************************************
+************************************ TypedGraph ********************************
+*******************************************************************************/
+/*<a name="classTypedGraph">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#TYPED_GRAPH">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classTypedGraph">declaration</a> */
+
+TypedGraph::TypedGraph()
+	: _top("top",1),
+          _node("node",1,1),
+          _arc("arc",1,vector<terminal>()),
+          _isa("isa",1,vector<terminal>()),
+          _nodeIsa("isa",1,vector<terminal>()),
+          _arcIsa("isa",1,vector<terminal>()),
+          _isaIsa("isa",1,vector<terminal>())
+  {
+  NextID = 1; //we reserve 0 as an "uninstantiated" ID number
+  Flags = checking;
+
+  //these are "fundamental" objects
+  _top.Id  = getNextID();
+  _node.Id = getNextID();
+  _arc.Id  = getNextID();
+  _isa.Id  = getNextID();
+  _isa.setPrototype(&amp;_isa);
+  _nodeIsa.Id = getNextID();
+  _arcIsa.Id = getNextID();
+  _isaIsa.Id = getNextID();
+  LastFundamentalObject = _isaIsa.Id;
+
+  //connect up the "fundamental" objects
+  _isa.putAnchor(0,_top.getID(),Terminal::FROM);
+  _isa.putAnchor(1,_top.getID(),Terminal::TO);
+  _arc.putAnchor(0,_top.getID(),Terminal::BIDIRECT);
+  //define the type hierarchy
+  _nodeIsa.putAnchor(0,_node.getID(),Terminal::FROM);
+  _nodeIsa.putAnchor(1,_top.getID(),Terminal::TO);
+  _arcIsa.putAnchor(0,_arc.getID(),Terminal::FROM);
+  _arcIsa.putAnchor(1,_top.getID(),Terminal::TO);
+  _isaIsa.putAnchor(0,_isa.getID(),Terminal::FROM);
+  _isaIsa.putAnchor(1,_arc.getID(),Terminal::TO);
+
+  //add in their constraints attributes
+  _top.setAttr(MakeAttribute((string)"constraints",ConjunctionOfValidators(),100u,0u));
+  _node.setAttr(MakeAttribute((string)"constraints",ConjunctionOfValidators(),100u,0u));
+  _arc.setAttr(MakeAttribute((string)"constraints",ConjunctionOfValidators(),100u,0u));
+  _isa.setAttr(MakeAttribute((string)"constraints",ConjunctionOfValidators(),100u,0u));
+
+  //add the actual constraints
+  _top.addConstraint("NoConstAttrOverrides");
+  _arc.addConstraint("NoSelfReference");
+  _arc.addConstraint("ConfinedToGraph");
+  _arc.addConstraint("ArcConformance");
+  _isa.addConstraint("Upward"); //implies "Directed" and "Arity=2"
+  _isa.addConstraint("NoDanglingTerminals");
+
+  //insert them
+  Contents.insert(content_element_type( _top.getID(),Ref2<component0>(&amp; _top)));
+  Contents.insert(content_element_type(_node.getID(),Ref2<component0>(&amp;_node)));
+  Contents.insert(content_element_type( _arc.getID(),Ref2<component0>(&amp; _arc)));
+  Contents.insert(content_element_type( _isa.getID(),Ref2<component0>(&amp; _isa)));
+  Contents.insert(content_element_type( _nodeIsa.getID(),Ref2<component0>(&amp; _nodeIsa)));
+  Contents.insert(content_element_type( _arcIsa.getID(),Ref2<component0>(&amp; _arcIsa)));
+  Contents.insert(content_element_type( _isaIsa.getID(),Ref2<component0>(&amp; _isaIsa)));
+  }
+
+void TypedGraph::verify(unsigned long flags)
+  {
+  if (!getChecking()) return;
+
+  /*	| % node, arc, and isa are the only level one objects
+	| Level1Objects subset Contents; */
+  //MASSERT_THROW(Contents.find(Ref2<component0>(_node))!=Contents.end(),!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[     _top.getID()] == _top    ,!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[    _node.getID()] == _node   ,!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[     _arc.getID()] == _arc    ,!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[     _isa.getID()] == _isa    ,!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[ _nodeIsa.getID()] == _nodeIsa,!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[  _arcIsa.getID()] == _arcIsa ,!flags&amp;Validator::silent);
+  MASSERT_THROW((*this)[  _isaIsa.getID()] == _isaIsa ,!flags&amp;Validator::silent);
+
+  /*
+  contents_type::iterator c;
+  for (c=Contents.begin(); c!=Contents.end(); c++) {
+    Component0&amp; c0 = *(*c).second;
+    verify(c0,flags);
+    }
+  */
+  verify(_top,flags);
+  }
+
+void TypedGraph::verify(Component0&amp; c, unsigned long flags)
+  {
+  if (!getChecking()) return;
+
+  verifyPrimative(c,flags);
+
+  //verify all the subtypes of c
+  contents_type::iterator i;
+  for (i=Contents.begin(); i!=Contents.end(); i++) {
+    if (parentof(c.getID(),(*i).first)) {
+      Component0&amp; c0 = *(*i).second;
+      verifyPrimative(c0,flags);
+      }
+    }
+  }
+
+void TypedGraph::verifyPrimative(Component0&amp; c, unsigned long flags)
+  {
+  if (!getChecking()) return;
+
+  //object itself is first verified...
+  c.verify();
+
+  /*	| % The only level 1 objects are TOP, NODE, ARC, and ISA and their
+	| % isa arcs that define the type hierarchy
+	| #{c:COMPONENT | c.Level = 1} = 7; */
+  MASSERT_THROW(c.getLevel()&gt;1?true:(c==_node    ||
+				     c==_arc     ||
+				     c==_isa     ||
+				     c==_top     ||
+                                     c==_nodeIsa ||
+                                     c==_arcIsa  ||
+                                     c==_isaIsa  ),!flags&amp;Validator::silent);
+
+  /*	| % there are no cycles over the isa relationship
+	| forall c:Contents @ not (c ancestorof c); */
+  MASSERT_THROW(c==_top || !ancestorof(c.getID(),c.getID()),!flags&amp;Validator::silent);
+
+  /*	| % everything is a NODE or ARC, but only one of these
+	| forall c:Contents @
+	|	(c isa NODE \/ c isa ARC)		/\
+	|	(c isa NODE) =&gt; not (c isa ARC)		/\
+	|	(c isa ARC ) =&gt; not (c isa NODE); */
+  if (dynamic_cast<isacomponent*>(&amp;c)) {
+    MASSERT_THROW( isa(c.getID(),_isa.getID() ),!flags&amp;Validator::silent);
+    MASSERT_THROW(!isa(c.getID(),_node.getID()),!flags&amp;Validator::silent);
+    //MASSERT_THROW(!isa(c.getID(), _arc.getID()),!flags&amp;Validator::silent);
+    }
+  else if (dynamic_cast<arccomponent*>(&amp;c)) {
+    //MASSERT_THROW(!isa(c.getID(), _isa.getID()),!flags&amp;Validator::silent);
+    MASSERT_THROW(!isa(c.getID(),_node.getID()),!flags&amp;Validator::silent);
+    MASSERT_THROW( isa(c.getID(), _arc.getID()),!flags&amp;Validator::silent);
+    }
+  else if (dynamic_cast<nodecomponent*>(&amp;c)) {
+    //MASSERT_THROW(!isa(c.getID(), _isa.getID()),!flags&amp;Validator::silent);
+    MASSERT_THROW( isa(c.getID(),_node.getID()),!flags&amp;Validator::silent);
+    MASSERT_THROW(!isa(c.getID(), _arc.getID()),!flags&amp;Validator::silent);
+    }
+  else MASSERT_THROW(c==_top,!flags&amp;Validator::silent);
+
+  /*	| % all components satisfy their constraints
+	| exists g:GRAPH0 | g.Contents = Contents @
+	|    forall c:g.Contents @
+	|	forall c2:g.Contents | c isa c2 @ forall v:VALIDATOR | v in c2.Constraints @
+	|		v(c,c2,g) = PASS; */
+  ConjunctionOfValidators v;
+  //Ref2<validator> valid(v);
+  for (contents_type::iterator c2=Contents.begin(); c2!=Contents.end(); c2++) {
+    if (isa(c.getID(),(*c2).first)) {
+      if (!getValue(*this,(*c2).first,string("constraints"),v/*valid*/)) { //got a validator
+        //MASSERT_THROW(((Validator&amp;)valid)(*(*c2).second,*this),!flags&amp;Validator::silent);
+        MASSERT_THROW(v(c,*(*c2).second,*this,flags),false);
+        }
+      }
+    }
+  }
+
+/*	| % _ parentof _ : a little complicated because we need a special case
+	| %                for ISA_COMPONENTs to prevent endless recursion of isa's
+	| (forall p,c:Contents | p /= ISA @
+	|	p parentof c &lt;=&gt; (exists a:ISA_COMPONENT | a in Contents @
+	|		GetTerminal(a,2) = p /\ GetTerminal(a,1) = c))
+	| /\
+	| (forall p,c:Contents | p = ISA @
+	|	p parentof c &lt;=&gt; (c.Role in ran isa_arc /\ p /= c /\
+	|		not (exists a:ISA_COMPONENT | a in Contents @
+	|			GetTerminal(a,2) = p /\ GetTerminal(a,1) = c))); */
+bool TypedGraph::parentof(ID_type p, ID_type c) const
+  {
+  if (c==getTopType() || p==c) return false;
+  if (p &amp;&amp; c) {
+    for (contents_type::const_iterator i(Contents.begin()); i!=Contents.end(); i++) {
+      IsaComponent* isa = dynamic_cast<isacomponent*>((Component0*)(*i).second);
+      if (isa &amp;&amp; isa-&gt;getTerminalID(0) &amp;&amp; isa-&gt;getTerminalID(0)==c &amp;&amp;
+		  isa-&gt;getTerminalID(1) &amp;&amp; isa-&gt;getTerminalID(1)==p) return true;
+      }
+    if (p == getIsaType() &amp;&amp; p!=c) { //the exception, any IsaComponent otherwise without a parent has the ISA prototype as a parent
+      IsaComponent* isa = dynamic_cast<isacomponent*>(&amp;(*this)[c]);
+      if (isa) return true;
+      }
+    //the following 2 clauses fake isa arcs between {arcs|nodes} and the level-1
+    //prototypes.  This is a bit a hack, but it allows us to cut the number of objects
+    //in some graphs almost in half.
+    if (p == getArcType() &amp;&amp; p!=c) {
+      ArcComponent* arc = dynamic_cast<arccomponent*>(&amp;(*this)[c]);
+      if (arc) return true;
+      }
+    if (p == getNodeType() &amp;&amp; p!=c) {
+      NodeComponent* node = dynamic_cast<nodecomponent*>(&amp;(*this)[c]);
+      if (node) return true;
+      }
+    }
+  return false;
+  }
+
+/*	| % _ancestorof _
+	| forall c1,c2:Contents @
+	|	c1 ancestorof c2 &lt;=&gt; (c1,c2) in ( _ parentof _ )^*; */
+bool TypedGraph::ancestorof(ID_type p, ID_type c) const
+  {
+  //this implemenation does not mirror the spec very well, but it conforms and
+  //it's a lot more efficient.
+  if (c==getTopType() || p==c) return false;
+  if (p==getTopType()) return true;
+  if (p &amp;&amp; c) {
+    if (p == getIsaType()) { //the exception, all IsaComponents must be subtypes of the ISA prototype
+      IsaComponent* isa = dynamic_cast<isacomponent*>(&amp;(*this)[c]);
+      if (isa) return true;
+      }
+
+    //the following 2 clauses fake isa arcs between {arcs|nodes} and the level-1
+    //prototypes.  This is a bit a hack, but it allows us to cut the number of objects
+    //in some graphs almost in half.
+    if (p == getArcType()) {
+      ArcComponent* arc = dynamic_cast<arccomponent*>(&amp;(*this)[c]);
+      if (arc) return true;
+      }
+    if (p == getNodeType()) {
+      NodeComponent* node = dynamic_cast<nodecomponent*>(&amp;(*this)[c]);
+      if (node) return true;
+      }
+
+    for (contents_type::const_iterator i=Contents.begin(); i!=Contents.end(); i++) {
+      IsaComponent* isa = dynamic_cast<isacomponent*>((Component0*)(*i).second);
+      if (isa &amp;&amp; isa-&gt;getTerminalID(0) &amp;&amp; isa-&gt;getTerminalID(0)==c &amp;&amp; isa-&gt;getTerminalID(1)) {
+	if (isa-&gt;getTerminalID(1)==p) return true;
+	else if (ancestorof(p,isa-&gt;getTerminalID(1))) return true;
+	}
+      }
+    }
+  return false;
+  }
+
+/*	| % _ isa _
+	| forall p,c:Contents @ c isa p &lt;=&gt; ((p = c) \/ (p ancestorof c)); */
+bool TypedGraph::isa(ID_type c, ID_type p) const
+  {
+  return (p &amp;&amp; c) &amp;&amp; (c==p || ancestorof(p,c));
+  }
+
+  /*	| getAttr: TYPED_GRAPH &amp; COMPONENT &amp; ATTRIBUTE_NAME --&gt; GETATTR_RESULT
+	|--------------
+	| forall g:TYPED_GRAPH; c:COMPONENT; a:ATTRIBUTE_NAME | c in g.Contents @
+	|   getAttr(g,c,a) =
+	|     if (exists at:c.Attributes @ a = at.Name)
+	|	% c actually has the attribute
+	|       then (mu x:c.Attributes | (a = x.Name))
+	|       else if (forall c2:g.Contents | c2 parentof c @
+	|						getAttr(g,c2,a) = NULLr)
+	|	  % attribute not found
+	|         then NULLr
+	|	  % attribute found in one of the ancestors
+	|         else (mu x:ATTRIBUTE | forall c2:g.Contents | c2-&gt;c in g.parentof0 /\
+	|		(exists y:ATTRIBUTE @ y=Attr~(getAttr(g,c2,a))) @
+	|		  exists y:ATTRIBUTE | y=Attr~(getAttr(g,c2,a)) @
+	|		    forall c3:g.Contents | c3-&gt;c in g.parentof0 /\
+	|		      (exists z:ATTRIBUTE @ z=Attr~(getAttr(g,c3,a))) /\
+	|		      (not (c3-&gt;c2 in g.ancestorof0)) @
+	|		        exists z:ATTRIBUTE | z=Attr~(getAttr(g,c3,a)) @
+	|		          y.Priority&lt;=z.Priority /\ x=y) */
+Attribute* TypedGraph::getAttr(ID_type id, const string&amp; attrName)
+  {
+  Attribute* ret = NULL;
+  Component0&amp; c = (*this)[id];
+  Component0::AttrIterator a = c.getAttr(attrName);
+  if (!(a == c.endAttr())) ret = (Attribute*)(*a);
+  if (!ret) {
+    ID_type idOfRet;
+    for (contents_type::iterator i = Contents.begin(); i!=Contents.end(); i++) {
+      if (parentof((*i).second-&gt;getID(),id)) {
+	Attribute* temp = getAttr((*i).first/*second-&gt;getID()*/,attrName);
+	if (temp) {
+	  //if ((!ret) || (temp-&gt;getPriority() &lt; ret-&gt;getPriority())) ret = temp;
+          if (!ret) {
+            ret = temp;
+            idOfRet = (*i).first;
+            }
+          else {
+            if (ancestorof(idOfRet,(*i).first)) {
+              ret = temp;
+              idOfRet = (*i).first;
+              }
+            else if ((!ancestorof((*i).first,idOfRet)) &amp;&amp; (temp-&gt;getPriority() &lt; ret-&gt;getPriority())) {
+              ret = temp;
+              idOfRet = (*i).first;
+              }
+            }
+	  }
+	}
+      }
+    }
+  return ret;
+  }
+
+  /*	---setAttr----------------------------------------------------------------
+	| Delta TYPED_GRAPH;
+	| c?: COMPONENT;
+	| attr?: ATTRIBUTE
+	|---------------
+	| c? in Contents;
+	| Contents' = (Contents \ {c?}) || {(mu c2:Contents |
+	|	c2.Name  = c?.Name	/\
+	|	c2.Level = c?.Level	/\
+	|	c2.Role  = c?.Role	/\
+	|	c2.Attributes = (c?.Attributes \
+	|		{a:c?.Attributes | a.Name = attr?.Name}) ||
+	|		{attr?})}
+	-------------------------------------------------------------------------- */
+int TypedGraph::setAttr(ID_type id, Attribute* attr)
+  {
+  int ret = 0;
+
+  Component0&amp; comp = (*this)[id];
+  Attribute* oldAttr = NULL;
+  Component0::AttrIterator oai = comp.getAttr(attr-&gt;getName());
+  if (!(oai==comp.endAttr())) {
+    oldAttr = (**oai).clone();
+    }
+
+  comp.setAttr(attr);
+
+  try {
+    verify(comp,0);
+    }
+  catch(...) {
+    error(0,'E',"Attribute '%s' caused a constraint violation; it will be %s",
+    		attr-&gt;getName().c_str(),
+                oldAttr?"restored to its original value":"deleted");
+    if (oldAttr) {
+      comp.setAttr(oldAttr);
+      oldAttr = NULL;
+      }
+    else {
+      comp.eraseAttr(attr-&gt;getName()); //so this lower-level version avoids the problem
+      }
+    ret = -2;
+    }
+
+  if (oldAttr) delete oldAttr;
+
+  if (!ret) {
+    //notify all the observers of subtypes just in case this attribute change affects them
+    notifyDependents(id);
+    }
+
+  return ret;
+  }
+
+void TypedGraph::notifyDependents(ID_type id)
+  {
+  for (contents_type::iterator c=Contents.begin(); c!=Contents.end(); c++) {
+    if (isa((*c).second-&gt;getID(),id)) (*c).second-&gt;notify();
+    }
+  ArcComponent* a = dynamic_cast<arccomponent*>(&amp;(*this)[id]);
+  if (a) {
+    for (Arc0::TerminalIterator i = a-&gt;beginTerminal(); i!=a-&gt;endTerminal(); i++) {
+      ID_type id = (*i).getAnchorID();
+      if (id) {
+        Component0&amp; c = (*this)[id];
+        c.notify();
+        notifyDependents(c.getID());
+        }
+      }
+    }
+  }
+
+int TypedGraph::removeAttr(ID_type id, const string&amp; attrName)
+  {
+  int ret = -3;
+  //get a copy of the attr, just in case we have to restore it
+  Attribute* orig = getAttr(id,attrName);
+  if (orig) { //can't remove an attr that doesn't exist
+    orig = orig-&gt;clone();
+    bool shouldDelete = true;
+
+    ret = (*this)[id].eraseAttr(attrName)?0:-1;
+
+    if (!ret) {
+      try {
+	verify((*this)[id],0);
+	}
+      catch(...) {
+	(*this)[id].setAttr(orig);
+	ret = -2;
+	shouldDelete = false;
+	}
+      }
+
+    if (!ret) {
+      //notify all the observers of subtypes just in case this attribute change affects them
+      for (contents_type::iterator c=Contents.begin(); c!=Contents.end(); c++) {
+	if (ancestorof(id,(*c).second-&gt;getID())) (*c).second-&gt;notify();
+	}
+      }
+
+    if (shouldDelete) delete orig;
+    }
+
+  return ret;
+  }
+
+int TypedGraph::insertComponent(Component0&amp; c) //this is a low-level method, no checks are done -- you must set its type, etc
+  {
+  if (!c.Id) c.Id = getNextID();
+  int ret = c.Id;
+  pair<typedgraph::contentsiterator,bool> res = Contents.insert(contents_type::value_type(c.Id,Ref2<component0>(c)));
+  if (!res.second) ret = -18;
+  return ret;
+  }
+
+  /*	---ADD_NODE---------------------------------------------------------------
+	| Delta TYPED_GRAPH;
+	| node?: NODE_COMPONENT;
+	| type?: NODE_COMPONENT
+	|---------------
+	| TYPED_GRAPH';
+	| type? in Contents;
+	| % not (node? in Level1Objects);
+	| getAttr((mu x:TYPED_GRAPH|x.Contents=Contents),type?,individual) = NULLr;
+	| Contents' = Contents || {node?, (mu a:ISA_COMPONENT |
+	|	GetTerminal(a,1)=node? /\ GetTerminal(a,2)=type?) };
+	-------------------------------------------------------------------------- */
+int TypedGraph::addNode(NodeComponent&amp; node, ID_type type)
+  {
+  Component0 &amp;p = (*this)[type]; //may throw
+  //if (!(p.getAttr("individual")==p.endAttr())) return -2;
+  int ret =node.Id = getNextID();
+
+  if (node.getName()=="?") {
+    char buf[MAX_NAME];
+    sprintf(buf,"%s-%lu",p.getName().c_str(),node.Id);
+    node.setName(buf);
+    }
+
+  Contents.insert(contents_type::value_type(node.Id,Ref2<component0>(node)));
+
+  ID_type typeID = 0;
+
+  try {
+    if (type!=getNodeType()) { // Nodes are automatically subtypes of the prototype Node without an actual isa arc (efficiency hack)
+      IsaComponent typeArc(makeIsaRelation(node.getID(),type));
+      typeID = typeArc.getID();
+      verify(typeArc,0);
+      }
+    verify((*this)[type],0);
+    verify(node,0);
+    }
+  catch(...) {ret = -5;}
+
+  //if the insertion failed, we need to remove the garbage we've added.
+  if (ret &lt; 0) {
+    error(0,'E',"Verfication failed; invalid node insertion undone");
+    if (typeID) Contents.erase(typeID);
+    Contents.erase(node.getID());
+    }
+  return ret;
+  }
+
+  /*	---ADD_ARC----------------------------------------------------------------
+	| Delta TYPED_GRAPH;
+	| arc?: ARC_COMPONENT;
+	| type?: ARC_COMPONENT
+	|---------------
+	| TYPED_GRAPH';
+	| type? in Contents; % redundant
+	| not(arc? isa ISA);
+	| % not(arc? in Level1Objects);
+	| getAttr((mu x:TYPED_GRAPH|x.Contents=Contents),type?,individual) = NULLr;
+	| Contents' = Contents || {arc?, (mu a:ISA_COMPONENT |
+	|	GetTerminal(a,1)=arc? /\ GetTerminal(a,2)=type?)};
+	-------------------------------------------------------------------------- */
+//!!!!!!!!!!!!!!addArc and addNode look almost identical....
+int TypedGraph::addArc(ArcComponent&amp; arc, ID_type type)
+  {
+  //some inital checks...
+  Component0 &amp;p = (*this)[type]; //may throw
+  //if (!(p.getAttr("individual")==p.endAttr())) return -2;
+  int ret = arc.Id = getNextID();
+
+  if (arc.getName()=="?") {
+    char buf[MAX_NAME];
+    sprintf(buf,"%s-%lu",p.getName().c_str(),arc.Id);
+    arc.setName(buf);
+    }
+
+  Contents.insert(contents_type::value_type(arc.Id,Ref2<component0>(arc)));
+
+  ID_type typeID = 0;
+
+  try  {
+    if (type!=getArcType()) { // Nodes are automatically subtypes of the prototype Node without an actual isa arc (efficiency hack)
+      //create the necessary isa arc
+      IsaComponent typeArc(makeIsaRelation(arc.getID(),type));
+      typeID = typeArc.getID();
+      verify(typeArc,0);
+      }
+
+    verify((*this)[type],0);
+    verify(arc,0);
+    }
+  catch(...) {ret = -5;}
+
+  //if the insertion failed, we need to remove the garbage we've added.
+  if (ret &lt; 0) {
+    error(0,'E',"Arc insertion failed; invalid node insertion undone");
+    if (typeID) Contents.erase(typeID);
+    Contents.erase(arc.Id);
+    }
+
+  return ret;
+  }
+
+long TypedGraph::redirectArcTerminal(ID_type arc, unsigned int index, ID_type target,
+			Terminal::DIRECTION* dir, unsigned long flags)
+  {
+  long ret = 0;
+  //some inital checks...
+  try {if (target) Component0 &amp;p = (*this)[target];}
+  catch(...) {
+    error(0,'E',"TypedGraph::redirectArcTerminal: bad target parameter");
+    return -8;
+    }
+
+  ArcComponent* a = NULL;
+  try {
+    Component0 &amp;c = (*this)[arc]; //may throw
+    a = dynamic_cast<arccomponent*>(&amp;c);
+    }
+  catch(...) {
+    error(0,'E',"TypedGraph::redirectArcTerminal: bad arc parameter");
+    return -7;
+    }
+
+  if (!a) {
+    error(0,'E',"TypedGraph::redirectArcTerminal: parameter ID_type arc is not an arc");
+    return -6;
+    }
+
+  //if (!(p.getAttr("individual")==p.endAttr())) return -2;
+
+  ID_type oldID = a-&gt;getTerminalID(index);
+  ret = oldID;
+  Terminal::DIRECTION oldDir = a-&gt;getTerminalDir(index);
+
+  try  {
+    a-&gt;putAnchor(index,target,dir?*dir:oldDir);
+    verify(*a,flags);
+    if (target) notifyDependents(target);
+    if (oldID) notifyDependents(oldID);
+    }
+  catch(...) {ret = -5;}
+
+  //if the mod failed, we need to return to the old state.
+  if (ret &lt; 0) {
+    if (!flags&amp;Validator::silent) error(0,'E',"Arc redirection failed; undone");
+    if (oldID) a-&gt;putAnchor(index,oldID,oldDir);
+    }
+
+  return ret;
+  }
+
+
+int TypedGraph::setComponentType(ID_type c, ID_type type)
+  {
+  if (ancestorof(c,type)) {
+    error(0,'E',"Can't create a circular chain of isa arcs");
+    return -11;
+    }
+  int ret = 0;
+  ID_type typeID = 0;
+  int removeFromC = 0; //used to undo a failed operation
+  try {
+    //create the necessary isa arc
+    IsaComponent typeArc = makeIsaRelation(c,type);
+    ret = typeID = typeArc.getID();
+
+    //arcs only: check conformance of the child terminals up to its arity,
+    //then expand its arity as necessary
+    ArcComponent* ac = dynamic_cast<arccomponent*>(&amp;(*this)[c]);
+    if (ac) {
+      ArcComponent* atype = dynamic_cast<arccomponent*>(&amp;(*this)[type]);
+      if (!atype) {
+        if (c!=getNodeType() &amp;&amp; c!=getArcType()) { //exception: top of the type hierarchy
+          error(0,'E',"Can't subtype an arc from a non-arc");
+          ret = -6;
+          }
+        }
+      else {
+        //check conformance
+        //++++++++++++++ this doesn't account for directions!!!!!!!!!!!!!!!!!!!!!
+        int checkSize = min(atype-&gt;getTerminals()-&gt;size(),ac-&gt;getTerminals()-&gt;size());
+	for (Arc0::terminals_type::size_type i = 0; i<checksize; i++)="" {="" massert_throw((ac-="">getTerminalID(i)&amp;&amp;atype-&gt;getTerminalID(i)&amp;&amp;(atype-&gt;getTerminalID(i))!=_top.getID())?
+			isa(ac-&gt;getTerminalID(i),atype-&gt;getTerminalID(i)):true,true);
+	  }
+        //expand child arc if necessary
+        for (int j=ac-&gt;getTerminals()-&gt;size(); j<atype->getTerminals()-&gt;size(); j++) {
+          ac-&gt;getTerminals()-&gt;push_back((*atype-&gt;getTerminals())[j]);
+          removeFromC++;
+          }
+        }
+      }
+
+    if (ret &gt;= 0) {
+      verify((*this)[c],0);
+      verify((*this)[type],0);
+      verify(typeArc,0);
+      }
+    }
+  catch(...) {ret = -5;}
+
+  //if the insertion failed, we need to remove the garbage we've added.
+  if (ret &lt; 0) {
+    error(0,'W',"isa arc insertion failed; invalid isa arc insertion undone");
+    if (typeID) Contents.erase(typeID);
+    //remove any added arc terminals form the child
+    if (removeFromC) {
+      ArcComponent* ac = dynamic_cast<arccomponent*>(&amp;(*this)[c]); //guarenteed to be try if removeFromC &gt; 0
+      for (int i=removeFromC; i&gt;0; i--) {
+        ac-&gt;getTerminals()-&gt;pop_back();
+        }
+      }
+    }
+
+  return ret;
+  }
+
+IsaComponent TypedGraph::makeIsaRelation(ID_type c, ID_type type) //protected version, don't do checks: may throw
+  {
+  //create the necessary isa arc
+  IsaComponent typeArc("isa",(*this)[c].getLevel(),vector<terminal>());
+  typeArc.putAnchor(0,c,Terminal::FROM);
+  typeArc.putAnchor(1,type,Terminal::TO);
+  typeArc.Id = getNextID();
+
+  //make up a name
+  char buf[MAX_NAME];
+  sprintf(buf,"isa-%lu",typeArc.Id);
+  typeArc.setName(buf);
+
+  Contents.insert(contents_type::value_type(typeArc.Id,Ref2<component0>(typeArc)));
+  return typeArc;
+  }
+
+int TypedGraph::remove(ID_type id)
+  {
+  int ret = 0;
+  contents_type::iterator i = Contents.find(id);
+  if (i!=Contents.end()) {
+    //unhook this item form all arcs
+    bool sideEffectRemoved = true;
+    while (sideEffectRemoved) { //this loop is here to allow restarts after we did a side-effect remove (otherwise be may get a corrupt iterator)
+      sideEffectRemoved = false;
+      for (contents_type::iterator c=Contents.begin(); c!=Contents.end(); c++) {
+        ArcComponent* a = dynamic_cast<arccomponent*>(&amp;(*(*c).second));
+        if (a) {
+          int index = a-&gt;findAnchor(id);
+          if (index&gt;=0) {
+            if (redirectArcTerminal(a-&gt;getID(),index,0)&lt;0) { //arc won't verify, so remove it
+              if (remove(a-&gt;getID())) ret = -2;
+              else {sideEffectRemoved = true; break;}
+              }
+            }
+          }
+        }
+      }
+
+    //do the actual removal
+    if (!ret) {
+      ArcComponent* a = dynamic_cast<arccomponent*>(&amp;(*(*i).second));
+      if (a) { //arc case
+        Arc0::terminals_type anchors(*a-&gt;getTerminals());
+        Contents.erase(i);
+        for (Arc0::TerminalIterator j(anchors.begin()); j!=anchors.end(); j++) {
+          if ((*j).getAnchorID()) notifyDependents((*j).getAnchorID());
+          }
+        }
+      else //node case
+        Contents.erase(i);
+      }
+    }
+  else ret = -1;
+  return ret;
+  }
+
+ostream&amp; TypedGraph::printOn(ostream&amp; out) const
+  {
+  //header data
+  Lexer::writeUnsigned(out,NextID);
+  Lexer::writeDelim(out);
+  out &lt;&lt; '\n';
+  //body data
+  for (contents_type::const_iterator i(Contents.begin()); i!=Contents.end(); i++) {
+    if ((*i).first &gt; LastFundamentalObject) { //don't save the "fundamental" objects
+      Lexer::writeDelim(out,'(');
+      Lexer::writeQuotedString(out,typeid(*(*i).second).name());
+      Lexer::writeDelim(out);
+      out &lt;&lt; *(*i).second;
+      Lexer::writeDelim(out,')');
+      out &lt;&lt; '\n';
+      }
+    }
+  return out;
+  }
+
+void TypedGraph::flush()
+  {
+  bool erased = true;
+  while (erased) {
+    erased = false;
+    for (contents_type::iterator i(Contents.begin()); i!=Contents.end(); i++) {
+      if ((*i).first &gt; LastFundamentalObject) { //don't delete the "fundamental" objects
+        Contents.erase(i);
+        erased = true;
+        break;
+        }
+      }
+    }
+
+  _top.clearObservers();
+  _node.clearObservers();
+  _arc.clearObservers();
+  _isa.clearObservers();
+  _nodeIsa.clearObservers();
+  _arcIsa.clearObservers();
+  _isaIsa.clearObservers();
+
+  NextID = LastFundamentalObject+1;
+  }
+
+istream&amp; TypedGraph::readFrom(istream&amp; in)
+  {
+  Flags &amp;= ~checking;
+
+  try {
+    flush();
+
+    //header data
+    unsigned long temp;
+    Lexer::readUnsigned(in,temp); NextID=temp;
+    Lexer::readDelim(in);
+
+    //body data
+    while (!Lexer::readDelim(in,'(')) {
+      string t;
+      Lexer::readQuotedString(in,t);
+      Lexer::readDelim(in);
+      Component0* c = GraphsTypeLibrary-&gt;makeCopy(t);
+      if (c) {
+        in &gt;&gt; *c;
+        Contents.insert(contents_type::value_type(c-&gt;Id,Ref2<component0>(c,true)));
+        }
+      else error(0,'E',"Can't find %s in GraphsTypeLibrary",t.c_str());
+      Lexer::readDelim(in,')');
+      }
+    }
+
+  catch(...) {}
+
+  Flags |= checking;
+
+  return in;
+  }
+
+Component0&amp; TypedGraph::operator[](ID_type id) const
+  {
+  contents_type::const_iterator i = Contents.find(id);
+  if (i == ((const contents_type)Contents).end())
+    throw BadIDException("TypedGraph::opeator[ID]: ID does not exist");
+  if (!(*i).second)
+    throw BadIDException("TypedGraph::opeator[ID]: ID has no value");
+  return *(*i).second; //Contents[id];
+  }
+
+bool TypedGraph::contains(ID_type id) const
+  {
+  contents_type::const_iterator i = Contents.find(id);
+  bool ret = (!(i == ((const contents_type)Contents).end())) &amp;&amp; (*i).second;
+  return ret;
+  }
+
+//helper function -- not strictly necessary
+long TypedGraph::makeArc(string&amp; name, unsigned int level, ID_type type, vector<terminal>* terminals)
+  {
+  int ret;
+  vector<terminal> def(1);
+  Component0&amp; p = (*this)[type];
+  if (dynamic_cast<isacomponent*>(&amp;p)) {
+    IsaComponent ident(name,level,terminals?*terminals:def);
+    ret = addArc(ident,type);
+    }
+  else {
+    ArcComponent ident(name,level,terminals?*terminals:def);
+    ret = addArc(ident,type);
+    }
+  //ident.putAnchor(0,0,Terminal::BIDIRECT);
+  return ret;
+  }
+
+//helper function -- not strictly necessary
+long TypedGraph::makeDirArc2(string&amp; name, unsigned int level, ID_type type, ID_type from, ID_type to)
+  {
+  ArcComponent ident(name,level,vector<terminal>());
+  ident.putAnchor(0,from,Terminal::FROM);
+  ident.putAnchor(1,to,Terminal::TO);
+  int ret = addArc(ident,type);
+  return ret;
+  }
+
+//helper function -- not strictly necessary
+long TypedGraph::makeNode(string&amp; name, unsigned int level, ID_type type)
+  {
+  NodeComponent ident(name,level);
+  int ret = addNode(ident,type);
+  return ret;
+  }
+
+/*******************************************************************************
+****************************** FirstOrderTypedGraph ****************************
+*******************************************************************************/
+/*<a name="classFirstOrderTypedGraph">
+  </a><a href="http://sern.ucalgary.ca/%7Ekremer/graphs/GraphsZ.htm#FIRST_ORDER_TYPED_GRAPH">Z spec</a>,
+  <a href="http://sern.ucalgary.ca/%7Ekremer/graphs/graphs_h.html#classFirstOrderTypedGraph">declaration</a> */
+
+FirstOrderTypedGraph::FirstOrderTypedGraph() : TypedGraph()
+  {
+  _arc.addConstraint("NoArcBtwnArcs");
+  }
+
+/*
+*/
+
+
+</terminal></isacomponent*></terminal></terminal></component0></arccomponent*></arccomponent*></component0></terminal></arccomponent*></atype-></checksize;></arccomponent*></arccomponent*></arccomponent*></component0></component0></component0></typedgraph::contentsiterator,bool></arccomponent*></isacomponent*></nodecomponent*></arccomponent*></isacomponent*></nodecomponent*></arccomponent*></isacomponent*></isacomponent*></validator></nodecomponent*></arccomponent*></isacomponent*></component0></component0></component0></component0></component0></component0></component0></component0></terminal></terminal></terminal></terminal></terminal></validator></conjunctionofvalidators></attributevaluepair></conjunctionofvalidators></attribute></attribute></polysetofattributes::iterator,bool></attribute></validator,0></component0,0></attribute,0></stdio.h></mobjlib.h></mlexer.h></merror.h></algo.h></typeinfo.h></fstream.h></constraints.h></graphs.h></owl\owlpch.h></pre></body></html>

@@ -1,0 +1,4 @@
+WARP|War and Peace|14.95
+MBDK|Moby Dick|12.95
+WUTH|Wuthering Heights|12.95
+CITR|Catcher in the Rye|9.95

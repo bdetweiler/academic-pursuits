@@ -1,0 +1,484 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 3.0//EN">
+<html><head><!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+
+
+
+<script language="JavaScript">
+<!-- hide
+   open("help.html", "ShockwavePlayer", "width=400,height=200,status=no,toolbar=no,menubar=no");
+// -->
+</script><title>Lecture 14 - data structures for graphs</title>
+
+<meta name="description" content="Lecture 14 - data structures for graphs">
+<meta name="keywords" content="all">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global"></head><body lang="EN">
+ <a name="tex2html509" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node15.html"><img alt="next" src="node14_files/next_motif.gif" align="bottom" height="24" width="37"></a> <a name="tex2html507" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/all.html"><img alt="up" src="node14_files/up_motif.gif" align="bottom" height="24" width="26"></a> <a name="tex2html501" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node13.html"><img alt="previous" src="node14_files/previous_motif.gif" align="bottom" height="24" width="63"></a>  <a name="tex2html511" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node24.html"><img alt="index" src="node14_files/index_motif.gif" align="bottom" height="24" width="43"></a> <br>
+<b> Next:</b> <a name="tex2html510" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node15.html">Lecture 15 - DFS </a>
+<b>Up:</b> <a name="tex2html508" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/all.html">No Title</a>
+<b> Previous:</b> <a name="tex2html502" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node13.html">Lecture 13 - dynamic </a>
+<br> <p>
+</p><h1><a name="SECTION000140000000000000000">Lecture 14 - data structures for graphs</a></h1>
+<p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec14-1.html" target="ShockwavePlayer">Listen To Part 14-1</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Problem Solving Techniques</big></p></div>
+<p>
+Most important: make sure you understand exactly what the question is asking -
+if not, you have no hope of answer it!!
+<a name="8103">&nbsp;</a>
+</p><p>
+Never be afraid to ask for another explanation of a problem until it is clear.
+</p><p>
+Play around with the problem by constructing examples to get insight into it.
+</p><p>
+Ask yourself questions.
+Does the first idea which comes into my head work?
+If not, why not?
+</p><p>
+Am I using all information that I am given about the problem?
+</p><p>
+Read Polya's book <em>How to Solve it</em>.
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec14-2.html" target="ShockwavePlayer">Listen To Part 14-2</a>
+</p><p>
+<em>
+16-1: 
+The Euclidean traveling-salesman problem is the problem of determining
+the shortest closed tour that connects a given set of <em>n</em> points in the
+plane.
+<a name="8141">&nbsp;</a>
+<a name="8142">&nbsp;</a>
+</em></p><p>
+<em>Bentley suggested simplifying the problem by restricting attention to
+<em>bitonic tours</em>, that is tours which start at the leftmost point,
+go strictly left to right to the rightmost point, and then go strictly
+right back to the starting point.
+</em></p><p>
+</p><div align="center"><em> <img alt="tex2html_wrap15210" src="node14_files/img607.gif" align="bottom" height="149" width="415"> <br></em></div>
+<em>Describe an  <img alt="tex2html_wrap_inline15090" src="node14_files/img694.gif" align="middle" height="20" width="29">  algorithm for finding the optimal bitonic tour.
+You may assume that no two points have the same <em>x</em>-coordinate.
+(Hint: scan left to right, maintaining optimal possibilities for the
+two parts of the tour.)
+</em>
+<hr>Make sure you understand what a bitonic tour is, or else it is hopeless.
+<p>
+First of all, play with the problem. Why isn't it trivial?
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec14-3.html" target="ShockwavePlayer">Listen To Part 14-3</a>
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15212" src="node14_files/img609.gif" align="bottom" height="193" width="355"> <br></div>
+Am I using all the information?
+<p>
+Why will they let us assume that no two <em>x</em>-coordinates are the same?
+What does the hint mean?
+What happens if I scan from left to right?
+</p><p>
+If we scan from left to right, we get an open tour which uses all
+points to the left of our scan line.
+<a name="8159">&nbsp;</a>
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15214" src="node14_files/img610.gif" align="bottom" height="122" width="145"> <br></div>
+In the optimal tour, the <em>k</em>th point is connected to exactly one point
+to the left of <em>k</em>.
+ <img alt="tex2html_wrap_inline15092" src="node14_files/img611.gif" align="middle" height="18" width="38">  Once I decide which point that is, say <em>x</em>.
+I need the optimal partial tour where the two endpoints are <em>x</em> and <em>k-1</em>,
+because if it isn't optimal I could come up with a better one.
+<p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec14-4.html" target="ShockwavePlayer">Listen To Part 14-4</a>
+</p><p>
+Hey, I have got a recurrence! And look, the two parameters which describe
+my optimal tour are the two endpoints.
+</p><p>
+Let <i>c</i>[<i>k</i>,<i>n</i>] be the optimal cost partial tour where the two endpoints
+are <i>k</i>&lt;<i>n</i>.
+</p><p>
+ <img alt="tex2html_wrap_inline15098" src="node14_files/img612.gif" align="middle" height="20" width="168">   (when <i>k</i> &lt; <i>n</i>-1)
+</p><p>
+ <img alt="tex2html_wrap_inline15102" src="node14_files/img613.gif" align="middle" height="20" width="168"> 
+</p><p>
+<i>c</i>[0, 1]=<i>d</i>[0, 1]
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15216" src="node14_files/img614.gif" align="bottom" height="234" width="363"> <br></div>
+<i>c</i>[<i>n</i>-1, <i>n</i>] takes <i>O</i>(<i>n</i>) to update, <i>c</i>[<i>k</i>, <i>n</i>] <i>k</i>&lt;<i>n</i>-1 takes <i>O</i>(1) to update.
+Total time is  <img alt="tex2html_wrap_inline15116" src="node14_files/img694.gif" align="middle" height="20" width="29"> .
+<p>
+But this doesn't quite give the tour, but just an open tour.
+We simply must figure where the last edge to <em>n</em> must go.
+</p><p>
+</p><p> <img alt="displaymath15088" src="node14_files/img616.gif" align="bottom" height="22" width="327"> </p><p>
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-1.html" target="ShockwavePlayer">Listen To Part 15-1</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Graphs</big></p></div>
+<p>
+A graph <em>G</em> consists of a set of <em>vertices</em> <em>V</em> together with a set <em>E</em> of
+vertex pairs or <em>edges</em>.
+<a name="8195">&nbsp;</a><a name="8196">&nbsp;</a><a name="8197">&nbsp;</a>
+</p><p>
+Graphs are important because any binary relation is a graph,
+so graphs can be used to represent essentially <em>any</em> relationship.
+</p><p>
+Example: A network of roads, with cities as vertices and roads between cities
+as edges.
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15218" src="node14_files/img617.gif" align="bottom" height="136" width="358"> <br></div>
+Example: An electronic circuit, with junctions as vertices as components as
+edges.
+<p>
+</p><div align="center"> <img alt="tex2html_wrap15220" src="node14_files/img618.gif" align="bottom" height="106" width="268"> <br></div>
+To understand many problems, we must think of them in terms of graphs!
+<p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-2.html" target="ShockwavePlayer">Listen To Part 15-2</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">The Friendship Graph</big></p></div>
+<p>
+Consider a graph where the vertices are people, and there is an edge
+between two people if and only if they are friends.
+<a name="8217">&nbsp;</a>
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15222" src="node14_files/img619.gif" align="bottom" height="160" width="358"> <br></div>
+This graph is well-defined on any set of people: SUNY SB, New York, or
+the world.
+<p>
+What questions might we ask about the friendship graph?
+</p><p>
+</p><ul><li> <b>If I am your friend, does that mean you are my friend?</b>
+<p>
+A graph is <em>undirected</em> if (<i>x</i>,<i>y</i>) implies (<i>y</i>,<i>x</i>).
+Otherwise the graph is directed.
+The ``heard-of'' graph is directed since countless famous people
+have never heard of me! 
+The ``had-sex-with'' graph is presumably undirected, since it requires
+a partner.
+<a name="8223">&nbsp;</a><a name="8224">&nbsp;</a></p></li><li> <b>Am I my own friend?</b>
+<a name="8226">&nbsp;</a><a name="8227">&nbsp;</a>
+<p>
+An edge of the form (<i>x</i>,<i>x</i>) is said to be a <em>loop</em>.
+If <em>x</em> is <em>y</em>'s friend several times over, that could be modeled using
+<em>multiedges</em>, multiple edges between the same pair of vertices.
+A graph is said to be <em>simple</em> if it contains no loops and
+multiple edges.
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-3.html" target="ShockwavePlayer">Listen To Part 15-3</a></p></li><li> <b>Am I linked by some chain of friends to the President?</b>
+<p>
+A <em>path</em> is a sequence of edges connecting two vertices.
+Since <em>Mel Brooks</em> is my father's-sister's-husband's cousin,
+there is a path between me and him!
+<a name="8245">&nbsp;</a><a name="8246">&nbsp;</a>
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15224" src="node14_files/img620.gif" align="bottom" height="47" width="352"> <br></div>
+</li><li> <b>How close is my link to the President?</b>
+<p>
+If I were trying to impress you with how tight I am with Mel
+Brooks, I would be much better off saying that Uncle Lenny knows him
+than to go into the details of how connected I am to Uncle Lenny.
+Thus we are often interested in the <em>shortest path</em> between two nodes.
+<a name="8251">&nbsp;</a></p></li><li> <b>Is there a path of friends between any two people?</b>
+<p>
+A graph is <em>connected</em> if there is a path between any two vertices.
+A directed graph is <em>strongly connected</em> if there is a directed path
+between any two vertices.
+<a name="8255">&nbsp;</a><a name="8256">&nbsp;</a></p></li><li> <b>Who has the most friends?</b>
+<p>
+The <em>degree</em> of a vertex is the number of edges adjacent to it.
+<a name="8259">&nbsp;</a>
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-4.html" target="ShockwavePlayer">Listen To Part 15-4</a>
+</p><p>
+</p></li><li> <b>What is the largest clique?</b>
+<a name="8267">&nbsp;</a>
+<p>
+A social clique is a group of mutual friends who all hang around together.
+A graph theoretic <em>clique</em> is a complete subgraph,
+where each vertex pair has an edge between them.
+Cliques are the densest possible subgraphs.
+Within the friendship graph, we would expect that large cliques correspond
+to workplaces, neighborhoods, religious organizations, schools, and the
+like.</p></li><li> <b>How long will it take for my gossip to get back to me?</b>
+<p>
+A <em>cycle</em> is a path where the last vertex is adjacent to the first.
+A cycle in which no vertex repeats (such as 1-2-3-1 verus 1-2-3-2-1)
+is said to be <em>simple</em>.
+The shortest cycle in the graph defines its <em>girth</em>, while a simple
+cycle which passes through each vertex is said to be a <em>Hamiltonian
+cycle</em>.
+<a name="8274">&nbsp;</a><a name="8275">&nbsp;</a><a name="8276">&nbsp;</a><a name="8277">&nbsp;</a>
+</p><p>
+</p></li></ul>
+<p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-5.html" target="ShockwavePlayer">Listen To Part 15-5</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Data Structures for Graphs</big></p></div>
+<p>
+There are two main data structures used to represent graphs.
+</p><p>
+</p><div align="center"><p align="center"><big class="LARGE">Adjacency Matrices</big></p></div>An <em>adjacency matrix</em> is an  <img alt="tex2html_wrap_inline15124" src="node14_files/img211.gif" align="middle" height="11" width="29">  matrix,
+where <i>M</i>[<i>i</i>,<i>j</i>] = 0 iff there is no edge from vertex <em>i</em> to vertex <em>j</em>
+<a name="8286">&nbsp;</a>
+<p>
+</p><div align="center"> <img alt="tex2html_wrap15226" src="node14_files/img622.gif" align="bottom" height="116" width="361"> <br></div>
+It takes  <img alt="tex2html_wrap_inline15128" src="node14_files/img623.gif" align="middle" height="18" width="24">  time to test if (<i>i</i>,<i>j</i>) is in a graph represented
+by an adjacency matrix.
+<p>
+Can we save space if (1) the graph is undirected? (2) if the graph is sparse?
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-6.html" target="ShockwavePlayer">Listen To Part 15-6</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="LARGE">Adjacency Lists</big></p></div>An <em>adjacency list</em> consists of a  <img alt="tex2html_wrap_inline15132" src="node14_files/img624.gif" align="middle" height="17" width="30">  array of pointers,
+where the <em>i</em>th element points to a linked list of the
+edges incident on vertex <em>i</em>.
+<a name="8307">&nbsp;</a>
+<p>
+</p><div align="center">
+ <img alt="tex2html_wrap15228" src="node14_files/img625.gif" align="bottom" height="107" width="181"> 
+ <img alt="tex2html_wrap15230" src="node14_files/img626.gif" align="bottom" height="82" width="181"> <br></div>
+To test if edge (<i>i</i>,<i>j</i>) is in the graph, we search the <em>i</em>th list for
+<em>j</em>,
+which takes  <img alt="tex2html_wrap_inline15136" src="node14_files/img627.gif" align="middle" height="18" width="27"> , where  <img alt="tex2html_wrap_inline15138" src="node14_files/img714.gif" align="middle" height="19" width="9">  is the degree of the <em>i</em>th vertex.
+<p>
+Note that  <img alt="tex2html_wrap_inline15140" src="node14_files/img714.gif" align="middle" height="19" width="9">  can be much less than <em>n</em> when the graph is sparse.
+If necessary, the two <em>copies</em> of each edge can be linked by a pointer
+to facilitate deletions.
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec15-7.html" target="ShockwavePlayer">Listen To Part 15-7</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Tradeoffs Between Adjacency Lists and Adjacency Matrices</big></p></div>
+<p>
+<small class="SMALL">
+<div align="center"><p align="center"><table border="1" cols="2" frame="box" rules="groups">
+<colgroup><col align="left"></colgroup><colgroup><col align="right">
+</colgroup><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">
+Comparison </td><td align="right" nowrap="nowrap" valign="baseline"> Winner </td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Faster to test if (<i>x</i>, <i>y</i>) exists? </td><td align="right" nowrap="nowrap" valign="baseline"> matrices</td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Faster to find vertex degree?</td><td align="right" nowrap="nowrap" valign="baseline">  lists</td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Less memory on small graphs? </td><td align="right" nowrap="nowrap" valign="baseline">lists (<i>m</i>+<i>n</i>) vs.  <img alt="tex2html_wrap_inline15146" src="node14_files/img630.gif" align="middle" height="20" width="20">  </td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Less memory on big graphs? </td><td align="right" nowrap="nowrap" valign="baseline"> matrices (small win) </td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Edge insertion or deletion? </td><td align="right" nowrap="nowrap" valign="baseline"> matrices <i>O</i>(1) </td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Faster to traverse the graph? </td><td align="right" nowrap="nowrap" valign="baseline"> lists <em>m+n</em> vs.  <img alt="tex2html_wrap_inline15150" src="node14_files/img647.gif" align="bottom" height="10" width="11">  </td></tr>
+</tbody><tbody>
+<tr><td align="left" nowrap="nowrap" valign="baseline">Better for most problems? </td><td align="right" nowrap="nowrap" valign="baseline"> lists  </td></tr>
+</tbody>
+</table>
+</p></div>
+</small>
+</p><p>
+Both representations are very useful and have different properties,
+although adjacency lists are probably better for most problems.
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec16-2.html" target="ShockwavePlayer">Listen To Part 16-2</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Traversing a Graph</big></p></div>
+<p>
+One of the most fundamental graph problems is to traverse every edge
+and vertex in a graph.
+Applications include:
+<a name="8356">&nbsp;</a>
+</p><p>
+</p><ul><li> Printing out the contents of each edge and vertex.</li><li> Counting the number of edges.</li><li> Identifying connected components of a graph.
+</li></ul>
+<p>
+For <em>efficiency</em>, we must make sure we visit each edge at most twice.
+</p><p>
+For <em>correctness</em>, we must do the traversal in a systematic way so
+that we don't miss anything.
+</p><p>
+Since a maze is just a graph, such an algorithm must be powerful enough to
+enable us to get out of an arbitrary maze.
+<a name="8361">&nbsp;</a>
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec16-3.html" target="ShockwavePlayer">Listen To Part 16-3</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Marking Vertices</big></p></div>
+<p>
+<em>
+The idea in graph traversal
+is that we must mark each vertex when we first visit it,
+and keep track of what have not yet completely explored.
+</em>
+</p><p>
+For each vertex, we can maintain two flags:
+</p><p>
+</p><ul><li>
+<em>discovered</em> - have we ever encountered this vertex before?</li><li>
+<em>completely-explored</em> - have we finished exploring this vertex yet?
+<p>
+</p></li></ul>
+<p>
+We must also maintain a structure containing all the vertices we have
+discovered but not yet completely explored.
+</p><p>
+Initially, only a single start vertex is considered to be discovered.
+</p><p>
+To completely explore a vertex, we look at each edge going out of it.
+For each edge which goes to an undiscovered vertex,
+we mark it <em>discovered</em> and add it to the list of work to do.
+</p><p>
+Note that regardless of what order we fetch the next vertex to explore,
+each edge is considered exactly twice, when each of its endpoints are explored.
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec16-4.html" target="ShockwavePlayer">Listen To Part 16-4</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Correctness of Graph Traversal</big></p></div>
+<p>
+Every edge and vertex in the connected component is eventually visited.
+</p><p>
+Suppose not, ie. there exists a vertex which was unvisited whose neighbor
+<em>was</em> visited.
+This neighbor will eventually be explored so we <em>would</em> visit it:
+</p><p>
+</p><div align="center"> <img alt="tex2html_wrap15232" src="node14_files/img632.gif" align="bottom" height="78" width="181"> <br></div>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec16-5.html" target="ShockwavePlayer">Listen To Part 16-5</a>
+<p>
+</p><div align="center"><p align="center"><big class="XLARGE">Traversal Orders</big></p></div>
+<p>
+The order we explore the vertices depends upon what kind of data structure
+is used:
+</p><p>
+</p><ul><li>
+<em>Queue</em> - by storing the vertices in a first-in, first out (FIFO)
+queue, we explore the oldest unexplored vertices first.
+Thus our explorations radiate out slowly from the starting vertex,
+defining a so-called <em>breadth-first search</em>.
+<a name="8397">&nbsp;</a><a name="8398">&nbsp;</a></li><li>
+<em>Stack</em> - by storing the vertices in a last-in, first-out (LIFO)
+stack, we explore the vertices by lurching along a path, constantly
+visiting a new neighbor if one is available, and backing up only
+if we are surrounded by previously discovered vertices.
+Thus our explorations quickly wander away from our starting point,
+defining a so-called <em>depth-first search</em>.
+<a name="8401">&nbsp;</a><a name="8402">&nbsp;</a>
+</li></ul>
+<p>
+The three possible colors of each node reflect if it is unvisited (white),
+visited but unexplored (grey) or completely explored (black).
+</p><p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec16-6.html" target="ShockwavePlayer">Listen To Part 16-6</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Breadth-First Search</big></p></div>
+<a name="8410">&nbsp;</a>
+<p>
+
+</p><pre><tt>
+</tt><p>
+<tt>BFS(G,s)
+</tt></p><p>
+<tt>for each vertex  <img alt="tex2html_wrap_inline15152" src="node14_files/img633.gif" align="middle" height="20" width="80">  do
+</tt></p><p>
+<tt>		 color[u] = white
+</tt></p><p>
+<tt>		  <img alt="tex2html_wrap_inline15154" src="node14_files/img634.gif" align="middle" height="20" width="48"> , ie. the distance from <em>s</em>
+</tt></p><p>
+<tt>		 <i>p</i>[<i>u</i>] = <i>NIL</i>, ie. the parent in the BFS tree
+</tt></p><p>
+<tt>color[u] = grey
+</tt></p><p>
+<tt><i>d</i>[<i>s</i>] = 0
+</tt></p><p>
+<tt><i>p</i>[<i>s</i>] = <i>NIL</i>
+</tt></p><p>
+<tt> <img alt="tex2html_wrap_inline15162" src="node14_files/img635.gif" align="middle" height="20" width="42"> 
+</tt></p><p>
+<tt>while  <img alt="tex2html_wrap_inline15164" src="node14_files/img636.gif" align="middle" height="21" width="31">  do
+</tt></p><p>
+<tt>		 <i>u</i> = <i>head</i>[<i>Q</i>]
+</tt></p><p>
+<tt>		 for each  <img alt="tex2html_wrap_inline15168" src="node14_files/img637.gif" align="middle" height="20" width="54">  do
+</tt></p><p>
+<tt>		 		 if <i>color</i>[<i>v</i>] = <i>white</i> then
+</tt></p><p>
+<tt>		 		 		 <i>color</i>[<i>v</i>] = <i>gray</i>
+</tt></p><p>
+<tt>		 		 		 <i>d</i>[<i>v</i>] = <i>d</i>[<i>u</i>] + 1
+</tt></p><p>
+<tt>		 		 		 <i>p</i>[<i>v</i>] = <i>u</i>
+</tt></p><p>
+<tt>		 		 		 enqueue[Q,v]
+</tt></p><p>
+<tt>		 		 dequeue[Q]
+</tt></p><p>
+<tt>		 		 <i>color</i>[<i>u</i>] = <i>black</i> 
+</tt></p></pre>
+
+<p>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/sounds/lec16-8.html" target="ShockwavePlayer">Listen To Part 16-8</a>
+</p><p>
+</p><div align="center"><p align="center"><big class="XLARGE">Depth-First Search</big></p></div>
+<p>
+DFS has a neat recursive implementation which eliminates the need to
+explicitly use a stack.
+<a name="8427">&nbsp;</a>
+</p><p>
+Discovery and final times are sometimes a convenience to maintain.
+</p><p>
+
+</p><pre><tt>
+</tt><p>
+<tt>DFS(G)
+</tt></p><p>
+<tt>for each vertex  <img alt="tex2html_wrap_inline15180" src="node14_files/img638.gif" align="middle" height="20" width="48">  do
+</tt></p><p>
+<tt>		 <i>color</i>[<i>u</i>] = <i>white</i>
+</tt></p><p>
+<tt>		 <i>parent</i>[<i>u</i>] = <i>nil</i>
+</tt></p><p>
+<tt><i>time</i> = 0
+</tt></p><p>
+<tt>for each vertex  <img alt="tex2html_wrap_inline15188" src="node14_files/img638.gif" align="middle" height="20" width="48">  do
+</tt></p><p>
+<tt>		 if <i>color</i>[<i>u</i>] = <i>white</i> then DFS-VISIT[u]
+</tt></p><p>
+</p></pre>
+
+<p>
+Initialize each vertex in the main routine, then do a search from each
+connected component.
+BFS must also start from a vertex in each component to completely visit the
+graph.
+<a name="8429">&nbsp;</a>
+</p><p>
+
+</p><pre><tt>
+</tt><p>
+<tt>DFS-VISIT[u]
+</tt></p><p>
+<tt><i>color</i>[<i>u</i>] = <i>grey</i> (*u had been white/undiscovered*)
+</tt></p><p>
+<tt><i>discover</i>[<i>u</i>] = <i>time</i>
+</tt></p><p>
+<tt><i>time</i> = <i>time</i>+1
+</tt></p><p>
+<tt>for each  <img alt="tex2html_wrap_inline15198" src="node14_files/img640.gif" align="middle" height="20" width="54">  do
+</tt></p><p>
+<tt>		 if <i>color</i>[<i>v</i>] = <i>white</i> then
+</tt></p><p>
+<tt>		 		 <i>parent</i>[<i>v</i>] = <i>u</i>
+</tt></p><p>
+<tt>		 		 DFS-VISIT(v)
+</tt></p><p>
+<tt><i>color</i>[<i>u</i>] = <i>black</i> (*now finished with <em>u</em>*)
+</tt></p><p>
+<tt><i>finish</i>[<i>u</i>] = <i>time</i>
+</tt></p><p>
+<tt><i>time</i> = <i>time</i>+1
+</tt></p><p>
+</p></pre>
+
+<p>
+</p><hr><a name="tex2html509" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node15.html"><img alt="next" src="node14_files/next_motif.gif" align="bottom" height="24" width="37"></a> <a name="tex2html507" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/all.html"><img alt="up" src="node14_files/up_motif.gif" align="bottom" height="24" width="26"></a> <a name="tex2html501" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node13.html"><img alt="previous" src="node14_files/previous_motif.gif" align="bottom" height="24" width="63"></a>  <a name="tex2html511" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node24.html"><img alt="index" src="node14_files/index_motif.gif" align="bottom" height="24" width="43"></a> <br>
+<b> Next:</b> <a name="tex2html510" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node15.html">Lecture 15 - DFS </a>
+<b>Up:</b> <a name="tex2html508" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/all.html">No Title</a>
+<b> Previous:</b> <a name="tex2html502" href="http://www.cs.sunysb.edu/%7Ealgorith/lectures-good/node13.html">Lecture 13 - dynamic </a>
+<p></p><address>
+<i>Algorithms <br>
+Mon Jun  2 09:21:39 EDT 1997</i>
+</address>
+
+</body></html>

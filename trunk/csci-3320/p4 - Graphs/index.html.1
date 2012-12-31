@@ -1,0 +1,37 @@
+<html>
+<body>
+<h2> Graphs </h2>
+
+This program needs to compute the shortest path, and minimum spanning
+tree for a graph.  I would recommend using Dijkstra's for the shortest
+path, and Prim's for the minimum spanning tree.  Part of this problem is
+choosing a good representation of the graph for the problem you are
+solving.
+<p>
+This program needs to read the input from stdin.  The input is defined
+as the path to compute and the edges.  Each edges is defined as the the
+source node, destination node, and distance.  For this problem the
+graphs are not directed, and edge names may be contigious non-whitespace
+symbols ( I used a hash table to go from symbol to index, feel free to
+use a list or some other type, just account for it in your analysis ).
+<p>
+In order to accomplish this problem, I used several datatypes.  
+Some of the containers I used were vector and Dheap.
+I also defined Graph, Vertex, Edge, Table, and Row.  
+This does not mean yours must have these, they are just suggestions.
+<p>
+Your program only needs to output the minimum spanning tree, 
+shortest path.
+<p>
+<a href=prog.out>Here are some sample runs</a><br>
+<p>
+This program is due December 12th.<br>
+
+<h3>Goals</h3>
+<ul>
+<li> write code to represent a graph
+<li> solve for common graph problems
+</ul>
+
+</body>
+</html>

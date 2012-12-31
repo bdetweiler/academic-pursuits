@@ -1,0 +1,69 @@
+
+<html>
+<body>
+<h2> 
+Soundex Hashing
+</h2>
+
+For this program you need to write a spelling suggestion list.  
+The program will read from a dictionary file, build a hash table for
+those words, and check the input.  
+If an input word is not in the hash table, it will output the word, and
+all entries in the table with the same soundex code.  The output list or
+words need to be in alpha order ( case insensititve ).
+<p>
+There is a reasonably decent dictionary at "/usr/share/dict/words".
+As of 11-13-06 the systems is running debian, and they use a
+non-standard location of "/usr/share/dict/american-english".
+<p>
+The program will read from stdin, an optional dictionary may be given with
+a "-d" argument.  When parsing the input we will consider any alphanumeric
+or hyphen part of a word.  We will ignore any other other input.  For this
+I used getline and strtok.
+
+<h3>
+Soundex Algorithm
+</h3>
+<ul>
+<li> The first letter of the code is the first letter of the input word.
+If the first letter is not a letter, use 'Z'.
+<li> The remaining letters of the code are any code that is non-zero, 
+and different from the code of the previous letter ( begining with the
+second letter ).
+</ul>
+Soundex codes for this assingment are 1 letter and 4 digits.
+But you will want to store the digits as characters so the entire 
+code is the same type.
+The code contains the first letter of the word (case doesn't matter).
+and the the others are mapped to numbers.
+The mappings are provided below, in the table.
+Any time a code is the same as the code of the previous character, 
+it is discarded.  
+If I am using 4 digits the default is "Z0000".
+<table border=3>
+<tr><td> <b>Letters</b> </td><td> <b>Numbers</b> </td></tr>
+<tr><td> b,p,f,v </td><td> 1 </td></tr>
+<tr><td> c,s,k,g,j,q,x,z </td><td> 2 </td></tr>
+<tr><td> d,t </td><td> 3 </td></tr>
+<tr><td> l </td><td> 4 </td></tr>
+<tr><td> m,n </td><td> 5 </td></tr>
+<tr><td> r </td><td> 6 </td></tr>
+<tr><td> All Others </td><td> 0 </td></tr>
+</table>
+
+<p>
+<a href="sample.run">Here are some sample runs from mine</a><br>
+
+<p>
+This program is due November <s>13th</s><s>15th</s>21th.<br>
+
+<h3>Goals</h3>
+<ul>
+<li> impliment soundex
+<li> impliment a simple hash table
+</ul>
+
+
+
+</body>
+</html>

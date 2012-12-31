@@ -1,0 +1,78 @@
+Tree::Node* Tree::double_right(Tree::Node*)
+           3(0)
+     2(0)
+           1(0)
+
+Tree::Node* Tree::single_right(Tree::Node*)
+           3(0)
+     2(-1)
+                 1(0)
+           0(0)
+                -1(0)
+
+Tree::Node* Tree::double_left(Tree::Node*)
+                 5(0)
+           4(0)
+                 3(0)
+     2(0)
+                 1(0)
+           0(0)
+                -1(0)
+
+find for 6 returns false
+find for 0 returns true
+find for 42 returns false
+Tree::Node* Tree::single_left(Tree::Node*)
+                       7(0)
+                 6(0)
+                       5(0)
+           4(1)
+                 3(0)
+     2(1)
+                 1(0)
+           0(0)
+                -1(0)
+
+find for 6 returns true
+find for 0 returns true
+find for 42 returns false
+Tree::Node* Tree::single_left(Tree::Node*)
+                       8(0)
+                 7(1)
+           6(0)
+                       5(0)
+                 4(0)
+                       3(0)
+     2(1)
+                 1(0)
+           0(0)
+                -1(0)
+
+                       8(0)
+                 7(1)
+           6(0)
+                       5(0)
+                 4(1)
+     3(1)
+                 1(0)
+           0(0)
+                -1(0)
+
+                       8(0)
+                 7(1)
+           6(1)
+                 4(0)
+     3(1)
+                 1(0)
+           0(0)
+                -1(0)
+
+Tree::Node* Tree::single_left(Tree::Node*)
+                 8(0)
+           7(0)
+                 6(0)
+     3(0)
+                 1(0)
+           0(0)
+                -1(0)
+

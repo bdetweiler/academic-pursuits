@@ -1,0 +1,637 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html><head><title>Practical Huffman Coding</title>
+
+
+   
+   <meta name="Author" content="Michael Schindler">
+   <meta name="Description" content="This page gives hints for 
+     efficient huffman codings from practical view. Most of this stuff
+     you will not find in textbooks">
+   <meta name="KeyWords" content="huffman code compression hints recipes FAQ practical huffmann">
+   <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"></head><body alink="#ff0000" bgcolor="#ffffff" link="#0020ff" text="#000000" vlink="#8000a0">
+
+<!-- $Revision: 1.2 $ -->
+
+<h1 align="center">Practical Huffman coding</h1>
+
+<h4 align="center">by <a href="http://www.compressconsult.com/people/michael.html">Michael
+Schindler</a> of <a href="http://www.compressconsult.com/">
+<img src="Practical%20Huffman%20Coding_files/log104b.gif" alt="&gt;data&lt;//// logo" align="middle" border="0"> Compression Consulting</a></h4>
+
+<p>
+Welcome to <a href="http://www.compressconsult.com/">Compression Consulting</a>'s
+huffman coding hints.  This page assumes that you are familiar with
+huffman coding.  It will focus on practical issues you need to know
+for writing a fast and reasonable memory efficient huffman coder.
+It will not cover the essentials, the history, proof of optimality
+(within the constraints) and other things you can find in textbooks.
+More information about huffman coding can be found in 
+<a href="http://datacompression.info/Huffman.shtml">The Data Compression Library</a>.
+
+
+</p><p>
+This page is now mentioned in the
+<a href="http://www.faqs.org/faqs/compression-faq/part2/section-1.html">comp.compression
+FAQ (part2)</a> and on the <a href="http://www.internz.com/compression-pointers.html">compression
+pointers</a> page as well as in <a href="http://datacompression.info/Huffman.shtml">The Data Compression Library</a>.
+For a nice animated source code see the <a href="http://ciips.ee.uwa.edu.au/%7Emorris/Year2/PLDS210/huffman.html">University of Western Australia
+algorithms course</a>
+
+</p><p>
+This is basically a cookbook recipe collection which fits most peoples
+needs.  If you are not sure whether this fits your needs please contact me
+at&nbsp;michael@<a href=""></a>compressconsult.com&nbsp;.
+There is intentionally no source code as Huffman coding is a popular student exercise.
+
+</p><h3>Table of content</h3>
+<menu>
+<li><a href="#conventions">Example Distribution and Tree Notation Used in this Text</a>
+</li><li><a href="#huffman">Huffman Codes</a>
+</li><li><a href="#canonical">Canonical Huffman Codes</a>
+</li><li><a href="#construction">Code Construction</a>
+</li><li><a href="#maxlength">Maximum Length of a Huffman Code</a>
+</li><li><a href="#codelengths">Calculating Codelengths for a Distribution</a>
+</li><li><a href="#encoding">Encoding</a>
+</li><li><a href="#decoding">Decoding</a>
+</li></menu>
+
+<h3><a name="conventions">Example Distribution and Tree Notation Used in this Text</a></h3>
+
+<p>
+Throughout the text I will use the following probabilities for the
+symbols A-H:<br>
+<table border="1" cellpadding="6">
+<tbody><tr><td>A: 3/28 </td><td>B: 1/28 </td><td>C: 2/28 </td><td>D: 5/28
+</td></tr><tr><td>E: 5/28 </td><td>F: 1/28 </td><td>G: 1/28 </td><td>H: 10/28
+</td></tr></tbody></table>
+
+</p><p>
+I will write trees in a bracket syntax, each bracket pair encloses
+a subtree; subtrees are written left to right.
+Example: ((a,b),c) denotes a binary tree where the left child of
+the root is a node with a as left child, b as right child. c is the right
+child of the root.  If the reader is not familiar with that I suggest
+using paper and pencil to draw the tree.
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h3><a name="huffman">Huffman Codes</a></h3>
+
+<p>
+Textbooks usually will not tell you, but typically there is more than one
+huffman tree for a distribution, so there is more than one huffman
+code. These codes may even differ in length.
+The following are huffman trees for the example distribution:<br>
+((((B,F),A),E),(((G,C),D),H))  Height 4<br>
+((D,((F,C),(B,G))),(H,(E,A)))  Height 4<br>
+((((C,((F,G),B)),A),(E,D)),H)  Height 6
+
+</p><p>
+Even if the codelengths are fixed (these lengths correspond with the
+first tree) there is more than one code assignment:<br>
+<table border="1" cellpadding="6">
+<tbody><tr><td>   </td><td>treecode </td><td>code2 </td><td>code3 </td><td>canonical
+</td></tr><tr><td>A  </td><td>001      </td><td>111   </td><td>100   </td><td>010
+</td></tr><tr><td>B  </td><td>0000     </td><td>1101  </td><td>0011  </td><td>0000
+</td></tr><tr><td>C  </td><td>1001     </td><td>0010  </td><td>1011  </td><td>0001
+</td></tr><tr><td>D  </td><td>101      </td><td>000   </td><td>000   </td><td>011
+</td></tr><tr><td>E  </td><td>01       </td><td>01    </td><td>11    </td><td>10
+</td></tr><tr><td>F  </td><td>0001     </td><td>1100  </td><td>1010  </td><td>0010
+</td></tr><tr><td>G  </td><td>1000     </td><td>0011  </td><td>0010  </td><td>0011
+</td></tr><tr><td>H  </td><td>11       </td><td>10    </td><td>01    </td><td>11
+</td></tr></tbody></table>
+
+</p><p>
+The first code was derived directly from the tree; code2, code3 and
+the code labeled canonical are some other prefix codes with the same
+length.
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h3><a name="canonical">Canonical Huffman Codes</a></h3>
+
+The name canonical neither comes from the copy company nor from
+church; here and in maths canonical denotes one of many alternatives
+that can be distinguished since it follows simple rules.  The rules
+used here were: <ul>
+<li> Shorter codes have a numerically (if filled with zeros to the right)
+higher value than longer codes.
+</li><li> within the same length, numerical values increase with alphabet.
+</li></ul>
+It should also be mentioned that the codelengths are the same
+as with huffman codes since these are canonical huffman codes. So there
+is no loss in compression when using these codes.
+
+<h4>Advantages</h4>
+<p>
+There are some advantages of using these (or similar) rules and
+produce a canonical huffman code:</p><ul>
+<li> The first rule guarantees that no more than the
+  ceil(log2(alphabetsize)) rightmost bits of the code can differ
+  from zero - see below.
+</li><li> The first rule also allows an efficient decoding - see below.
+</li><li> Both rules together allow a complete reconstruction of the code
+  knowing only the codelengths for each symbol.
+</li></ul>
+
+<p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h4><a name="construction">Code Construction</a></h4>
+<p>
+I assume you know the codelength for each symbol and how often
+each length occurs. A method to do this will be given later.
+To assign codes you need only a single pass over the symbols,
+but before doing that you need to calculate where the codes for
+each codelength start. To do so consider the following:
+The longest code is all zeros and each code differs from the previous
+by 1 (I store them such that the last bit of the code
+is in the least significant bit of a byte/word).
+
+</p><p>
+In the example this means: </p><ul>
+<li>codes with length 4 start at 0000<br>
+</li><li>codes with length three start at (0000+4*1)&gt;&gt;1 = 010. There are 4 codes
+ with length 4 (that is where the 4 comes from), so the next length 4
+ code would start at 0100. But since it shall be a length 3 code we remove
+ the last 0 (if we ever remove a 1 there is a bug in the codelengths!).
+</li><li>codes with length 2 start at (010+2*1)&gt;&gt;1 = 10.
+</li><li>codes with length 1 start at (10+2*1)&gt;&gt;1 = 10.
+</li><li>codes with length 0 start at (10+0*1)&gt;&gt;1 = 1. If anything else than
+ 1 is start for the codelength 0 there is a bug in the codelengths!
+</li></ul>
+
+<p>
+Then visit each symbol in alphabetical sequence (to ensure the second
+condition) and assign the startvalue for the codelength of that symbol
+as code to that symbol. After that increment the startvalue for that
+codelength by 1. That's it.
+
+</p><p>
+This construction also ensures the claimed property, namely that only
+the ceil(log2(alphabetsize)) rightmost bits can be nonzero.
+Proof: The following is valid for all symbols: The code has been
+incremented by one for each symbol with a larger or equal codelength.
+There can be at most alphabetsize-1 such symbols, so it has been
+incremented at most alphabetsize-1 times. This maximum number fulfills
+the claimed property.
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h4><a name="maxlength">Maximum Length of a Huffman Code</a></h4>
+<p>
+Apart from the ceil(log2(alphabetsize)) boundary for the nonzero bits
+in this particular canonical huffman code it is useful to know the
+maximum length a huffman code can reach. In fact there are two limits
+which must both be fulfilled.
+
+</p><p>
+No huffman code can be longer than alphabetsize-1.  Proof: it is
+impossible to construct a binary tree with N nodes and more than N-1
+levels.
+
+</p><p>
+The maximum length of the code also depends on the number of samples you
+use to derive your statistics from; the sequence is as follows (the
+samples include the fake samples to give each symbol a nonzero
+probability!):<br>
+<table border="1" cellpadding="6">
+<tbody><tr> <td align="center">#samples    </td><td align="center">maximum codelength
+</td><td> </td><td align="center">#samples    </td><td align="center">maximum codelength
+</td></tr><tr> <td align="center">  1....2    </td><td align="center"> 1
+</td><td> </td><td align="center"> 21...33    </td><td align="center"> 6
+</td></tr><tr> <td align="center">  3....4    </td><td align="center"> 2
+</td><td> </td><td align="center"> 34...54    </td><td align="center"> 7
+</td></tr><tr> <td align="center">  5....7    </td><td align="center"> 3
+</td><td> </td><td align="center"> 55...88    </td><td align="center"> 8
+</td></tr><tr> <td align="center">  8...12    </td><td align="center"> 4
+</td><td> </td><td align="center"> 89..143    </td><td align="center"> 9
+</td></tr><tr> <td align="center"> 13...20    </td><td align="center"> 5
+</td><td> </td><td align="center">144..232    </td><td align="center">10
+</td></tr></tbody></table>
+the width of each range is the lower end of the previous range,
+so the next would be: 233 to 233+144-1=376 samples give a maximum
+codelength of 11.
+
+</p><p>
+An example for a tree with depth 6 and 21 samples (count for
+each symbol given) would be ((((((1,1),1),2),3),5),8).
+(oh no - Fibonacci numbers again :)
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h4><a name="codelengths">Calculating Codelengths for a Distribution</a></h4>
+<p>
+There are several methods to calculate codelengths efficiently.
+Either do as described below or look at
+<a href="http://www.cs.mu.oz.au/%7Ealistair/abstracts/inplace.html">
+http://www.cs.mu.oz.au/~alistair/abstracts/inplace.html</a> to give
+you just a few ideas.
+
+</p><p>
+Textbooks usually describe huffman tree construction similar to the
+following: </p><ul>
+<li> Setup: make a heap containing the symbols, lowest probable
+ symbol on top.
+</li><li> Loop: take the 2 least probable nodes out of the heap, form a
+ new node having the two nodes used to form it as children. Insert
+ the new node back into the heap. Repeat until only one node is left
+ (or alphabet-1 times; this is the same.)
+</li><li> that node is the root.
+</li></ul>
+
+<p>
+Practical purposes often demand a separation of intermediate and leaf
+nodes during that process. If you do that store the leaf nodes in an
+array of size alphabetsize-1 and fill it from left to right.
+Since intermediate nodes are constructed in the sequence they are used
+you just need two pointers; one pointing to the next unfilled place and
+one pointing to the next unused intermediate node. You don't have to do
+the heap sink down that often this way; you just compare the top of the
+heap containing the symbols with the unused intermediate node.
+If you like you could also sort the symbols by probability first and
+then use them in the sequence of increasing probability. The result is
+the same; if you sort first you might use quicksort, if you keep the heap
+idea you (implicitly) use heapsort to sort the symbols.
+
+</p><p>
+If you have sorted probabilities you don't need the sorting step and
+complexity for code generation will drop from O(n log(n)) to O(n).
+
+</p><p>
+If you are short of memory organize the data as follows: During the loop
+phase store which intermediate node is the parent only; you may use
+the space to store the huffman code lengths later in the leaves.
+You also need to provide the space for alphabetsize-1 intermediate nodes;
+simply use the place in the leaves to store the huffman code endings
+later. So you don't need any extra space that depends on the
+alphabetsize, you can all do it in the space you need to store the codes
+later.
+
+</p><p>
+After that treegeneration phase set the depth of the last intermediate
+node (root) to 0. Then loop over the intermediate nodes from the next
+to last created to the first created, replacing the parent index
+with 1 + the value you find at the parent index; this is the depth of
+that node.
+
+</p><p>
+Proceed with the leaves; fill the length field with 1 + the value at the
+parent instead of the parent index; this is the depth (codelength) for
+that leaf. Count how often each length occurs during that loop.
+If you process the leaves in sequence of increasing or decreasing
+probability you can reuse the space of the intermediate nodes for the
+counters provided you have an extra space of one word (for the
+first/currently processed codelength counter). This is an additional
+benefit from doing the probability sort first and not using a heap
+for the symbols. Warning: zero each counter before
+incrementing the first time and not before starting this loop, the
+treedepths that occupy the same place are used in the loop!
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h3><a name="encoding">Encoding</a></h3>
+<p>
+In practice the log2(alphabetsize) for the nonzero bits in this
+canonical code is the one that is important for memory layout.
+You just store that number of bits of the code and the codelength for
+each symbol.  To encode a symbol you look up the length and last bits
+of the code.  Then shift the old output to the left by the length
+(possibly producing bytes to output) and OR the last bits in.
+You may want to pack the codelength and code ending into one
+memory unit (16 or 32 bit) to reduce the number of memory accesses.
+
+</p><p>
+On some architectures it is faster to have an register containing
+0..7(15) bits pending for output. To encode you leftshift the last
+bits of the added code by the number of pending bits and OR the
+result in. Then add the codelength to the number of pending bits.
+Output bytes (or larger units) and rightshift the code until the
+number of pending bits is less than 7(15). The leading zeros will
+be shifted in as needed. Never do any bitwise IO.
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+
+</p><h3><a name="decoding">Decoding</a></h3>
+<p>
+Textbooks still explain decoding on a bit-by-bit method; if you see
+a 0 go left in the tree, if you see a 1 go right; if you reach a leaf
+you have a symbol. This is DEAD SLOW.
+
+</p><h4>Lookup decoding</h4>
+<p>
+How about decoding the example canonical code the following way:
+make a table with 16 entries. This table will tell you what symbol
+you decoded and how many bits you used.<br>
+index 0000 would contain B,4<br>
+index 0001 C,4<br>
+...<br>
+index 1000 to 1011 would all contain E,2<br>
+index 1100 to 1111 would all contain H,2 
+
+</p><p>
+This is in fact a good idea for short maximum codelengths. But if
+maximum codelength is 25 you would need a table with &gt;32 million
+entries -- not a good idea. The solution is to use different tables
+for different lengths. Here it is important that the canonical code
+chosen keeps codes of same length together.
+
+</p><p>
+You can make a table for each length and search the correct
+table by looking at the input; all you need to know is where the
+codes for each length start and search your input in there.
+
+</p><p>
+Or you make multilevel tables; first lookup the first few bits; they
+will tell you what table to use. Then look up in the second table the
+decoded symbol and the length. I personally prefer that one if the
+memory is not tight.
+
+</p><p>
+You might also choose the table based on the amount of 0's 
+preceding the next 1. But stop search for a 1 after a fixed
+length. Modern processors have an assembler instruction for that
+search.
+
+</p><h4>Example for tables for each length</h4>
+<p>
+decode 000101110 (CDE):
+
+</p><p>
+you have an array containing the start of each length and which table to use
+
+<table border="1" cellpadding="6">
+<tbody><tr><td>start </td><td align="center">codelength </td><td align="center">table to use
+</td></tr><tr><td>0000  </td><td align="center">4          </td><td align="center">table1
+</td></tr><tr><td>0100  </td><td align="center">3          </td><td align="center">table2
+</td></tr><tr><td>1000  </td><td align="center">2          </td><td align="center">table3
+</td></tr></tbody></table>
+
+</p><p>
+table1 contains the symbols with length 4 sorted by code: BCFG<br>
+table2 contains the symbols with length 3 sorted by code: AD<br>
+table3 contains the symbols with length 2 sorted by code: EH<br>
+
+</p><p>
+</p><ul>
+<li>get the first 4 bits (0001). (actually you could do with 1 bit less
+ than the longest codelength since that omitted bit must be 0 at a
+ length boundary)
+</li><li>do a search for these bits in the array; telling you to
+ use table1.
+</li><li>subtract start from the bits you have, shift them if the code is
+ short and use the result as index into table1. You find C.
+</li><li>get the next 4 bits (0111).
+</li><li>do a search for these bits in the array; telling you to
+ use table2.
+</li><li>subtract start from the bits you have, shift them by 1 and use
+ the result as index into table2. You find D.
+</li><li>get the first 4 bits (1000, the l was not used for the last symbol!).
+</li><li>do a search for these bits in the array; telling you to
+ use table3.
+</li><li>subtract start from the bits you have, shift them by 2 and use
+ the result as index into table3. You find E.
+</li></ul>
+<br>
+In a real implementation you could, for example, avoid the subtraction
+by adjusting the table pointers.
+
+<h4>Example for two-level tables</h4>
+
+<p>
+you have an array containing the following:
+
+<table border="1" cellpadding="6">
+<tbody><tr><td align="center">index </td><td align="center">table to use </td><td align="center">bits as index
+</td></tr><tr><td align="center">00    </td><td align="center">table1       </td><td align="center">2
+</td></tr><tr><td align="center">01    </td><td align="center">table2       </td><td align="center">1
+</td></tr><tr><td align="center">10    </td><td align="center">table3       </td><td align="center">0
+</td></tr><tr><td align="center">11    </td><td align="center">table4       </td><td align="center">0
+</td></tr></tbody></table>
+some entries may point to the same table if you have shorter
+codes than your index.
+
+</p><p>
+The other tables contain a symbol and a codelength. There are ways to
+omit the codelengths, see below.<br>
+table1 contains: B4 C4 F4 G4<br>
+table2 contains: A3 D3<br>
+table3 contains: E2<br>
+table4 contains: H2<br>
+If a symbol has a shorter codelength than the symbol with the longest
+codelength in that table it occupies more than one place - just like
+with the full decoding table in the first attempt.
+
+</p><p>
+These tables are surprisingly small if you choose the size of the first
+array that decides between tables large enough - 2^(maximum codelength/2)
+is usually a good guess for the size of that array.
+
+</p><p>
+</p><ul>
+<li>get the first 2 bits (00).
+</li><li>look into array and see that you need to use table1 with 2 bit as index.
+</li><li>look into table1 index next 2 bits (01) and find C and 4 bits used.
+</li><li>get the next 2 bits (01).
+</li><li>look into array and see that you need to use table2 with 1 bit as index.
+</li><li>look into table2 index next bit (1) and find D and 3 bits used.
+</li><li>get the next 2 bits (10).
+</li><li>look into array and see that you need to use table3 with 0 bit as index.
+</li><li>look into table2 no index bits and find E and 2 bits used.
+</li></ul>
+<br>
+Again optimizations are possible. Note that the code contains no if
+at all.
+
+<h4>Some Variants</h4>
+
+<p>
+You might try to decode short symbols with only one lookup, however
+the decision whether to make a second lookup or not costs more than the
+second lookup.  You might also consider decoding more than one symbol
+at once; however this usually does not pay off unless the average
+codelength used is very short (less than 2 bit).
+
+</p><p>
+You might want to have the first array point to functions instead of
+tables; then a one-lookup (and possibly a 3-lookup with another
+intermediate level) decoding can be done efficiently. But it will break
+instruction pipeline.
+
+</p><p>
+With short memory you might want to avoid storing the codelengths
+for each symbol like with the first method. If your first array
+has 2^9 (512) entries and your maximum codelength is 18 you know
+that only 9 of the 512 second level tables might have codes with
+different lengths in them. Only these tables need to store the
+length. Or search the length for codes using a
+binary search like with the first method - but much faster.
+For the search store the maximum and minimum codelengths
+in each such table and do the binary search only in that range.
+You might also use separate arrays where codelengths start for
+each table with more than one codelength. You could even do the search
+always; for symbols standing in tables with only one length it will
+terminate immediately anyway.
+
+</p><p>
+If your symbols are variable size you can store pointers to the
+symbols instead the symbols themselves. If you store them as a block
+for each table you can easily avoid a termination symbol or a length
+for those variable symbols; just look in the table where the next
+variable length symbol starts. You will need an extra entry in the
+table to terminate the last symbol of the table.
+
+</p><p>
+Instead of multiple second level tables you may use one big table
+and create appropriate pointers or indices.
+
+</p><p>
+<a href="#conventions">Conventions</a> -
+<a href="#huffman">Huffman Codes</a> -
+<a href="#canonical">Canonical Huffman Codes</a> -
+<a href="#construction">Code Construction</a> -
+<a href="#maxlength">Maximum Length</a> -
+<a href="#codelengths">Calculating Codelengths</a> -
+<a href="#encoding">Encoding</a> -
+<a href="#decoding">Decoding</a>
+
+</p><hr>
+<h3><a href="http://www.compressconsult.com/">
+<img src="Practical%20Huffman%20Coding_files/log104b.gif" alt="&gt;data&lt;//// logo" align="middle" border="0"></a>
+This is free info from <a href="http://www.compressconsult.com/">
+Compression Consulting Schindler</a></h3>
+
+<p>
+If you are not familiar with compression and need know what compression
+could do for your application
+<a href="http://www.compressconsult.com/index.html#contact">contact</a>
+us. We can also help you choose the compression that fits your
+needs best - chances are that it is not simple huffman coding as
+described in here.
+
+</p><p>
+Even if you are familiar with compression it may be a good idea to
+<a href="http://www.compressconsult.com/index.html#contact">contact</a>
+us - we may be able to give you some hints or confirm your opinion after
+a short problem description. Even a question asked to you can help
+you understanding your problem a lot better, saving your development
+time.
+
+</p><p>
+Since you are looking for an entropy coder: check out IBM's Q-coder,
+AT&amp;T's Z-coder, Pegasus Imaging's ELS-coder or a
+<a href="http://www.compressconsult.com/rangecoder/">range coder</a>
+to name just a few possible alternatives.
+</p><hr>
+
+<h4><a name="student">Remark for students</a></h4>
+<p>
+You may have noticed that there is no source code here. This is intentional.
+This page may have been given to you as reference for some programming
+exercise. I often get requests from students for making their homework - 
+which I will not do unless they pay.
+Recommended rate from my trade group
+(<a href="http://www.ubit.at/WEBLib/StdLib/Maintenance/Global/GetBinaryObject.asp?OID=11967">Kalkulationsrichtlinien</a>)
+is EUR 85.03 with the following recommended addidions: 80% for outside austria or 120% for outside
+europe; travel expenses. There is also 20% tax for private persons inside
+europe or business inside austria.<br>
+If you really cant do it consider taking a different class - or search the web
+for an implemantation that fits your homework.
+</p>
+
+<p>
+Despite of above I will answer any question for free you may have if you
+already have a self-written working implementation (so that you know what
+is going on) and may want to implement some of the things from above.
+Also if you just need a huffman coder for a different kind of work I
+can make source code available.
+</p>
+
+<hr>
+
+<p>
+(c) <a href="http://www.compressconsult.com/people/michael.html">Michael Schindler</a>, Aug., Oct. 1998
+Remark for students added 2001.
+If you locate a spelling error <a href="http://www.compressconsult.com/spell.html">click here</a>
+</p>
+
+<p><a href="http://validator.w3.org/"><img src="Practical%20Huffman%20Coding_files/vh32.gif" alt="Valid HTML 3.2!" border="0" height="31" width="88"></a>
+
+</p><hr>
+<p> szip and the &gt;data&lt;/// logo are trademarks or registered trademarks
+of Michael Schindler.<br>
+All other trademarks or registered trademarks are held by their owners.
+
+<!--
+For Excite; compresses well.
+
+Cookbook recipes for coding huffman coders.
+
+Cookbook recipes for coding huffman coders.
+
+Cookbook recipes for coding huffman coders.
+
+-->
+</p></body></html>

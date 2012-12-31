@@ -1,0 +1,7 @@
+name                                       hours    rate        pay
+ Bob, Joe                                  38.50   12.75     490.88
+ Bob, Jolene                               17.50    9.25     161.88
+ Smith, Janet                              20.00    9.65     193.00
+ Public, John Q.                           25.00    8.25     206.25
+ Doe, Jane                                 40.00    8.75     350.00
+ Ling, Grunt                               15.00    6.25      93.75

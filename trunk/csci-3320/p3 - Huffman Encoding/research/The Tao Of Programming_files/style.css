@@ -1,0 +1,18 @@
+BODY {
+	BORDER-RIGHT: 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 5px; MARGIN-LEFT: auto; BORDER-LEFT: 1px solid; WIDTH: 600px; COLOR: black; MARGIN-RIGHT: auto; PADDING-TOP: 5px; BORDER-BOTTOM: 1px solid; BACKGROUND-COLOR: white
+}
+A {
+	COLOR: black
+}
+H1 {
+	TEXT-ALIGN: center
+}
+H2 {
+	TEXT-ALIGN: right
+}
+H3 {
+	TEXT-ALIGN: center
+}
+HR {
+	WIDTH: 100%; COLOR: black; HEIGHT: 1px; BACKGROUND-COLOR: black
+}

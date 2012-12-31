@@ -1,0 +1,7 @@
+#!/bin/bash
+export LD_LIBRARY_PATH=.
+# run socket code; To do this, we just awk out the name of the program.
+# The position can vary from system to system, but
+# on Phoenix, the program name is in the 9th column
+./`ls -al . | grep socket | grep "\-rwxr-xr-x" | awk '{print $9}'` $1
+
