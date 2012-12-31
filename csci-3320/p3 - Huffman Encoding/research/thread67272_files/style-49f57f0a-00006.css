@@ -1,0 +1,1264 @@
+/* vBulletin 3 CSS For Style 'Programming' (styleid: 6) */
+body
+{
+	background: #FFFFFF;
+	color: #444444;
+	font: 12px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	margin: 0px;
+	padding: 0px;
+	line-height: 20px;
+	behavior: url("/forums/clientscript/csshover.htc");
+}
+a:link, body_alink
+{
+	color: #0033CC;
+	text-decoration: none;
+}
+a:visited, body_avisited
+{
+	color: #0033CC;
+	text-decoration: none;
+}
+a:hover, a:active, body_ahover
+{
+	color: #000000;
+	text-decoration: underline;
+}
+.page
+{
+	background: #FFFFFF;
+	width: 887px;
+}
+.tborder
+{
+	border: 1px solid #BBBBBB;
+}
+.tcat
+{
+	background: #FFFFFF;
+	color: #006666;
+	font: bold 15px arial, helvetica, sans-serif;
+	line-height: 25px;
+}
+.tcat a:link, .tcat_alink
+{
+	color: #006666;
+	text-decoration: underline;
+}
+.tcat a:visited, .tcat_avisited
+{
+	color: #006666;
+	text-decoration: underline;
+}
+.tcat a:hover, .tcat a:active, .tcat_ahover
+{
+	color: #006666;
+	text-decoration: none;
+}
+.thead
+{
+	background: #ECECEC;
+	color: #000000;
+	font-family: arial, helvetica, sans-serif;
+	font-weight: bold;
+	padding: 15px;
+}
+.thead a:link, .thead_alink
+{
+	color: #000000;
+	text-decoration: underline;
+}
+.thead a:visited, .thead_avisited
+{
+	color: #000000;
+	text-decoration: underline;
+}
+.thead a:hover, .thead a:active, .thead_ahover
+{
+	color: #000000;
+	text-decoration: none;
+}
+.alt1, .alt1Active
+{
+	background: #FFFFFF;
+	font-size: 11px;
+	padding: 5px;
+}
+.alt2, .alt2Active
+{
+	background: #F4F4F4;
+	font-size: 11px;
+	padding: 5px;
+}
+td.inlinemod
+{
+	background: #FAEECE;
+	color: #434343;
+	font-size: 11px;
+	line-height: 20px;
+	padding: 5px;
+}
+.wysiwyg
+{
+	background: #FFFFFF url(/forums/dani-images/misc/dani/watermark_code.gif) no-repeat top left;;
+	color: #434343;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	padding: 5px;
+	line-height: 15px;
+}
+textarea, .bginput
+{
+	color: #555555;
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.button
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+select
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+option, optgroup
+{
+	font-size: 11px;
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.smallfont
+{
+	font: 11px verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	line-height: 15px;
+}
+.time
+{
+	color: #999999;
+}
+.navbar
+{
+	background: #006666 url(/forums/myimages/style/softwaredevelopment/navbits_left.gif) no-repeat bottom left;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 2px 5px 3px 10px;
+	margin-bottom: 20px;
+}
+.navbar a:link, .navbar_alink
+{
+	color: #ECBF41;
+	text-decoration: none;
+}
+.navbar a:visited, .navbar_avisited
+{
+	color: #ECBF41;
+	text-decoration: none;
+}
+.navbar a:hover, .navbar a:active, .navbar_ahover
+{
+	color: #ECBF41;
+	text-decoration: underline;
+}
+.highlight
+{
+	background: #ECBF41;
+	color: #000000;
+	font-weight: bolder;
+	padding: 2px 5px 2px 5px;
+}
+.fjsel
+{
+	background: #3E5C92;
+	color: #E0E0F6;
+}
+.fjdpth0
+{
+	background: #ECBF41;
+}
+.panel
+{
+	background: #F2F2F2;
+	padding: 10px;
+}
+.panelsurround
+{
+	background: #FFFFFF;
+	padding: 20px;
+}
+legend
+{
+	color: #22229C;
+	font: 11px tahoma, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+}
+.vbmenu_control
+{
+	background: #006666;
+	color: #FFFFFF;
+	font: bold 11px arial, helvetica, sans-serif;
+	padding: 3px 6px 3px 6px;
+	white-space: nowrap;
+	
+}
+.vbmenu_control a:link, .vbmenu_control_alink
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:visited, .vbmenu_control_avisited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_control a:hover, .vbmenu_control a:active, .vbmenu_control_ahover
+{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+.vbmenu_popup
+{
+	background: #E4E4E4;
+	color: #555555;
+	font-family: Arial, verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	border: 1px solid #BBBBBB;
+	z-index: 100;
+}
+.vbmenu_option
+{
+	background: #E4E4E4;
+	color: #555555;
+	white-space: nowrap;
+	cursor: pointer;
+	border-bottom: 1px dashed #C8C8C8;
+}
+.vbmenu_option a:link, .vbmenu_option_alink
+{
+	color: #0033CC;
+}
+.vbmenu_option a:visited, .vbmenu_option_avisited
+{
+	color: #0033CC;
+}
+.vbmenu_option a:hover, .vbmenu_option a:active, .vbmenu_option_ahover
+{
+	color: #0033CC;
+}
+.vbmenu_hilite
+{
+	background: #006666;
+	color: #FFFFFF;
+	white-space: nowrap;
+	cursor: pointer;
+	border-bottom: 1px dashed #C8C8C8;
+}
+.vbmenu_hilite a:link, .vbmenu_hilite_alink
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:visited, .vbmenu_hilite_avisited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.vbmenu_hilite a:hover, .vbmenu_hilite a:active, .vbmenu_hilite_ahover
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+div#sponsor
+{
+	margin-bottom: 20px;
+	border: 1px solid #BBBBBB;
+	background-color: #FFFFFF;
+	padding: 5px;
+	font-size: 11px;
+	position: relative;
+}
+div#sponsor a
+{
+	display: block;
+	text-align: right;
+	width: 100%;
+}
+div#sponsor div
+{
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
+div#sponsor:hover
+{
+	background-color: #F4F4F4;
+}
+.light
+{
+	color: #999999;
+}
+.hilite1, .hilite2, .hilite3, .hilite4, .hilite5, .hilite6, .hilite7, .hilite8, .hilite9
+{
+	padding: 2px 5px 2px 5px;
+	background-color: #ECBF41;
+	color: #000000;
+	font-weight: bolder;
+}
+div.forumlinkbit
+{
+	font-size: 11px;
+	line-height: 15px;
+	height: 30px;
+	width: 225px;
+	float: left;
+}
+h2.tags
+{
+	padding-left: 5px;
+	margin: 20px 0px 0px 0px;
+	font-size: 12px;
+	line-height: 20px;
+	font-weight: normal;
+}
+div.navbar h1
+{
+	font-family: verdana, geneva, lucida, 'lucida grande', arial, helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 20px;
+	font-weight: bold;
+	margin: 0px;
+	padding: 0px;
+	display: inline;
+	color: #FFFFFF;
+}
+div.minishots
+{
+	border: 1px solid #000000;
+	margin: 10px;
+	width: 120px;
+	height: 90px;
+	float: left;
+}
+div#memberlinks div.thumbshot
+{
+	border: 1px solid #000000;
+	margin: 10px;
+	width: 200px;
+	height: 150px;
+	float: left;
+	background: #FFFFFF url(/forums/myimages/style/thumbshot.gif) no-repeat top left;
+}
+div#searchlinks div.linkbit
+{
+	margin-right: 50px;
+}
+div.big
+{
+	margin-bottom: 10px;
+}
+div#forumlinks div.links
+{
+	width: 207px;
+	float: right;
+}
+div#searchlinks div.links
+{
+	width: 457px;
+	float: right;
+}
+div#forumlinks div.linkdesc
+{
+	font-size: 11px;
+	line-height: 15px;
+	color: #666666;
+}
+.domain
+{
+	color: green;
+	text-decoration: none;
+	margin-top: 5px;
+}
+.domain a:link, .domain a:visited
+{
+	color: green;
+	text-decoration: underline;
+}
+.domain a:hover
+{
+	text-decoration: none;
+}
+div.thumbshot
+{
+	border: 1px solid #000000;
+	margin-right: 20px;
+	width: 200px;
+	height: 150px;
+	float: left;
+	background: #FFFFFF url(/forums/myimages/style/thumbshot.gif) no-repeat top left;
+}
+div.searchshots
+{
+	border: 1px solid #000000;
+	float: left;
+	margin-right: 20px;
+	width: 200px;
+	height: 150px;
+	background: #FFFFFF url(/forums/myimages/style/thumbshot.gif) no-repeat top left;
+}
+div.thumbshots
+{
+	border: 1px solid #000000;
+	float: left;
+	margin: 0px 10px 10px 0px;
+	width: 120px;
+	height: 90px;
+}
+div.privatemessage
+{
+	background: #FFFFFF;
+	border: 1px solid #BBBBBB;
+	border-top: 0px;
+	padding-top: 10px;
+	margin-bottom: 20px;
+}
+code.inlinecode
+{
+	margin: 0px;
+	padding: 2px 5px 2px 5px;
+	display: inline;
+	color: #000000;
+	background-color: #FDF8EB;
+}
+h1.heading
+{
+	background: url(/forums/myimages/misc/dani/heading.gif) no-repeat top left;
+	padding: 5px 0px 0px 10px;
+	line-height: 35px;
+}
+div.bbquote
+{
+	background-color: #EEEEEE;
+	border: 1px solid #CCCCCC;
+	color: #444444;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+div.box div.bbquote, div.bbquote div.bbquote
+{
+	background-color:#FFFFFF;
+}
+div.buddybit
+{
+	width: 170px;
+	float: left;
+	margin: 10px;
+	font-size: 13px;
+}
+#login td
+{
+	padding-left: 10px;
+}
+p.userlist a
+{
+	color: #666666;
+}
+p.userlist
+{
+	color: #999999;
+}
+
+div.category ul
+{
+	display: none;
+	z-index:100;
+	border: 1px solid #989898;
+	border-top: 0px;
+	background: #EFEFEF url(/forums/dani-images/misc/dani/menu.jpg) repeat-x;
+	list-style: none;
+	font-family: arial, helvetica, sans-serif; 
+	font-size: 11px;
+	padding: 15px;
+	margin: 0px;
+}
+
+div.category
+{
+	position: relative;
+}
+
+div.category:hover
+{
+	z-index: 100;
+	background-color: #EFEFEF;
+}
+
+div.category:hover ul
+{
+	z-index: 100;
+	display: block;
+	position: absolute;
+	background-color: #EFEFEF;
+	width: 160px;
+	left: 0px;
+	top: 23px;
+	white-space: normal;
+}
+
+div.category ul li
+{
+	width: 100%;
+	display: block;
+	border-bottom: 1px dashed #BBBBBB;
+	padding: 2px;
+	margin: 0px;
+	cursor: pointer;
+	z-index:100;
+}
+
+div.category:hover ul li:hover a:hover
+{
+	color: #000000;
+}
+
+div.category ul li a
+{
+	text-decoration: none;
+}
+
+div.authorbox
+{
+	background: #666666 url(/forums/myimages/style/author.gif) no-repeat top left;
+	color: #EFEFEF;
+	padding: 35px 10px 10px 10px;
+	margin-bottom: 20px;
+}
+div.authorbox a:link, div.authorbox a:visited
+{
+	color: #EFEFEF;
+	text-decoration: underline;
+}
+div.authorbox a:hover
+{
+	text-decoration: none;
+}
+div.border
+{
+	border: 1px solid #E1E1E1;
+	padding: 10px;
+}
+
+.code {color: black;}
+.code .imp { }
+.code .kw1 {color: purple; font-weight:bold;}
+.code .kw2 {color: purple; font-weight:bold;}
+.code .kw3 {color: purple; font-weight:bold;}
+.code .kw4 {color: purple; font-weight:bold;}
+.code .co1 {color: green;}
+.code .co2 {color: green;}
+.code .coMULTI {color: green; font-style: italic;}
+.code .es0 {color: blue; font-weight: bold;}
+.code .br0 {color: gray; font-weight: bold;}
+.code .st0 {color: blue;}
+.code .nu0 {color: red;}
+.code .me1 { }
+.code .me2 { } 
+
+div#column ul
+{
+	list-style: url(/forums/myimages/statusicon/subforum_new.gif);
+	margin: 0px 0px 20px 10px;
+	padding: 0px;
+}
+div#column div.border ul, div#column div.featured ul
+{
+	margin-left: 15px;
+}
+li
+{
+	margin-bottom: 5px;
+}
+
+div.entries div, .spaced
+{
+	margin-bottom: 20px;
+}
+
+div#code1, div#code2
+{
+	font-size: 13px;
+	line-height: 18px;
+}
+textarea.code
+{
+	width: 100%;
+	height: 500px;
+	color: #000000;
+	font-family: 'courier new';
+	border: 1px solid #BBBBBB;
+}
+div#code2 textarea.code
+{
+	font-size: 12px;
+}
+
+pre.code
+{
+	line-height: 16px;
+}
+
+pre.code li
+{
+	margin: 0px;
+}
+
+pre
+{
+	white-space: -moz-pre-wrap;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	_white-space: pre;
+}
+
+div.codeblock
+{
+	color: #000000;
+	background-color: #FDF8EB;
+	padding: 10px;
+	margin: 20px 0px 20px 0px;
+}
+
+div.bbquote div.codeblock
+{
+	background-color: #FFFFFF;
+}
+
+h1.languagebit
+{
+	width: 180px;
+	float: left;
+	margin: 10px 10px 10px 20px;
+}
+fieldset
+{
+	border: 0px;
+}
+fieldset legend
+{
+	font-weight: bold;
+	font-size: 12px;
+	padding: 5px 0px 10px 0px;
+}
+div.featured
+{
+	background-color: #F4F4F4;
+	border: 1px solid #E1E1E1;
+	padding: 10px;
+}
+div#miniforumlist
+{
+	background-color: #FDF8EB;
+	border: 1px dashed #ECBF41;
+	padding: 10px;
+	width: 315px;
+}
+div#miniforumlist h1
+{
+	line-height: 30px;
+}
+div#miniforumlist div.forum
+{
+	border: 0px;
+	padding: 2px;
+	line-height: 25px;
+}
+div#miniforumlist div.forum div.forumtitle
+{
+	font-size: 11px;
+}
+
+table#threadslist
+{
+	border: 0px;
+}
+div.box div.form input, div.box div.form select, div.box div.form textarea
+{
+	margin-bottom: 10px;
+}
+div.box div.messagearea
+{
+	width: 500px;
+	margin-bottom: 10px;
+}
+div.box div.commentarea
+{
+	width: 420px;
+	margin-bottom: 10px;
+}
+div.tagcloud
+{
+	line-height: 30px;
+}
+div.tagcloud a
+{
+	text-decoration: none;
+}
+
+div.tagcloud a:hover
+{
+	background-color: #CCCCCC;
+}
+div.userinfo
+{
+	background: #EEEEEE url(/forums/myimages/style/quote.gif) no-repeat bottom left;
+	padding: 10px 10px 30px 10px;
+}
+
+div.quote div.rule
+{
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+}
+div.quote
+{
+	border: 1px solid #BBBBBB;
+	border-top: 0px;
+	border-bottom: 0px;
+	background-color: #FFFFFF;
+	padding: 10px 10px 0px 10px;
+}
+div.bottomquote
+{
+	background: #FFFFFF url(/forums/myimages/style/bottomquote.gif) no-repeat bottom left;
+	height: 14px;
+	margin-bottom: 20px;
+}
+#tooltip
+{
+	background-color: #FDF8EB;
+	border: 1px solid #BBBBBB;
+	padding: 5px;
+	width: 200px;
+	overflow: hidden;
+	display: none;
+	opacity: 0.90;
+	filter: alpha(opacity=90);
+}
+#tooltip.tooltiphome
+{
+	background-color: #FFFFFF;
+}
+#tooltip.tooltipshot
+{
+	opacity: 1.00;
+	filter: alpha(opacity=100);
+	padding: 0px;
+	width: 200px;
+	height: 150px;
+	border: 1px solid #000000;
+	background: #FFFFFF url(/forums/myimages/style/thumbshot.gif) no-repeat top left;
+}
+#tooltip h3
+{
+	font-size: 11px;
+	font-weight: normal;
+	color: #444444;
+	line-height: 20px;
+	display: inline;
+}
+#tooltip.tooltipshot p.url
+{
+	display: none;
+}
+#tooltip.tooltipshot h3
+{
+	margin: 0px;
+	padding: 0px;
+}
+.deleted, .deleted a
+{
+	color: #BBBBBB;
+}
+
+div.rule
+{
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px dashed #BBBBBB;
+}
+div.cell
+{
+	float: left;
+	width: 135px;
+	padding: 10px;
+}
+#column
+{
+	float: right;
+	padding: 0px 0px 20px 20px;
+	border-left: 1px solid #EEEEEE;
+	border-bottom: 1px solid #EEEEEE;
+}
+.mediumfont
+{
+	font-size: 13px;
+}
+
+div.ad_wideskyscraper
+{
+	width: 160px;
+	height: 600px;
+}
+
+div.ad_rectangle
+{
+	width: 336px;
+	height: 280px;
+	margin-bottom: 20px;
+}
+
+div.ad_mediumrectangle
+{
+	width: 300px;
+	height: 250px;
+	margin-bottom: 20px;
+}
+
+div.ad_banner
+{
+	width: 468px;
+	height: 60px;
+}
+
+div.ad_halfbanner
+{
+	width: 234px;
+	height: 60px;
+}
+
+div.ad_leaderboard
+{
+	width: 728px;
+	height: 90px;
+}
+
+div.ad_linkunit
+{
+	width: 468px;
+	height: 15px;
+}
+
+div.bold a:link, div.bold a:visited
+{
+	font-weight: bold;
+	color: #444444;
+	text-decoration: none;
+}
+div.bold a:hover
+{
+	text-decoration: underline;
+}
+div#navtitle
+{
+	width: 697px;
+	margin-bottom: 20px;
+}
+div#navtitle h1
+{
+	display: inline;
+	padding: 5px 15px 5px 15px;
+	color: #FFFFFF;
+	font-size: 20px;
+	font-family: arial, helvetica, sans-serif;
+	line-height: 30px;
+}
+
+div#heading
+{
+	background-color: #BFBFBF;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 5px;
+	margin-bottom: 20px;
+}
+
+div#heading .portal
+{
+	background-color: #BFBFBF;
+	color: #FFFFFF;
+	padding: 5px;
+}
+
+div#heading a:link, div#heading a:visited
+{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+div#heading a:hover
+{
+	text-decoration: none;
+}
+
+
+table#threadslist td
+{
+	border-bottom: 1px dashed #BBBBBB;
+}
+div#sidebar div.heading
+{
+	font-size: 12px;
+	font-weight: bold;
+	padding: 5px;
+	color: #FFFFFF;
+	line-height: 20px;
+}
+div#sidebar div.heading a:link, div#sidebar div.heading a:visited
+{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+div#sidebar_corner
+{
+	float: right;
+	display: inline;
+	width: 190px;
+}
+
+#sidebar div.body
+{
+	background: #ECECEC url(/forums/myimages/style/sidebar_br.gif) no-repeat bottom right;
+	padding: 5px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+#sidebar div.body ul
+{
+	padding: 5px 0px 0px 20px;
+	margin: 0px;
+	list-style-type: square;
+}
+
+
+#sidebar div.body ul li
+{
+	font-size: 12px;
+	line-height: 15px;
+}
+
+#sidebar div.search_body
+{
+	font-size: 11px;
+	line-height: 15px;
+	color: #ECBF41;
+	margin-bottom: 10px;
+	padding: 40px 10px 10px 10px;
+}
+
+#sidebar div.search_body a:link, #sidebar div.search_body a:visited
+{
+	color: #ECBF41;
+	text-decoration: underline;
+}
+#sidebar div.search_body a:hover
+{
+	text-decoration: none;
+}
+
+div#sidebar
+{
+	float: right;
+	width: 170px;
+	margin-left: 20px;
+	font-family: arial, helvetica, sans-serif;
+}
+
+div#menu
+{
+	background-color: #E4E4E4;
+	padding: 0px;
+	margin: 0px;
+	white-space: nowrap;
+	height: 25px;
+	width: 887px;
+}
+div#leaderboard
+{
+	width: 728px;
+	height: 90px;
+	float: right;
+}
+div#skyscraper
+{
+	width: 160px;
+	height: 600px;
+}
+div#login
+{
+	background: #ECECEC url(/forums/myimages/style/login_l.gif) no-repeat bottom left;
+	color: #565656;
+	font-size: 12px;
+	width: 750px;
+	text-align: center;
+	font-family: arial, helvetica, sans-serif;
+	margin-bottom: 10px;
+}
+div#login div
+{
+	background: url(/forums/myimages/style/login_r.gif) no-repeat bottom right;
+	padding: 5px;
+	height: 30px;
+	line-height: 30px;
+}
+div#login a:link, div#login a:visited
+{
+	color: #565656;
+	font-weight: bolder;
+	text-decoration: none;
+}
+div#login a:hover
+{
+	color: #000000;
+	text-decoration: none;
+}
+div.leftshadow
+{
+	background: url(/forums/myimages/style/shadow_left.jpg) top left repeat-y;
+	width: 963px;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	min-height:100%;
+}
+div.rightshadow
+{
+	background: url(/forums/myimages/style/shadow_right.jpg) top right repeat-y;
+	width: 963px;
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	min-height:100%;
+}
+div.container
+{
+	background: #FFFFFF;
+	border-left: 1px solid #BBBBBB;
+	border-right: 1px solid #BBBBBB;
+	padding: 20px;
+	width: 887px;
+	text-align: left;
+	height: 100%;
+	min-height:100%;
+}
+
+div.thincontainer
+{
+	background: #FFFFFF;
+	padding: 20px;
+	width: 887px;
+	text-align: left;
+	height: 100%;
+	min-height:100%;
+}
+
+div.right_title
+{
+	font-weight: bold;
+	float: right;
+}
+
+div.forumdesc
+{
+	background-color: #EEEEEE;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+div.forum, div.forum_portal
+{
+	border-bottom: 1px dashed #BBBBBB;
+	padding: 5px;
+	line-height: 30px;
+}
+
+div.forum_portal, div#main div.forum
+{
+	font-size: 11px;
+	line-height: 20px;
+}
+
+div#subforums div.forum_portal
+{
+	font-size: 12px;
+	line-height: 30px;
+}
+
+div.forum div.count
+{
+	float: right;
+	width: 80px;
+	text-align: right;
+}
+
+div.forum_portal div.count, div#main div.forum div.count
+{
+	float: right;
+	width: 60px;
+	text-align: right;
+	font-size: 11px;
+}
+
+div#subforums div.forum_portal div.count
+{
+	width: 80px;
+	font-size: 12px;
+}
+
+div.forum_portal div.lastpostinfo, div#main div.forum div.lastpostinfo
+{
+	float: right;
+	/* width: 120px; */
+	text-align: right;
+	font-size: 10px;
+}
+
+div#subforums div.forum_portal div.lastpostinfo
+{
+	/* width: 200px; */
+	font-size: 11px;
+}
+
+div.forum div.lastpostinfo
+{
+	float: right;
+	/* width: 200px; */
+	text-align: right;
+}
+
+div.forum div.forumtitle
+{
+	float: left;
+}
+
+div.box
+{
+	background-color: #EEEEEE;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+div.box p
+{
+	padding: 0px;
+	margin: 0px 0px 10px 0px;
+}
+
+div.quote h2
+{
+	display: inline;
+	margin: 0px;
+	padding: 0px;
+	font-size: 12px;
+	line-height: 20px;
+	font-weight: bold;
+}
+
+div.box h2
+{
+	display: inline;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 40px;
+}
+.big
+{
+	font-weight: bold;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 25px;
+}
+
+h1, div.h1
+{
+	font-family: arial, helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 30px;
+	font-weight: bold;
+}
+
+h1 a:link, h1 a:visited, div.h1 a:link, div.h1 a:visited
+{
+	text-decoration: underline;
+}
+h1 a:hover, div.h1 a:hover
+{
+	text-decoration: none;
+}
+
+div.entries h1
+{
+	margin: 10px 0px 10px 0px;
+	line-height: 25px;
+}
+div.entries h1 a:link, div.entries h1 a:visited
+{
+	color: #0033CC;
+	text-decoration: none;
+}
+div.entries h1 a:hover
+{
+	text-decoration: underline;
+}
+
+/* ***** styling for 'big' usernames on postbit etc. ***** */
+.bigusername
+{
+	font-size: 18px;
+	line-height: 25px;
+	font-family: arial, helvetica, sans-serif;
+}
+
+/* ***** small padding on 'thead' elements ***** */
+td.thead, div.thead { padding: 4px; }
+
+/* ***** basic styles for multi-page nav elements */
+.pagenav a { text-decoration: none; }
+.pagenav td { padding: 2px 4px 2px 4px; }
+
+/* ***** define margin and font-size for elements inside panels ***** */
+.fieldset { margin-bottom: 6px; }
+.fieldset, .fieldset td, .fieldset p, .fieldset li { font-size: 11px; }
+
+/* ***** don't change the following ***** */
+form { display: inline; }
+label { cursor: default; }
+.normal { font-weight: normal; }
+.inlineimg { vertical-align: middle; }
+div#sidebar_corner
+{
+	background: url(/forums/myimages/style/softwaredevelopment/search_left.gif) no-repeat top left;
+}
+div#navtitle
+{
+	background: #006666 url(/forums/myimages/style/softwaredevelopment/nav_b.gif);
+}
+div#navtitle div
+{
+	background: url(/forums/myimages/style/softwaredevelopment/nav_l.gif) top left repeat-y;
+}
+div#navtitle div div
+{
+	background: url(/forums/myimages/style/softwaredevelopment/nav_r.gif) top right repeat-y;
+}
+#sidebar div.search_body
+{
+	background-color: #006666;
+}
+div#sidebar div.heading
+{
+	background: #006666 url(/forums/myimages/style/softwaredevelopment/header.gif) top right no-repeat;
+}
+fieldset legend,
+#sidebar div.body,
+.category:hover ul,
+h1, div.h1,
+h1 a:link, h1 a:visited, div.h1 a:link, div.h1 a:visited,
+.category ul li a:link, .category ul li a:visited
+{
+	color: #006666;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+
+
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
+	<meta name="robots" content="index,follow">
+	<link rel="stylesheet" rev="stylesheet" href="binaryreadwrite_files/lofiscreen.css" media="screen">
+	<link rel="stylesheet" rev="stylesheet" href="binaryreadwrite_files/lofihandheld.css" media="handheld">
+	<link rel="stylesheet" rev="stylesheet" href="binaryreadwrite_files/lofiprint.css" media="print"><title>rohitab.com - Forums &gt; C++ Binary File Read/writing</title></head><body>
+<div id="ipbwrapper">
+  <div class="ipbnavsmall">
+   <a href="http://www.rohitab.com/discuss/index.php?act=Help">Help</a> -
+   <a href="http://www.rohitab.com/discuss/index.php?act=Search">Search</a> -
+   <a href="http://www.rohitab.com/discuss/index.php?act=Members">Members</a> -
+   <a href="http://www.rohitab.com/discuss/index.php?act=calendar">Calendar</a>
+  </div>
+  <div id="largetext">Full Version: <a href="http://www.rohitab.com/discuss/index.php?showtopic=25109">C++ Binary File Read/writing</a></div>
+  <div class="ipbnav"><a href="http://www.rohitab.com/discuss/lofiversion/index.php/">rohitab.com - Forums</a> &gt; <a href="http://www.rohitab.com/discuss/lofiversion/index.php/f22.html">Programming</a> &gt; <a href="http://www.rohitab.com/discuss/lofiversion/index.php/f14.html">Programming</a></div>
+  
+  <div id="ipbcontent">
+  <div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">Kez</div>
+  <div class="postdate">Jun 1 2007, 03:01 PM</div>
+ </div>
+ <div class="postcontent">
+  I'm trying to understand how to read and write binary files but my compiler does not seem to like this idea...<br><br>(the following code is from the book "c++ without fear")<br>[codebox]// Exercise 08.04.03.txt<br>// This program enables the user to view or write any<br>//  number of records.<br><br><br>#include &lt;iostream&gt;<br>#include &lt;fstream&gt;<br>using namespace std;<br><br>int get_int(int default_value);<br>char name[20];<br>int age;<br><br>int main() {<br>    char filename[81];<br>    int n;<br>    int menu;   // Integer used to select a menu command.<br><br>    int recsize =  sizeof(name) + sizeof(int);<br>    <br><br>    cout &lt;&lt; "Enter file name: ";<br>    cin.getline(filename, 80);<br><br>    // Open file for binary read-write access.<br><br>    fstream  fbin(filename, ios::binary | ios::in | ios::out);<br>    if (!fbin) {<br>        cout &lt;&lt; "Could not open file " &lt;&lt; filename;<br>        return -1;<br>    }<br><br>    while(1) {<br><br>        // Prompt for a command and then get a menu number.<br><br>        cout &lt;&lt; "Enter a choice: 1. Write Record, 2. Read Record, 3. Exit. ";<br>        menu = get_int(3);<br><br>        if (menu == 1) {                       // Menu choice #1. Write<br><br>	    cout &lt;&lt; "Enter a record number: ";    // Get record #<br>  	    n = get_int(0);<br>            fbin.seekp(n * recsize);<br><br>            cout &lt;&lt; "Enter name: ";               // Get data to write<br>            cin.getline(name, 19);<br>            cout &lt;&lt; "Enter age: ";<br>            age = get_int(0);<br><br>            // Write data to the file.<br> <br>            fbin.write(name, 20);                 // Write to file<br>            fbin.write(reinterpret_cast&lt;char*&gt;(&amp;age), sizeof(int));<br><br>        } else if (menu == 2) {               // Menu choice #2. Read<br><br>	    cout &lt;&lt; "Enter a record number: ";      // Get record #<br>            n = get_int(0);<br>            fbin.seekp(n * recsize);<br><br>            // Read data from the file.<br><br>            fbin.read(name, 20);                    // Read data from file<br>            fbin.read(reinterpret_cast&lt;char*&gt;(&amp;age), sizeof(int));<br><br>            // Display the data and close.<br>    <br>            cout &lt;&lt; "The name is: " &lt;&lt; name &lt;&lt; endl;  // Display the data<br>            cout &lt;&lt; "The age is: " &lt;&lt; age &lt;&lt; endl;<br><br>         } else                               // Other menu choices: Exit.<br>            break;<br>    }<br>    fbin.close();<br>    return 0;<br>}<br><br>// Get integer function<br>// Get an integer from keyboard; return default<br>//  value if user enters 0-length string.<br>//<br>int get_int(int default_value) {<br>    char s[81];<br><br>    cin.getline(s, 80);<br>    if (strlen(s) == 0)<br>         return default_value;<br>    return atoi(s);<br>}[/codebox]<br><br>I tried this code and my own but dev-c++ cant seem to get passed creating a file...<br>The code compiles fine and I can compiles and run non-binary read/write programs fine.<br>Can anyone tell me what my problem is?
+ </div>
+</div><div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">ExtremeCoder</div>
+  <div class="postdate">Jun 1 2007, 05:47 PM</div>
+ </div>
+ <div class="postcontent">
+  Well, why dont you program this in C it has no Object Oriented basis kind of thing, it is much easier in C than in C++
+ </div>
+</div><div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">Kez</div>
+  <div class="postdate">Jun 1 2007, 09:51 PM</div>
+ </div>
+ <div class="postcontent">
+  <!--quoteo(post=10001439:date=Jun 1 2007, 01&#58;47 PM:name=ExtremeCoder)--><div class="quotetop">QUOTE(ExtremeCoder @ Jun 1 2007, 01:47 PM) [snapback]10001439[/snapback]</div><div class="quotemain"><!--quotec-->Well, why dont you program this in C it has no Object Oriented basis kind of thing, it is much easier in C than in C++<!--QuoteEnd--></div><!--QuoteEEnd--><br><br>I don't program in C because I am trying to master C++<br><br>Is there some include file that needs to be there when using binary files?
+ </div>
+</div><div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">KOrUPt</div>
+  <div class="postdate">Jun 3 2007, 04:36 AM</div>
+ </div>
+ <div class="postcontent">
+  <!--quoteo(post=10001555:date=Jun 3 2007, 04&#58;19 AM:name=metatron)--><div class="quotetop">QUOTE(metatron @ Jun 3 2007, 04:19 AM) [snapback]10001555[/snapback]</div><div class="quotemain"><!--quotec-->edit: NM.  Misread the code.<!--QuoteEnd--></div><!--QuoteEEnd--><br>when
+it comes to file IO C is the better choice, that is unless there is a
+clear choice for using C++, but the reason that i found is that C is
+easier and it half's the final size of the exe </div>
+</div><div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">MetalHead</div>
+  <div class="postdate">Jun 3 2007, 03:21 PM</div>
+ </div>
+ <div class="postcontent">
+I understand that everyone is telling you to go to C but don't. Just
+because it is easier for them doesn't mean you can't learn something
+that is above them.<br><br>The
+error occurs when you try to open a file that doesn't exist.
+Unfortunately I am not sure the exact functions you need, but I can
+tell what you need to code to fix it.<br><br><!--c1--><div class="codetop">CODE</div><div class="codemain"><!--ec1-->cout &lt;&lt; "Enter file name: ";<br>cin.getline(filename, 80);<br><br>//This is just psuedo-code...<br>//I might have used actual functions but probably<br>//not. This is just to get the idea across...<br>if(!FileExists(filename) CreateFile(filename);<br><br>fstream fbin(filename, ios::binary | ios::in | ios::out);<!--c2--></div><!--ec2--><br>Hope this helps.
+ </div>
+</div><div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">thedoors</div>
+  <div class="postdate">Jun 3 2007, 03:30 PM</div>
+ </div>
+ <div class="postcontent">
+  <!--quoteo(post=10001627:date=Jun 3 2007, 06&#58;21 PM:name=MetalHead)--><div class="quotetop">QUOTE(MetalHead @ Jun 3 2007, 06:21 PM) [snapback]10001627[/snapback]</div><div class="quotemain"><!--quotec-->I
+understand that everyone is telling you to go to C but don't. Just
+because it is easier for them doesn't mean you can't learn something
+that is above them.<!--QuoteEnd--></div><!--QuoteEEnd--><br>Wrong, when
+people say "learn C instead of C++" they say it for other reasons not
+because C is 'easier'. (which is not always true anyway) </div>
+</div><div class="postwrapper">
+ <div class="posttopbar">
+  <div class="postname">MetalHead</div>
+  <div class="postdate">Jun 3 2007, 03:37 PM</div>
+ </div>
+ <div class="postcontent">
+KOrUPt said use C for IO, which I use, but both said learn C because it
+is easier. I personally prefer stdio to iostream but that is just me,
+and I think he should learn what he chooses. </div>
+</div>
+  </div>
+  <div class="smalltext">This is a "lo-fi" version of our main content. To view the full version with more information, formatting and images, please <a href="http://www.rohitab.com/discuss/index.php?showtopic=25109">click here</a>.</div>
+</div>
+<div id="ipbcopyright">Invision Power Board © 2001-2007 <a href="http://www.invisionpower.com/">Invision Power Services, Inc.</a></div>
+</body></html>

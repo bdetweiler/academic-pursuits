@@ -1,0 +1,589 @@
+inserting at 0 x 1: ---: 15
+1: 
+       Omaha  Lima  
+      ______________
+Omaha |   0      0   
+ Lima |   0      0   
+
+final: 
+       Omaha  Lima  
+      ______________
+Omaha |   0     15   
+ Lima |   0      0   
+
+inserting at 1 x 0: ---: 15
+1: 
+       Omaha  Lima  
+      ______________
+Omaha |   0     15   
+ Lima |   0      0   
+
+final: 
+       Omaha  Lima  
+      ______________
+Omaha |   0     15   
+ Lima |  15      0   
+
+connecting Omaha and Lima
+connecting at 0, 1, 15);
+(Omaha) ----15----(Lima)
+inserting at 0 x 2: ---: 3
+1: 
+       Omaha  Lima  Miami 
+      ____________________
+Omaha |   0     15      0   
+ Lima |  15      0      0   
+Miami |   0      0      0   
+
+final: 
+       Omaha  Lima  Miami 
+      ____________________
+Omaha |   0     15      3   
+ Lima |  15      0      0   
+Miami |   0      0      0   
+
+inserting at 2 x 0: ---: 3
+1: 
+       Omaha  Lima  Miami 
+      ____________________
+Omaha |   0     15      3   
+ Lima |  15      0      0   
+Miami |   0      0      0   
+
+final: 
+       Omaha  Lima  Miami 
+      ____________________
+Omaha |   0     15      3   
+ Lima |  15      0      0   
+Miami |   3      0      0   
+
+connecting Omaha and Miami
+connecting at 0, 2, 3);
+(Omaha) ----3----(Miami)
+inserting at 0 x 3: ---: 4
+1: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      0   
+  Lima |  15      0      0      0   
+ Miami |   3      0      0      0   
+Denver |   0      0      0      0   
+
+final: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      0      0   
+ Miami |   3      0      0      0   
+Denver |   0      0      0      0   
+
+inserting at 3 x 0: ---: 4
+1: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      0      0   
+ Miami |   3      0      0      0   
+Denver |   0      0      0      0   
+
+final: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      0      0   
+ Miami |   3      0      0      0   
+Denver |   4      0      0      0   
+
+connecting Omaha and Denver
+connecting at 0, 3, 4);
+(Omaha) ----4----(Denver)
+inserting at 2 x 1: ---: 5
+1: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      0      0   
+ Miami |   3      0      0      0   
+Denver |   4      0      0      0   
+
+final: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      0      0   
+ Miami |   3      5      0      0   
+Denver |   4      0      0      0   
+
+inserting at 1 x 2: ---: 5
+1: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      0      0   
+ Miami |   3      5      0      0   
+Denver |   4      0      0      0   
+
+final: 
+         Omaha  Lima   Miami Denver 
+       ______________________________
+ Omaha |   0     15      3      4   
+  Lima |  15      0      5      0   
+ Miami |   3      5      0      0   
+Denver |   4      0      0      0   
+
+connecting Miami and Lima
+connecting at 2, 1, 5);
+(Miami) ----5----(Lima)
+inserting at 1 x 4: ---: 75
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage 
+          ____________________________________________________
+    Omaha |     0         15          3          4          0     
+     Lima |    15          0          5          0          0     
+    Miami |     3          5          0          0          0     
+   Denver |     4          0          0          0          0     
+Anchorage |     0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage 
+          ____________________________________________________
+    Omaha |     0         15          3          4          0     
+     Lima |    15          0          5          0         75     
+    Miami |     3          5          0          0          0     
+   Denver |     4          0          0          0          0     
+Anchorage |     0          0          0          0          0     
+
+inserting at 4 x 1: ---: 75
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage 
+          ____________________________________________________
+    Omaha |     0         15          3          4          0     
+     Lima |    15          0          5          0         75     
+    Miami |     3          5          0          0          0     
+   Denver |     4          0          0          0          0     
+Anchorage |     0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage 
+          ____________________________________________________
+    Omaha |     0         15          3          4          0     
+     Lima |    15          0          5          0         75     
+    Miami |     3          5          0          0          0     
+   Denver |     4          0          0          0          0     
+Anchorage |     0         75          0          0          0     
+
+connecting Lima and Anchorage
+connecting at 1, 4, 75);
+(Lima) ----75----(Anchorage)
+inserting at 4 x 5: ---: 2
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis  
+          ______________________________________________________________
+    Omaha |     0         15          3          4          0          0     
+     Lima |    15          0          5          0         75          0     
+    Miami |     3          5          0          0          0          0     
+   Denver |     4          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          0     
+ Corvalis |     0          0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis  
+          ______________________________________________________________
+    Omaha |     0         15          3          4          0          0     
+     Lima |    15          0          5          0         75          0     
+    Miami |     3          5          0          0          0          0     
+   Denver |     4          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2     
+ Corvalis |     0          0          0          0          0          0     
+
+inserting at 5 x 4: ---: 2
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis  
+          ______________________________________________________________
+    Omaha |     0         15          3          4          0          0     
+     Lima |    15          0          5          0         75          0     
+    Miami |     3          5          0          0          0          0     
+   Denver |     4          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2     
+ Corvalis |     0          0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis  
+          ______________________________________________________________
+    Omaha |     0         15          3          4          0          0     
+     Lima |    15          0          5          0         75          0     
+    Miami |     3          5          0          0          0          0     
+   Denver |     4          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2     
+ Corvalis |     0          0          0          0          2          0     
+
+connecting Anchorage and Corvalis
+connecting at 4, 5, 2);
+(Anchorage) ----2----(Corvalis)
+inserting at 4 x 6: ---: 4
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings  
+          ________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0     
+     Lima |    15          0          5          0         75          0          0     
+    Miami |     3          5          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          0     
+ Corvalis |     0          0          0          0          2          0          0     
+ Billings |     0          0          0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings  
+          ________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0     
+     Lima |    15          0          5          0         75          0          0     
+    Miami |     3          5          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4     
+ Corvalis |     0          0          0          0          2          0          0     
+ Billings |     0          0          0          0          0          0          0     
+
+inserting at 6 x 4: ---: 4
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings  
+          ________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0     
+     Lima |    15          0          5          0         75          0          0     
+    Miami |     3          5          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4     
+ Corvalis |     0          0          0          0          2          0          0     
+ Billings |     0          0          0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings  
+          ________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0     
+     Lima |    15          0          5          0         75          0          0     
+    Miami |     3          5          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4     
+ Corvalis |     0          0          0          0          2          0          0     
+ Billings |     0          0          0          0          4          0          0     
+
+connecting Anchorage and Billings
+connecting at 4, 6, 4);
+(Anchorage) ----4----(Billings)
+inserting at 4 x 7: ---: 15
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4          0     
+ Corvalis |     0          0          0          0          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          0          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0          0          0          0          0     
+
+inserting at 7 x 4: ---: 15
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          0          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0          0          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          0          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+connecting Anchorage and Edmonton
+connecting at 4, 7, 15);
+(Anchorage) ----15----(Edmonton)
+inserting at 5 x 3: ---: 5
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          0          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+inserting at 3 x 5: ---: 5
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          0          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+connecting Corvalis and Denver
+connecting at 5, 3, 5);
+(Corvalis) ----5----(Denver)
+inserting at 3 x 7: ---: 3
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          0     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+inserting at 7 x 3: ---: 3
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          0         15          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          3         15          0          0          0     
+
+connecting Denver and Edmonton
+connecting at 3, 7, 3);
+(Denver) ----3----(Edmonton)
+inserting at 6 x 7: ---: 10
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0          0     
+ Edmonton |     0          0          0          3         15          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0          0          0     
+
+inserting at 7 x 6: ---: 10
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0          0          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0         10          0     
+
+connecting Billings and Edmonton
+connecting at 6, 7, 10);
+(Billings) ----10----(Edmonton)
+inserting at 6 x 3: ---: 1
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          0          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0         10          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0         10          0     
+
+inserting at 3 x 6: ---: 1
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          0          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0         10          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          1          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0         10          0     
+
+connecting Billings and Denver
+connecting at 6, 3, 1);
+(Billings) ----1----(Denver)
+inserting at 7 x 3: ---: 2
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          1          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          3         15          0         10          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          1          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          2         15          0         10          0     
+
+inserting at 3 x 7: ---: 2
+1: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          1          3     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          2         15          0         10          0     
+
+final: 
+              Omaha      Lima       Miami     Denver   Anchorage  Corvalis   Billings   Edmonton  
+          __________________________________________________________________________________
+    Omaha |     0         15          3          4          0          0          0          0     
+     Lima |    15          0          5          0         75          0          0          0     
+    Miami |     3          5          0          0          0          0          0          0     
+   Denver |     4          0          0          0          0          5          1          2     
+Anchorage |     0         75          0          0          0          2          4         15     
+ Corvalis |     0          0          0          5          2          0          0          0     
+ Billings |     0          0          0          1          4          0          0         10     
+ Edmonton |     0          0          0          2         15          0         10          0     
+
+connecting Edmonton and Denver
+connecting at 7, 3, 2);
+(Edmonton) ----2----(Denver)

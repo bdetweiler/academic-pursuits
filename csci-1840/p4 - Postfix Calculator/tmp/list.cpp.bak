@@ -1,0 +1,194 @@
+/****************************************************************************
+ * Author:  Brian Detweiler                                                 *
+ * File:    list.h                                                          *
+ * Use:     Header definition for the List class. A list allows dynamic     *
+ *          data storage. This list stores data of type Word.               *
+ ***************************************************************************/
+#include<iostream>
+using namespace std;
+
+#include<new>
+// List and Node class definitions
+#include"list.h"  
+
+// ToDo: Test this. It's new! 
+/* Input:   A const List &
+ * Output:  None
+ * Return:  A const List &
+ * Notes:   Allows for List = List by overloading the assignment operator.
+ */
+#if 0
+const List &List::operator = (const List &l)
+{
+    List::Node *curr = this->head;
+    this->head = l.head;
+    delete curr;
+    return this;
+}
+#endif
+
+/* Input:   An ostream & and a const List &
+ * Output:  None
+ * Return:  An ostream
+ * Notes:   Allows for cout << List by overloading the ostream operator.
+ */
+ostream &operator << (ostream &ost, const List &l)
+{
+    List::Node *curr = l.head;
+    while(curr)
+    {
+        ost << curr->count << ' ' << curr->data << endl;
+        curr = curr->next;
+    }
+    return ost;
+}
+
+
+/* Input:   A const Word
+ * Output:  none
+ * Return:  none
+ * Notes:   Inserts a Word in the correct position.
+ */
+#if 0
+Node *traverse(const Word foo, const Node *& prev) const
+{
+    List::Node *curr = head.next;
+    prev = &head;
+    while(curr && curr->data < foo)
+    {
+        prev = curr;
+        curr = curr->next;
+    }
+    if(curr->data == foo)
+    {
+}
+#endif
+/* Input:   A const Word
+ * Output:  none
+ * Return:  none
+ * Notes:   Inserts a Word in the correct position.
+ */
+void List::insert(const Word foo)
+{
+    // ToDo: this is seg faulting. 
+    cout << " Insert " << endl;
+    Node *curr = head;
+    Node *prev = NULL;
+    cout << " before while " << endl;
+    cout << " curr - " << curr << endl;
+    cout << " prev - " << prev << endl;
+    cout << find(foo) << endl;
+    while(curr && curr->data < foo)
+    {
+        cout << " in while " << endl;
+    cout << " curr - " << curr << endl;
+    cout << " prev - " << prev << endl;
+        prev = curr;
+        curr = curr->next;
+    }
+    if(curr->data == foo)
+    {
+        cout << " Increment counter " << endl;
+    cout << " curr - " << curr << endl;
+    cout << " prev - " << prev << endl;
+        curr->count += 1;
+    }
+    else
+    {
+        cout << " in else " << endl;
+    cout << " curr - " << curr << endl;
+    cout << " prev - " << prev << endl;
+        exit(1);
+        Node *n = new Node(foo, curr);
+        if(prev)
+        {
+            prev->next = n;
+        }
+        else
+        {
+            head = n;
+        }
+    }
+} // End insert
+
+/* Input:   A const Word foo
+ * Output:  none
+ * Return:  A boolean
+ * Notes:   Removes a Word from the list and returns true on success.
+ */
+bool List::remove(const Word foo)
+{
+   bool rval = false;
+   Node *curr = head;
+   Node *prev = NULL;
+   while(curr && curr->data < foo)
+   {
+       prev = curr;
+       curr = curr->next;
+   }
+   if(curr && curr->data == foo)
+   {
+       if(prev)
+       {
+           prev->next = curr->next;
+       }
+       else
+       {
+           head = curr->next;
+       }
+       delete curr;
+       rval = true;
+   }
+   return rval;
+} // End remove
+
+/* Input:   A const Word 
+ * Output:  none
+ * Return:  A boolean
+ * Notes:   Returns true in the event that the given node exists.
+ */
+bool List::find(const Word foo) const
+{
+    Node * curr = head;
+    while(curr && curr->data < foo)
+    {
+        curr = curr->next;
+    }
+    return(curr && curr->data == foo);
+}
+        
+
+/* Input:   none
+ * Output:  none
+ * Return:  A boolean
+ * Notes:   Returns true in the event that the list is empty.
+ */
+bool List::empty() const 
+{ 
+   return !head; 
+} 
+
+/* Input:   none
+ * Output:  none
+ * Return:  none
+ * Notes:   Default constructor.
+ */
+List::List() 
+   : head(0)
+{ 
+} 
+
+/* Input:   none
+ * Output:  none
+ * Return:  none
+ * Notes:   Destructor.
+ */
+List::~List()
+{
+    // while head is not empty remove the data
+    while(!empty())
+    {
+        remove(head->data);      
+    }
+
+} // end List destructor

@@ -1,0 +1,137 @@
+[jclark@stormbringer new_graph]$ make
+g++ -Wall   -c -o main.o main.cpp
+g++ -Wall   -c -o graph.o graph.cpp
+g++ -Wall   -c -o vertex.o vertex.cpp
+g++ -Wall  main.o graph.o vertex.o   -o main
+[jclark@stormbringer new_graph]$ cat foo.in
+a c
+a b 1
+a c 9
+a d 5
+b c 8
+b d 7
+c d 3
+[jclark@stormbringer new_graph]$ cat foo.in | ./main
+vertex list
+a b c d
+
+edge list
+a - b = 1
+a - c = 9
+a - d = 5
+b - c = 8
+b - d = 7
+c - d = 3
+
+minimum spanning tree
+a - b = 1
+a - d = 5
+c - d = 3
+
+Dijkstra table from a
+a done 1 prev a dist 0
+b done 1 prev a dist 1
+c done 0 prev d dist 8
+d done 1 prev a dist 5
+
+The shortest path from a to c has a distance of 8
+a -> d -> c
+[jclark@stormbringer new_graph]$ cat bar.in
+a d
+a f 1
+a g 10
+a b 3
+b g 2
+b c 8
+c g 3
+c d 6
+d g 12
+d e 14
+e g 4
+e f 9
+g f 5
+f b 6
+e c 5
+[jclark@stormbringer new_graph]$ cat bar.in | ./main
+vertex list
+a f g b c d e
+
+edge list
+a - f = 1
+a - g = 10
+a - b = 3
+b - g = 2
+b - c = 8
+c - g = 3
+c - d = 6
+d - g = 12
+d - e = 14
+e - g = 4
+e - f = 9
+g - f = 5
+f - b = 6
+e - c = 5
+
+minimum spanning tree
+a - f = 1
+a - b = 3
+b - g = 2
+c - g = 3
+e - g = 4
+c - d = 6
+
+Dijkstra table from a
+a done 1 prev a dist 0
+f done 1 prev a dist 1
+g done 1 prev b dist 5
+b done 1 prev a dist 3
+c done 1 prev g dist 8
+d done 0 prev c dist 14
+e done 1 prev g dist 9
+
+The shortest path from a to d has a distance of 14
+a -> b -> g -> c -> d
+[jclark@stormbringer new_graph]$ cat baz.in
+foo baz
+foo bar 6
+foo a 14
+foo baz 17
+foo spam 4
+bar a 1
+bar baz 5
+bar spam 2
+a baz 3
+a spam 7
+baz spam 10
+[jclark@stormbringer new_graph]$ cat baz.in | ./main
+vertex list
+foo bar a baz spam
+
+edge list
+foo - bar = 6
+foo - a = 14
+foo - baz = 17
+foo - spam = 4
+bar - a = 1
+bar - baz = 5
+bar - spam = 2
+a - baz = 3
+a - spam = 7
+baz - spam = 10
+
+minimum spanning tree
+bar - a = 1
+bar - spam = 2
+a - baz = 3
+foo - spam = 4
+
+Dijkstra table from foo
+foo done 1 prev foo dist 0
+bar done 1 prev foo dist 6
+a done 1 prev bar dist 7
+baz done 0 prev a dist 10
+spam done 1 prev foo dist 4
+
+The shortest path from foo to baz has a distance of 10
+foo -> bar -> a -> baz
+[jclark@stormbringer new_graph]$

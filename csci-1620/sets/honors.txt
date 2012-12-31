@@ -1,0 +1,37 @@
+[jclark@arioch sets]$ head -n1 input.txt
+10 15 1 8 5
+[jclark@arioch sets]$ head -n1 input.txt | ./honors
+1 5 8 10 15
+the subsets are
+1
+5
+8
+10
+15
+1 5
+1 8
+1 10
+1 15
+5 8
+5 10
+5 15
+8 10
+8 15
+10 15
+1 5 8
+1 5 10
+1 5 15
+1 8 10
+1 8 15
+1 10 15
+5 8 10
+5 8 15
+5 10 15
+8 10 15
+1 5 8 10
+1 5 8 15
+1 5 10 15
+1 8 10 15
+5 8 10 15
+1 5 8 10 15
+[jclark@arioch sets]$ 

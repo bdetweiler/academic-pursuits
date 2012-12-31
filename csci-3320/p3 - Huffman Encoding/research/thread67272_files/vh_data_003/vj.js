@@ -1,0 +1,1 @@
+document.write("<"+"a href=\"http://aj.daniweb.com/servlet/ajrotator/206213/0/cj?ajkey=V12724204D1L103128D8285692D8285692L172669L172688QL103279QL103149P0G0021\" target=\"_top\"><"+"img src=\"http://img1.adjuggler.com/banners/Client105796/1150835054526_160x60-vert-software_01.jpg\" height=\"600\" width=\"160\" border=\"0\" alt=\"Lounge\"><"+"/a>");

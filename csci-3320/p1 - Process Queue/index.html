@@ -1,0 +1,63 @@
+<html>
+<body>
+<h2> Heaps </h2>
+
+This program will simulate a process queue.  The idea is the program will
+run some programs giving time slices based on the priority.
+
+<h3> the input file </h3>
+The process entries will be in a file, one per line. The data is the start
+time, priority level, total time to run, and process name.  All start
+times will be in order and unique.  The process name may be multiple
+tokens.
+<br>
+<a href="file.data">Here is a sample input file</a><br>
+
+<h3> the process </h3>
+Each process is defined by the priority level, the number of time 
+units until completion, and the name/string for the process.  
+When you insert each process into the heap, just add the priority 
+level to the time is is placed in the heap to generate an 
+effective priority ( effective priority = priority + insert time ).  
+The heap is sorted by the effective priority.  
+The input will be in order by start time, and the start times will be
+unique ( this makes input easier ).
+
+<h3> the heap </h3>
+Your heap needs to be a D-Heap.  I will recommend that you try an int
+heap first, then turn it into a heap of type "Process", or template it.
+
+<h3> the main program </h3>
+You will handle the first argument as your input file.  
+This program will follow a form of having a loop for each time unit.  
+You will need to read in a process, if the start time has arrived place 
+the process in the heap, then read in the next process.  Be sure to test 
+for fail and/or eof on your input stream.  If the heap is not empty, get a 
+process from it, and run it and output the name, if the process is not 
+done place it back on the heap, don't forget to update the effective 
+priority level to reflect the time.
+<p>
+I want your ouput to show the time, any new inserts, 
+what process if any is running in that time interval, 
+and if it finished.  I want only one line per time unit.
+<br>
+<a href="output.txt">Here is a sample run from my program</a> 
+based on the earlier input file<br>
+
+<h3> program arguments </h3>
+Pass the input filename as the first argument, 
+the number of time units to run as the second, 
+and the d-value as the third ( ex: sched ./file.data 100 2 ).
+
+<p>
+This program is due Septmber 18th.<br>
+
+<h3>Goals</h3>
+<ul>
+<li> write a D-Heap
+<li> solve a heap ( priority queue ) problem
+<li> provide a basic analysis
+</ul>
+
+</body>
+</html>

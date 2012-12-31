@@ -1,0 +1,57 @@
+#include<iostream>
+using namespace std;
+
+#include<fstream>
+
+int main(int argc, char *argv[])
+{
+
+    // if you keep the small rules, you can break the big ones.
+//    Word word;
+//    char str[] = NULL;
+//    cin >> str;
+    /*
+     *     char * pch;
+     *     printf ("Splitting string \"%s\" in
+     *     tokens:\n",str);
+     *     pch = strtok (str," ");
+     *     while (pch != NULL)
+     *     {
+     *         printf ("%s\n",pch);
+     *         pch = strtok(NULL, " ,.");
+     *     }
+     */
+
+    cout << "Word Frequency Counter.\n"
+         << "******************************"
+         << "***************************\n\n";
+
+    // as a command line arguement it takes a file for input
+    if(argc < 2)
+    {
+        cout << "Usage " << argv[0] << " <file>" << endl;
+        return 1;
+    }
+    if((argv[1] == "-r") || (argv[1] == "--rank"))
+    {
+        // Rank from most used to least used and alphabetically
+        cout << "Rank!";
+    }
+
+/*
+    Word word;
+    char str[] = NULL;
+    cin >> str;
+    char * pch;
+    printf ("Splitting string \"%s\" in tokens:\n",str);
+    pch = strtok (str," ");
+    while (pch != NULL)
+    {
+        printf ("%s\n",pch);
+        pch = strtok (NULL, ",.");
+    }
+*/
+
+
+}
+

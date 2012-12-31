@@ -1,0 +1,12 @@
+[jclark@arioch code]$ make
+g++ -Wall   -c -o poly.o poly.cpp
+g++ -Wall   -c -o main.o main.cpp
+g++   poly.o main.o   -o poly
+[jclark@arioch code]$ cat input.txt
++2x1+7x0-12x2
+-5x2+2x0
+[jclark@arioch code]$ cat input.txt | ./poly
+( -17x2 +2x1 +9x0 ) = ( -12x2 +2x1 +7x0 ) + ( -5x2 +2x0 )
+( -7x2 +2x1 +5x0 ) = ( -12x2 +2x1 +7x0 ) - ( -5x2 +2x0 )
+( +60x4 -10x3 -59x2 +4x1 +14x0 ) = ( -12x2 +2x1 +7x0 ) * ( -5x2 +2x0 )
+[jclark@arioch code]$

@@ -1,0 +1,522 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>GameDev.net - Simple File I/O Using C++</title>
+
+
+
+  
+  <link rel="stylesheet" href="file_io_in_CPP_files/reference.css" type="text/css">
+  <link rel="icon" href="http://www.gamedev.net/pics/gdicon.png" type="image/png">
+<style type="text/css">
+.iTt{
+    FONT-FAMILY:       Verdana, Arial, Helvetica;
+    FONT-SIZE:         11px;
+    FONT-STYLE:        normal;
+    FONT-WEIGHT:       normal;
+    COLOR:             black;
+    BACKGROUND-COLOR:  lightyellow;
+    BORDER:            black 1px solid;
+    PADDING:           2px;
+}
+.iTt a {
+    COLOR:             0000CC;
+}
+.iTt a:visited {
+    COLOR:             0000CC;
+}
+.iTt a:hover {
+    COLOR:             6666CC;
+}
+.iTt TD {
+   COLOR:              999999;
+}
+</style></head><body leftmargin="0" topmargin="0" alink="#000000" background="file_io_in_CPP_files/watermark.gif" bgcolor="#ffffff" link="#666699" marginheight="0" marginwidth="0" text="#000000" vlink="#666699">
+
+<table border="0" cellpadding="3" cellspacing="0" width="100%">
+  <tbody><tr>
+    <td class="tblhdr">Simple File I/O Using C++</td>
+    <td class="tblhdr" align="right" nowrap="nowrap"><img src="file_io_in_CPP_files/littleg.gif" align="absbottom" height="16" width="16">&nbsp;<a href="http://www.gamedev.net/"><span style="color: white; text-decoration: none;">GameDev.net</span></a></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+<!-- Begin -  Site: GameDev.net Zone: GameDev.net variable width -->
+<script language="javascript" type="text/javascript">
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=55140&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;IFR=False&amp;PageID=55140&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</script><script language="javascript" src="file_io_in_CPP_files/a.js"></script><!-- BEGIN RICH-MEDIA NETWORK CODE -->
+<script language="JavaScript">
+rnum=Math.round(Math.random() * 100000);
+
+document.write('<scr'+'ipt src="http://www.burstnet.com/cgi-bin/ads/ad10166a.cgi/v=2.0S/sz=468x60A|728x90A/'+rnum+'/NI/RETURN-CODE/JS/"></scr'+'ipt>');
+
+</script><script src="file_io_in_CPP_files/a.htm"></script><iframe src="file_io_in_CPP_files/076948.htm" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0" allowtransparency="true" frameborder="0" height="90" scrolling="no" width="728">&lt;SCRIPT
+language="JavaScript" type="text/javascript"&gt;document.write('&lt;a
+target=_top
+href="http://www.burstnet.com/ads/ad10166a-map.cgi/BCPG73770.103532.109038/SZ=468X60A|728X90A/V=2.0S//REDIRURL=http://clk.atdmt.com/MON/go/brstmmon0770000530mon/direct/076948/"
+target="_blank"&gt;&lt;img
+src="http://view.atdmt.com/MON/view/brstmmon0770000530mon/direct/076948/"/&gt;&lt;/a&gt;');&lt;/SCRIPT&gt;&lt;</iframe><img src="file_io_in_CPP_files/blank.gif" align="right" height="0" width="0"><script language="JavaScript">var tcdacmd="dt",ANBCH="573";</script><script language="JavaScript" src="file_io_in_CPP_files/slf.js"></script><noscript><a href="http://www.burstnet.com/ads/ad10166a-map.cgi/ns/v=2.0S/sz=468x60A|728x90A/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ad10166a.cgi/ns/v=2.0S/sz=468x60A|728x90A/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
+
+<noscript> <a
+href="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID="
+target="_blank"> <img
+src="http://www.gamedev.net/banman/a.aspx?ZoneID=13&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&amp;PageID="
+width="728" height="90" border="0" alt=""></a>
+</noscript>
+<!-- End -  Site: GameDev.net Zone: GameDev.net variable width --></td>
+  </tr>
+</tbody></table>
+<table border="0" cellpadding="5" cellspacing="0" width="100%"><tbody><tr><td>
+
+    <p align="center"><span class="title">Simple File I/O Using C++</span>
+    
+          <br><span class="author">by John Peregrine</span>
+        </p>
+    <table align="right" border="0" cellpadding="5" cellspacing="0" width="310"><tbody><tr><td align="center"><br><span class="maintext-2">ADVERTISEMENT</span>
+<!-- Begin -  Site: GameDev.net Zone: GameDev.net Box -->
+<script language="javascript" type="text/javascript">
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=20483&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;IFR=False&amp;PageID=20483&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</script><script language="javascript" src="file_io_in_CPP_files/a_002.js"></script><script language="JavaScript">
+var ShockMode = 0;
+if (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"] && navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin) {
+if (navigator.plugins && navigator.plugins["Shockwave Flash"])
+ShockMode = 1;
+}
+else if (navigator.userAgent && navigator.userAgent.indexOf("MSIE")>=0 
+&& (navigator.userAgent.indexOf("Windows 9")>=0 || navigator.userAgent.indexOf("Windows NT")>=0)) {
+document.write('<SCRIPT LANGUAGE=VBScript\> \n');
+document.write('on error resume next \n');
+document.write('ShockMode = (IsObject(CreateObject("ShockwaveFlash.ShockwaveFlash.4"))) ');
+document.write('<\/SCRIPT\> ');
+}
+if ( ShockMode ) {
+document.write('<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"');
+document.write(' codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0"');
+document.write(' ID=banner WIDTH="300" HEIGHT="250" >');
+document.write(' <PARAM NAME=movie VALUE="http://www.gamedev.net/banman/ads/slickedit0707-300x250.swf?url=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d26%26CampaignID%3d421%26AdvertiserID%3d96%26BannerID%3d518%26SiteID%3d1%26RandomNumber%3d45360"> ');
+document.write(' <param name="wmode" value="transparent"> ');
+document.write(' <PARAM NAME=quality VALUE=autohigh> ');
+document.write('<EMBED SRC="http://www.gamedev.net/banman/ads/slickedit0707-300x250.swf?url=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d26%26CampaignID%3d421%26AdvertiserID%3d96%26BannerID%3d518%26SiteID%3d1%26RandomNumber%3d45360"');
+document.write(' swLiveConnect=FALSE WIDTH="300" HEIGHT="250"');
+document.write(' QUALITY=autohigh wmode="transparent"');
+document.write(' TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">');
+document.write('</EMBED>');
+document.write('</OBJECT>');
+} else if (!(navigator.appName && navigator.appName.indexOf("Netscape")>=0 && navigator.appVersion.indexOf("2.")>=0)){
+document.write('<A HREF="http://www.gamedev.net/banman/a.aspx?Task=Click&ZoneID=26&CampaignID=421&AdvertiserID=96&BannerID=518&SiteID=1&RandomNumber=45360" TARGET="_top"><IMG SRC="http://www.gamedev.net/banman/ads/slickedit0707-300-250.jpg" WIDTH="300" HEIGHT="250" BORDER="0"></A>');
+}
+</script><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash2/cabs/swflash.cab#version=4,0,0,0" id="banner" height="250" width="300"> <param name="movie" value="http://www.gamedev.net/banman/ads/slickedit0707-300x250.swf?url=http%3a%2f%2fwww.gamedev.net%2fbanman%2fa.aspx%3fTask%3dClick%26ZoneID%3d26%26CampaignID%3d421%26AdvertiserID%3d96%26BannerID%3d518%26SiteID%3d1%26RandomNumber%3d45360">  <param name="wmode" value="transparent">  <param name="quality" value="autohigh"> <embed src="file_io_in_CPP_files/slickedit0707-300x250.swf" swliveconnect="FALSE" quality="autohigh" wmode="transparent" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" height="250" width="300"></object>
+<noembed>&lt;A
+HREF="http://www.gamedev.net/banman/a.aspx?Task=Click&amp;ZoneID=26&amp;CampaignID=421&amp;AdvertiserID=96&amp;BannerID=518&amp;SiteID=1&amp;RandomNumber=45360"
+TARGET="_top"&gt;&lt;IMG
+SRC="http://www.gamedev.net/banman/ads/slickedit0707-300-250.jpg"
+WIDTH="300" HEIGHT="250" BORDER="0"&gt;&lt;/A&gt;</noembed>
+<noscript><A
+HREF="http://www.gamedev.net/banman/a.aspx?Task=Click&ZoneID=26&CampaignID=421&AdvertiserID=96&BannerID=518&SiteID=1&RandomNumber=45360"
+TARGET="_top"><IMG
+SRC="http://www.gamedev.net/banman/ads/slickedit0707-300-250.jpg"
+WIDTH="300" HEIGHT="250" BORDER="0"></A></noscript>
+
+<noscript> <a
+href="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=20483"
+target="_blank"> <img
+src="http://www.gamedev.net/banman/a.aspx?ZoneID=26&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&amp;PageID=20483"
+width="300" height="250" border="0" alt=""></a>
+</noscript>
+<!-- End -  Site: GameDev.net Zone: GameDev.net Box -->
+</td></tr></tbody></table>
+  
+
+<h1>Preface</h1>
+<p>I have been reviewing the message boards and posted articles on file
+input and output, and I just think it&#8217;s that time again. File I/O is
+easier than baking cookies when used in conjunction with C++. In this
+article, I will be explaining to all of you how exactly to handle just
+about every aspect of file input and output using both ASCII and <a itxtdid="3695415" target="_blank" href="#" style="border-bottom: 0.075em solid darkgreen; font-weight: normal; font-size: 100%; text-decoration: underline; color: darkgreen; background-color: transparent; padding-bottom: 1px;" classname="iAs" class="iAs">binary</a> methods, and the best part is that it&#8217;s all done using C++.</p>
+
+<h1>Getting started, ASCII output</h1>
+<p>To get anything to work using the methods here, you must first
+include &lt;fstream.h&gt;. This is actually an extension onto
+&lt;iostream.h&gt;, for those of you buffs out there that already like
+to use streams for <a itxtdid="3336454" target="_blank" href="#" style="border-bottom: 0.075em solid darkgreen; font-weight: normal; font-size: 100%; text-decoration: underline; color: darkgreen; background-color: transparent; padding-bottom: 1px;" classname="iAs" class="iAs">console</a>
+input and output. Actually, &lt;iostream.h&gt; is already included with
+&lt;fstream.h&gt;, so you really don&#8217;t need to include both into your
+source files anymore, but if you prefer to just explicitly include
+both, feel free to do so. Let&#8217;s begin by showing you the class designed
+for file handling, and I&#8217;ll show you how to do ASCII I/O. If you
+guessed "fstream," you&#8217;re exactly right! But for the methods of this
+article, we&#8217;ll be using the two classes "ifstream" and "ofstream" for
+input and output, respectively.</p>
+<p>If you have ever worked with the two console streams "cin" and
+"cout," then this will become a breeze for you. We&#8217;ll work with just
+the output part for now, and start by declaring an object for it.</p>
+
+<blockquote><pre><div class="code">
+ofstream fout;
+
+</div></pre></blockquote>
+
+<p>That&#8217;s all for that, but to open the file, you must call ofstream::open() like this.</p>
+
+<blockquote><pre><div class="code">
+fout.open("output.txt");
+
+</div></pre></blockquote>
+
+<p>You could have also just as well opened the file as you declared the
+stream by passing the filename as a parameter to the constructor of the
+object.</p>
+
+<blockquote><pre><div class="code">
+ofstream fout("output.txt");<p></p>
+
+</div></pre></blockquote>
+
+<p>This will be our selected method of declaring objects, since it&#8217;s
+still rather simple to see how to create and open the file. By the way,
+if the file you are opening for output does not exist, it will be
+created for you, so there is no need to ever worry about creating the
+file. Now to output to the file, it works exactly like how you would
+output to "cout." For those of you that don&#8217;t know "cout" for console
+output, then here&#8217;s an example.</p>
+
+<blockquote><pre><div class="code">
+int num = 150;
+char name[] = "John Doe";
+fout &lt;&lt; "Here is a number: " &lt;&lt; num &lt;&lt; "\n";
+fout &lt;&lt; "Now here is a string: " &lt;&lt; name &lt;&lt; "\n";
+
+</div></pre></blockquote>
+
+<p>Now to save the file, you must close the file, or flush the buffer
+to the file. Closing the file will not let you access it anymore, so
+only call it when you are done using the file and it will automatically
+save the file for you. Flushing the buffer will write the buffer to the
+file and still keep the file open, so use this function when necessary.
+Flushing is done by another output looking call, and closing is done by
+a method call. Like this:</p>
+
+<blockquote><pre><div class="code">
+fout &lt;&lt; flush;
+fout.close();
+
+</div></pre></blockquote>
+
+<p>Now the contents of the file when you open it in a <a itxtdid="2238104" target="_blank" href="#" style="border-bottom: 0.075em solid darkgreen; font-weight: normal; font-size: 100%; text-decoration: underline; color: darkgreen; background-color: transparent; padding-bottom: 1px;" classname="iAs" class="iAs">text editor</a> will read:</p>
+
+<blockquote><pre><div class="code">
+Here is a number: 150
+Now here is a string: John Doe
+
+</div></pre></blockquote>
+
+<p>It&#8217;s that simple! Now let&#8217;s move on to file input, which can be a
+bit trickier, so make sure you have the simple streams down first.
+Become familiar with the "&lt;&lt;" and "&gt;&gt;" operators, because
+you&#8217;ll need them again. So here we go&#8230;</p>
+
+<h1>Moving on, ASCII input</h1>
+<p>Input is, again, exactly the same as using the "cin" stream. It
+resembles the file output stream we&#8217;ve already discussed, but there are
+a few things you have to worry about. Before we go over the tricky
+stuff, let&#8217;s just begin with a simple text file that contains:</p>
+
+<blockquote><pre><div class="code">
+12
+GameDev
+15.45
+L
+This is really awesome!
+
+</div></pre></blockquote>
+
+<p>To open this file, you must create the in-stream object, like so.</p>
+
+<blockquote><pre><div class="code">
+ifstream fin("input.txt");
+
+</div></pre></blockquote>
+
+<p>Now let&#8217;s read in the first four lines. Remember how you used the
+"&lt;&lt;" operator to insert variables and symbols into the stream?
+Well, to go along with the "&lt;&lt;" (insertion) operator, there&#8217;s the
+"&gt;&gt;" (extraction) operator. And it works just the same. Look at
+this snippet below.</p>
+
+<blockquote><pre><div class="code">
+int number;
+float real;
+char letter, word[8];
+
+fin &gt;&gt; number;
+fin &gt;&gt; word;
+fin &gt;&gt; real;
+fin &gt;&gt; letter;
+
+</div></pre></blockquote>
+
+<p>It's also possible to put these four lines reading the file into one, simpler line.</p>
+
+<blockquote><pre><div class="code">
+fin &gt;&gt; number &gt;&gt; word &gt;&gt; real &gt;&gt; letter;
+
+</div></pre></blockquote>
+
+<p>How does this work? After each white space in the file, the
+"&gt;&gt;" operator will stop reading in the contents, until another
+&gt;&gt; operator is encountered. Since each of the four lines we were
+reading in was separated by a new line (which is a white space
+character), the "&gt;&gt;" operator puts only that line into the
+separate variables. That&#8217;s how both of the <a itxtdid="3695749" target="_blank" href="#" style="border-bottom: 0.075em solid darkgreen; font-weight: normal; font-size: 100%; text-decoration: underline; color: darkgreen; background-color: transparent; padding-bottom: 1px;" classname="iAs" class="iAs">code's</a> samples would work.</p>
+<p>Let&#8217;s not forget about that last line in our file, though.</p>
+
+<blockquote><pre><div class="code">
+This is really awesome!
+
+</div></pre></blockquote>
+
+<p>If we want this whole line in one char array, we cannot do it with
+the "&gt;&gt;" operator because the spaces (white space) between each
+word would stop the file extraction. For instance, if we had said:</p>
+
+<blockquote><pre><div class="code">
+char sentence[101];
+fin &gt;&gt; sentence;
+
+</div></pre></blockquote>
+
+<p>We'd want <span class="code">sentence</span> to now contain, "This
+is really awesome!" But because of the white space, it now only
+contains "This". Obviously, there is a way to read in the whole line,
+and it is the method getline(). This is how we would do it.</p>
+
+<blockquote><pre><div class="code">
+fin.getline(sentence, 100);
+
+</div></pre></blockquote>
+
+<p>Here are the parameters to the function. The first parameter is
+obviously the char array we want to read in to. The second is the
+maximum number of characters we will read in until we encounter a new
+line. So now <span class="code">sentence</span> contains "This is really awesome!" just like we wanted.</p>
+<p>You should now know how to do input and output with ASCII files.  But we can&#8217;t stop there, because binary files now await us.</p>
+
+<h1>Continuing on, binary input and output</h1>
+<p>Binary files are a little bit more complicated, but they are still
+rather simple. The first thing you should note is that we do not use
+the insertion and extraction operators anymore. You can, but it will
+not write as binary. You must use the methods read() and write() for
+binary. To create a binary file, look at the next line.</p>
+
+<blockquote><pre><div class="code">
+ofstream fout("file.dat", ios::binary);
+
+</div></pre></blockquote>
+
+<p>This will open the file as binary, instead of the default ASCII
+mode. Let&#8217;s start first by writing to the file. The write() method
+takes two parameters. The first is a char pointer to the object you
+wish to write, and the second is the number of bytes the object is. To
+illustrate this, let&#8217;s show an example.</p>
+
+<blockquote><pre><div class="code">
+int number = 30;
+fout.write((char *)(&amp;number), sizeof(number));
+
+</div></pre></blockquote>
+
+<p>The first parameter is written as "(char *)(&amp;number)". This just
+type casts the integer variable to a char pointer. If you don&#8217;t
+understand how that works, then you can leaf through a C++ book on
+pointers if necessary. The second parameter was written as
+"sizeof(number)". The sizeof() function just returns an integer of the
+number of bytes a variable is. And that&#8217;s it!</p>
+<p>The best part of using binary files is that you can write an entire
+structure to the file in one line. Let&#8217;s say you had a structure with
+12 different items in it. Using an ASCII file would make you write each
+individual member of the structure one at a time, but binary files can
+do it all for you. Let&#8217;s look at this.</p>
+
+<blockquote><pre><div class="code">
+struct OBJECT
+{
+   int number;
+   char letter;
+} obj;
+
+obj.number = 15;
+obj.letter = &#8216;M&#8217;;
+
+fout.write((char *)(&amp;obj), sizeof(obj));
+
+</div></pre></blockquote>
+
+<p>That would write the entire structure for you! Let&#8217;s move on to
+input now. Input will be a cinch now because the read() function takes
+exactly the same parameters as write(), and it works exactly the same.</p>
+
+<blockquote><pre><div class="code">
+ifstream fin("file.dat", ios::binary);
+
+fin.read((char *)(&amp;obj), sizeof(obj));
+
+</div></pre></blockquote>
+
+<p>I don&#8217;t even have to explain how that works, because it works just
+the same as write(). Binary files can be even easier that ASCII files,
+but the downside is that you cannot edit binary files with a simple
+text editor. But with that said, let me finish up by explaining some
+more methods to the ifstream and ofstream objects.</p>
+
+<h1>Finishing up, More methods</h1>
+<p>I&#8217;ve already explained ASCII and binary files, so here&#8217;s the low-down on all the functions that I didn&#8217;t cover yet.</p>
+
+<h2>Checking files</h2>
+<p>You&#8217;ve already learned the open() and close() methods, but here&#8217;s some you might want to use.</p>
+<p>The method good() will return a boolean to whether or not the file opening was good.</p>
+<p>Similarly, bad() will return a boolean to whether or not the file
+opening was bad. If it was bad, do not continue with the file
+operations.</p>
+<p>The last checking method is fail(), which is somewhat like the method bad(), but not as severe.</p>
+
+<h2>Reading files</h2>
+<p>The method get() will return one character at a time.</p>
+<p>The method ignore(int,char) will ignore a certain number of
+characters, but you must pass it two parameters. The first is the
+number of characters to ignore. The second is a character that, when
+encountered, will stop ignoring characters. For instance,</p>
+
+<blockquote><pre><div class="code">
+fin.ignore(100, &#8216;\n&#8217;);
+
+</div></pre></blockquote>
+
+<p>Will ignore 100 characters, or ignore all characters up to, and including the &#8216;\n&#8217; character.  </p>
+<p>The method peek() will return the next character in the file, but
+not actually take it. So if you used peek() to look at the next
+character, using get() right after peek() will give you the same
+character, and <u>then</u> move the file counter.</p>
+<p>The method putback(char) will actually put characters, one at a
+time, into the stream. I haven&#8217;t found a use for this one yet, but it&#8217;s
+there.</p>
+
+<h2>Writing files</h2>
+<p>There&#8217;s only one extra method here that may concern you. That&#8217;s
+put(char), which just writes one character at a time to the out stream.</p>
+
+<h2>Opening files</h2>
+<p>When we opened binary files using this syntax:</p>
+
+<blockquote><pre><div class="code">
+ofstream fout("file.dat", ios::binary);
+
+</div></pre></blockquote>
+
+<p>The "ios::binary" was an extra flag to give you some options on how
+to open the file. By default, the file is opened as ASCII, will create
+the file if it doesn&#8217;t exist, and it will overwrite the file if it does
+exist. Here are some more flags you can use to change things up.</p>
+
+<blockquote><table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr valign="top"><td class="code">ios::app</td><td>Append to the end of a file</td></tr>
+<tr valign="top"><td class="code">ios::ate</td><td>Places the file marker at the end of the file, instead of at the beginning</td></tr>
+<tr valign="top"><td class="code">ios::trunc</td><td>Default.  This will truncate an existing file and overwrite it.</td></tr>
+<tr valign="top"><td class="code">ios::nocreate</td><td>If the file does not exist, it will not create it for you.</td></tr>
+<tr valign="top"><td class="code">ios::noreplace&nbsp;&nbsp;&nbsp;</td><td>If the file does already exist, the open will fail.</td></tr>
+</tbody></table></blockquote>
+
+<h2>File status</h2>
+<p>The only method I have ever used for the file status is eof(), which
+will return true if the file marker is at the end of the file. The
+major use I have had with this is within loops. For an example, this
+code snippet will count the number of occurrences of the lower case &#8216;e&#8217;
+in the file.</p>
+
+<blockquote><pre><div class="code">
+ifstream fin("file.txt");
+char ch;
+int counter;
+
+while (!fin.eof())
+{
+   ch = fin.get();
+   if (ch == &#8216;e&#8217;)
+      counter++;
+}
+
+fin.close();
+
+</div></pre></blockquote>
+
+<p>I&#8217;ve never used any other methods than those described here. There
+are many others, but they are rarely used. Consult a C++ book or the
+help files on file streams for these extra methods.</p>
+
+<h1>Conclusion</h1>
+<p>You should now have a firm grasp on how to do both input and output
+with ASCII and binary files. There are many methods that you may use to
+help with your input and output, though not many of them are used. I
+hope this article helped at least some of you, since I noticed a lot of
+people didn&#8217;t know how to use file I/O. Everyone should know. There are
+obviously other ways to do file I/O, such as with the include file
+&lt;stdio.h&gt;. I just prefer to use the stream methods because I find
+them so much cleaner. Good luck to all of you who have read this, and
+maybe I&#8217;ll write for you all again sometime.</p>
+
+<p>John Peregrine, ColdfireV
+<br><a href="mailto:jperegrine@customcall.com">jperegrine@customcall.com</a></p>
+
+<p align="center"><b><a href="http://www.gamedev.net/community/forums/topic.asp?key=featart&amp;uid=1127&amp;forum_id=35&amp;Topic_Title=Simple+File+I%2FO+Using+C%2B%2B">Discuss this article in the forums</a></b></p>
+<p>
+<br><span class="maintext-2">Date this article was posted to GameDev.net: <b>7/17/2000</b>
+<br>(Note that this date does not necessarily correspond to the date the article was written)</span>
+</p><p><b>See Also:</b><br>
+
+<a href="http://www.gamedev.net/reference/list.asp?categoryid=214">C and C++  </a><br>
+
+<a href="http://www.gamedev.net/reference/list.asp?categoryid=53">Sweet Snippets  </a><br>
+
+</p><p align="center">© 1999-2007 Gamedev.net. All rights reserved. <a href="http://www.gamedev.net/info/legal.htm#copyright"><u>Terms of Use</u></a> <a href="http://www.gamedev.net/info/legal.htm#privacy"><u>Privacy Policy</u></a>
+<br><span class="maintext-1">Comments? Questions? Feedback? <a href="http://www.gamedev.net/info/faq.asp">Click here!</a></span></p>
+
+</td></tr></tbody></table>
+
+
+<!-- start Vibrant Media IntelliTXT Tooltip style sheet -->
+
+<!-- end Vibrant Media IntelliTXT style sheet -->
+<!-- start Vibrant Media IntelliTXT script section -->
+<script type="text/javascript" src="file_io_in_CPP_files/front.js"></script><script src="file_io_in_CPP_files/door.js" type="text/javascript"></script>
+<!-- end Vibrant Media IntelliTXT script section -->
+
+<script src="file_io_in_CPP_files/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-279474-1";
+urchinTracker();
+</script>
+<script type="text/javascript" src="file_io_in_CPP_files/func_200706222110.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_007.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_006.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_010.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_002.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_015.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_020.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_004.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_009.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_016.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_011.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_021.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_013.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_014.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_003.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_017.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_008.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_018.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_019.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_012.js"></script><script type="text/javascript" src="file_io_in_CPP_files/chunks_005.js"></script><script type="text/javascript" src="file_io_in_CPP_files/spit.js"></script><script type="text/javascript" src="file_io_in_CPP_files/al.htm"></script></body></html>

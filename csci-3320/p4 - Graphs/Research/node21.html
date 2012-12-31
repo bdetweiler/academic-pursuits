@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head><!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds --><title>Floyd's algorithm</title>
+
+
+
+
+<meta name="description" content="Floyd's algorithm">
+<meta name="keywords" content="graphalg">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<link rel="STYLESHEET" href="node21_files/graphalg.css"></head><body lang="EN">
+ <a name="tex2html244" href="http://www.cs.auckland.ac.nz/%7Eute/220ft/graphalg/node22.html"><img alt="next" src="node21_files/next_motif.gif" align="bottom" height="24" width="37"></a> <a name="tex2html242" href="http://www.cs.auckland.ac.nz/%7Eute/220ft/graphalg/node19.html"><img alt="up" src="node21_files/up_motif.gif" align="bottom" height="24" width="26"></a> <a name="tex2html238" href="http://www.cs.auckland.ac.nz/%7Eute/220ft/graphalg/node20.html"><img alt="previous" src="node21_files/previous_motif.gif" align="bottom" height="24" width="63"></a>   <br>
+<b> Next:</b> <a name="tex2html245" href="http://www.cs.auckland.ac.nz/%7Eute/220ft/graphalg/node22.html">Final Remarks </a>
+<b>Up:</b> <a name="tex2html243" href="http://www.cs.auckland.ac.nz/%7Eute/220ft/graphalg/node19.html">Computing Distances and Diameter </a>
+<b> Previous:</b> <a name="tex2html239" href="http://www.cs.auckland.ac.nz/%7Eute/220ft/graphalg/node20.html">Dijkstra's algorithm</a>
+<br> <p>
+</p><h2><a name="SECTION00052000000000000000">Floyd's algorithm</a></h2>
+<p>
+Our next algorithm for computing the shortest distances of a graph is based
+on an algorithm design technique called <em>dynamic programming</em>. This is
+where smaller, less difficult subproblems are first solved before the full problem
+is solved.
+</p><p>
+Floyd's algorithm computes a distance matrix from a cost matrix in time  <img alt="tex2html_wrap3325" src="node21_files/img110.gif" align="bottom" height="12" width="42"> .
+Thus the running time is comparable to Dijkstra's algorithm since we would have
+to run Dijkstra's algorithm  <img alt="tex2html_wrap3326" src="node21_files/img111.gif" align="bottom" height="11" width="16">  times to calculate all entries of
+the distance matrix. However, as can be seen, the following algorithm is much
+easier to code. <br>
+</p><p>
+</p><p>
+</p><p>
+<b>algorithm</b> Floyd(cost matrix  <img alt="tex2html_wrap3264" src="node21_files/img94.gif" align="bottom" height="11" width="58"> )
+</p><p>
+<i>Let  <img alt="tex2html_wrap2775" src="node21_files/img21.gif" align="bottom" height="5" width="6">  equal the dimension of  <img alt="tex2html_wrap3329" src="node21_files/img112.gif" align="bottom" height="11" width="18"> </i>
+</p><p>
+1 <tt>&nbsp; <img alt="tex2html_wrap3330" src="node21_files/img113.gif" align="bottom" height="11" width="52"> </tt>
+</p><p>
+3<tt>&nbsp;</tt><b>for each</b> <b> <img alt="tex2html_wrap3331" src="node21_files/img114.gif" align="bottom" height="11" width="80"> do</b>
+</p><p>
+4<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><b>for each</b>  <img alt="tex2html_wrap3332" src="node21_files/img115.gif" align="bottom" height="11" width="78">  <b>do</b>
+</p><p>
+5<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt><b>for</b> each  <img alt="tex2html_wrap3333" src="node21_files/img116.gif" align="bottom" height="11" width="79">  <b>do</b>
+</p><p>
+<tt>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt> <img alt="tex2html_wrap3334" src="node21_files/img117.gif" align="bottom" height="11" width="124"> )
+</p><p>
+7<tt>&nbsp;</tt><b>return</b> shortest distance matrix  <img alt="tex2html_wrap3335" src="node21_files/img118.gif" align="bottom" height="11" width="19"> 
+</p><p>
+<tt>&nbsp;&nbsp;</tt><b>end </b>
+</p><p>
+</p><p>
+</p><p>
+The idea behind the algorithm is to compute the shortest paths for all pairs
+of vertices  <img alt="tex2html_wrap2919" src="node21_files/img34.gif" align="bottom" height="8" width="3">  and  <img alt="tex2html_wrap3337" src="node21_files/img119.gif" align="bottom" height="11" width="4">  using vertices  <img alt="tex2html_wrap3338" src="node21_files/img120.gif" align="bottom" height="11" width="51"> (as internal
+vertices) for k increasing from 0 to  <img alt="tex2html_wrap3339" src="node21_files/img121.gif" align="bottom" height="8" width="28"> At line 6 in the algorithm we
+decide whether using vertex k can improve the currently known shortest path
+ <img alt="tex2html_wrap3340" src="node21_files/img122.gif" align="bottom" height="11" width="15">  between vertices  <img alt="tex2html_wrap2919" src="node21_files/img34.gif" align="bottom" height="8" width="3">  and  <img alt="tex2html_wrap3337" src="node21_files/img119.gif" align="bottom" height="11" width="4"> . <br>
+</p><p>
+<b>Example 30.</b> An application of Floyd's algorithm on the third graph of
+Example 26 is given below. <br>
+</p><p>
+ <img alt="tex2html_wrap3343" src="node21_files/img123.gif" align="bottom" height="79" width="140">  <img alt="tex2html_wrap3344" src="node21_files/img124.gif" align="bottom" height="79" width="139">  <img alt="tex2html_wrap3345" src="node21_files/img125.gif" align="bottom" height="79" width="132"> <br>
+</p><p>
+Initial cost matrix<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="tex2html_wrap3346" src="node21_files/img126.gif" align="bottom" height="9" width="26">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img alt="tex2html_wrap3347" src="node21_files/img127.gif" align="bottom" height="8" width="26"> </tt><tt><br> </tt>
+</p><p>
+ <img alt="tex2html_wrap3348" src="node21_files/img128.gif" align="bottom" height="79" width="107">  <img alt="tex2html_wrap3349" src="node21_files/img129.gif" align="bottom" height="79" width="127">  <img alt="tex2html_wrap3350" src="node21_files/img130.gif" align="bottom" height="79" width="122"> <br>
+</p><p>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp; <img alt="tex2html_wrap3351" src="node21_files/img131.gif" align="bottom" height="8" width="26"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="tex2html_wrap3352" src="node21_files/img132.gif" align="bottom" height="9" width="26"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="tex2html_wrap3353" src="node21_files/img133.gif" align="bottom" height="8" width="26"> </tt><tt><br> </tt>
+</p><p>
+ <img alt="tex2html_wrap3354" src="node21_files/img134.gif" align="bottom" height="79" width="122"> <br>
+</p><p>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp; <img alt="tex2html_wrap3355" src="node21_files/img135.gif" align="bottom" height="9" width="26"> </tt><tt><br> </tt>
+</p><p>
+In the above matrices we list the entries that change after each increment of
+k. Notice that undirected graphs, as expected, have symmetric distance matrices.
+</p><p>
+<br> </p><hr>
+<p></p><address>
+<i>Waltraut Ute Lorch <br>
+Tue Mar 28 17:10:00 NZST 2000</i>
+</address>
+
+</body></html>

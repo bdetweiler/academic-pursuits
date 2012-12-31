@@ -1,0 +1,92 @@
+#include<cstring>
+#include<iostream>
+using namespace std;
+#include"word.h"
+
+
+// Default constructor
+Word::Word(void)
+{
+    this->length = 0;
+    this->data   = new char [1];
+    this->data[0] = '\0';
+}
+
+Word::Word(const char * cp)
+{
+    if(!cp)
+    {
+        cp = "";
+    }
+    int size   = strlen(cp) + 1;
+    this->data = new char [size];
+    strcpy(this->data, cp);
+}
+
+
+// Copy constructor
+Word::Word (const Word & other)
+{
+    this->length = other.length;
+    this->data   = new char [length + 1];
+    strcpy (this->data, other.data);
+}
+
+// Destructor
+Word::~Word ()
+{
+    delete [] this->data;
+}
+
+// Assignment operator
+Word & Word::operator = (const Word & other)
+{
+    if (this == & other)
+        return * this;
+    if (this->length != other.length)
+    {
+        delete [] this->data;
+        this->length = other.length;
+        this->data   = new char[this->length + 1];
+    }
+    strcpy (this->data, other.data);
+    return * this;
+}
+
+// Comparison operator
+bool Word::operator == (const Word & other) const
+{
+    return (strcasecmp(this->data, other.data) == 0);
+}
+
+bool Word::operator != (const Word & other) const
+{
+    return(!(*this == other));
+}
+
+bool Word::operator < (const Word & other) const
+{
+    return(this->length < other.length);
+}
+
+bool Word::operator > (const Word & other) const
+{
+    return(this->length > other.length);
+}
+
+bool Word::operator <= (const Word & other) const
+{
+    return(this->length <= other.length);
+}
+
+bool Word::operator >= (const Word & other) const 
+{
+    return(this->length >= other.length);
+}
+
+// Output operator
+ostream & operator << (ostream & outs, const Word & w)
+{
+    outs << w.data;
+    return outs;
+}

@@ -1,0 +1,6 @@
+38.5 12.75 Bob, Joe
+17.5 9.25 Bob, Jolene
+20.0 9.65 Smith, Janet 
+25.0 8.25 Public, John Q.
+40.0 8.75 Doe, Jane 
+15.0 6.25 Ling, Grunt 

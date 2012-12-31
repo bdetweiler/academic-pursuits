@@ -1,0 +1,93 @@
+<html><head><title>1.1.4 Graph Data Structures</title>
+
+<meta name="keywords" content="graph data structures,adjacency lists,adjacency matrix,data structures,graph structures,graph algorithms,DFS,BFS,graph theory"></head><body background="graph-data-structures.shtml_files/sblogobg.jpg">
+
+<h2>1.1.4 Graph Data Structures</h2>
+
+
+<center>
+<img src="graph-data-structures.shtml_files/graph-data-structures-L.gif" alt="Problem Input" hspace="10">
+<img src="graph-data-structures.shtml_files/vbar.gif" alt="|" height="160" hspace="5" width="50">
+<img src="graph-data-structures.shtml_files/graph-data-structures-R.gif" alt="Problem Output"><br>
+</center>
+<hr size="3">
+<center><h2><pre>INPUT                    OUTPUT</pre></h2></center>
+<hr size="3">
+<strong>Input Description:</strong>
+A graph <i>G</i>.
+<p>
+<strong>Problem:</strong>
+Give an efficient, flexible data structure to represent <i>G</i>.
+</p><p>
+<strong>Excerpt from</strong>  
+<a href="http://www.amazon.com/exec/obidos/ASIN/0387948600/thealgorithmrepo">The Algorithm Design Manual</a>
+</p><p>
+While there are several possible variations, the two basic data structures for graphs are <em>adjacency
+matrices</em> and <em>adjacency lists</em>.
+</p><ul>
+<li><em>How big will your graph be</em>?  How many vertices will it have, both typically and in the worse case?
+Ditto for the number of edges? If your graph has 100 vertices, your adjacency matrix contains 10,000 entries.
+If your graph has 1,000 vertices, your adjacency matrix contains 1,000,000 entries. If your graph has 10,000
+vertices, your adjacency matrix contains 100,000,000 entries -- so forget about it. Adjacency matrices work only
+for small or very dense graphs. 
+</li><li><em>How dense will your graph be</em>? If the graph is very dense, meaning that a large fraction of the
+vertex pairs define edges, there is probably no compelling reason to use adjacency lists, since you will be
+doomed to using Theta(n<sup>2</sup>) space, anyway.
+</li><li><em> Which algorithms will you be implementing</em>?  Certain algorithms are easier on adjacency matrices
+(such as all-pairs shortest path) and others on adjacency lists (such as most DFS-based algorithms).
+Adjacency matrices win for algorithms that repeatedly ask, ``Is (i,j) in G?'' However, most graph algorithms can be
+modified to eliminate such queries.
+</li><li><em>Will you be modifying the graph over the course of your application, and if so, how?</em>  Repeated edge
+insertions and (particularly) deletions argue for adjacency matrices, or perhaps for fancier versions of
+adjacency lists such as binary search trees. However, more likely than modifying the topology of graph
+is modifying the <em>attributes</em> of a vertex or edge of the graph, such as size, weight, or color. Attributes
+are best handled as extra fields in the vertex or edge records of adjacency lists.
+<p>
+Building a good general-purpose graph type is surprisingly tricky and difficult. For this reason, we suggest that
+you check out existing implementations (particularly LEDA) before hacking up your own. Note that it costs only
+time linear in the size of the larger data structure to convert between adjacency matrices and adjacency lists.
+This conversion is unlikely to be the bottleneck in any application, if you decide you want to use both data
+structures and have the space to store them. This usually isn't necessary but might prove simplest if you are confused
+about the alternatives.
+</p></li></ul>
+
+<p>
+The best book available for this problem is
+<a href="http://www.amazon.com/exec/obidos/ASIN/0521563291/thealgorithmrepo">
+Leda : A Platform for Combinatorial and Geometric Computing
+</a>
+by
+Kurt Mehlhorn and Stefan Naher.
+
+</p><hr size="3">
+<h2>Implementations</h2>
+<p>
+</p><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/implement/LEDA/implement.shtml">LEDA - A Library of Efficient Data Types and Algorithms    (C++) (rating 10)</a><br>
+</li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/implement/graphed/implement.shtml">GraphEd -- Graph Editor and Layout Program   (C) (rating 8)</a><br>
+</li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/implement/link/implement.shtml">LINK -- Programming and Visualization Environment for Hypergraphs   (C++) (rating 6)</a><br>
+</li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/implement/graphbase/implement.shtml">The Stanford GraphBase      (C) (rating 6)</a><br>
+</li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/implement/combinatorica/implement.shtml">Combinatorica   (Mathematica) (rating 6)</a><br>
+</li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/implement/moret/implement.shtml">Moret and Shapiro's Algorithms P to NP   (Pascal) (rating 4)</a><br>
+<hr size="3">
+<h2>Related Problems</h2>
+<p>
+</p></li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/files/graph-partition.shtml">Graph Partition </a><br>
+</li><li><a href="http://www.cs.sunysb.edu/%7Ealgorith/files/set-data-structures.shtml">Set Data Structures</a><br>
+<hr size="3">
+<br>
+<a href="http://www.cs.sunysb.edu/%7Ealgorith/files/suffix-trees.shtml">Previous Problem</a>
+         <a href="http://www.cs.sunysb.edu/%7Ealgorith/files/set-data-structures.shtml">Next Problem</a>
+<br>
+<br><a href="http://www.cs.sunysb.edu/%7Ealgorith/info/probs-graph-files/graph-data-structures.gif">View the graph for this
+file</a><br>
+<br><a href="http://www.cs.sunysb.edu/%7Ealgorith/wwwboard/wwwboard.html">Bulletin Board</a>
+<br><a href="http://www.amazon.com/exec/obidos/ASIN/0387948600/thealgorithmrepo">About ``The Algorithm Design Manual''</a>.
+<br><a href="mailto:algorith@cs.sunysb.edu">Send us Mail</a>
+<br><a href="http://www.cs.sunysb.edu/%7Ealgorith/">The Stony Brook Algorithm Repository -- go to front page</a>
+<p></p><address>This page last modified on Wed Mar 07, 2001
+.</address>
+
+<img src="graph-data-structures.shtml_files/ax.gif"> 
+
+
+</li></body></html>

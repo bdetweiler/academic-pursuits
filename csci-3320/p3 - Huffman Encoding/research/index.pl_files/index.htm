@@ -1,0 +1,69 @@
+var userVars = "specialties=%20&mission=%20&ipaddy=62%2e253%2e128%2e7&employment=%20&votetime=2002%2d10%2d11&nwriteups=%20&showmessages_replylink=1&nwriteupsupdate=1183892775&chatterbox_msgs_descend=1&votesrefreshed=1&displaypref_e2node=displayfull&oldexp=%20&nodelets=262%2c457857%2c263%2c165437%2c174581&motto=%20&numwriteups=%20&level=1%20%28Initiate%29%20%2f%203&can_weblog=%20&favorite_noders=%2c1704834&includedJS=%20";
+document.write('<script type="text/javascript" src="js/prototype.js"></script>');
+document.write('<script type="text/javascript" src="js/scriptaculous.js"></script>');
+document.write('<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>');
+
+var Deferrer = {
+	defer: function (callback, requiredObject) {	
+		if (!Deferrer.interval) {
+			Deferrer.interval = window.setInterval(Deferrer.checkInterval, 500);
+		}	
+		Deferrer.callbacks.push({callback: callback, requiredObject: requiredObject});
+	},
+	callbacks: [],
+	checkInterval: function () {
+		var c = Deferrer.callbacks;
+		var remaining = [];
+		for (var i=0; i < c.length; i++) {
+			var req = eval("typeof(" + c[i].requiredObject + ")");
+			if (req != 'undefined' && eval(c[i].requiredObject)) {
+				c[i].callback();
+			} else {
+				remaining.push(c[i]);
+			}
+		}
+		Deferrer.callbacks = remaining;
+		if (Deferrer.callbacks.length == 0) {
+			window.clearInterval(Deferrer.interval);
+		}
+	},
+	onLoad: function (callback) {
+		Deferrer.defer(callback, "document.getElementsByTagName('body').length");
+	}
+}
+
+var Debugger = {
+	log: function (str) {
+		if (!Debugger.enabled) {
+			return;
+		}
+		if (!Debugger.window) {
+			Debugger.showWindow();
+		}
+		Debugger.window.innerHTML += "LOG: " + str + "<br>";
+	},
+	showWindow: function () {
+		Debugger.window = document.createElement('div');
+		with (Debugger.window.style) {
+			width = '400px';
+			height = '200px';
+			backgroundColor = '#ffffff';
+			border = '1px black solid';
+			position = 'fixed';
+			bottom = '10px';
+			left = '20px';
+			overflow = 'auto';
+		}
+		window.document.appendChild(Debugger.window);
+	},
+	window: false,
+	enabled: false	
+}
+
+Deferrer.defer( function () {
+	USERVARS = userVars.toQueryParams();
+	isZen = USERVARS.preferred_theme == 1854183;
+}, "Prototype");
+
+
+

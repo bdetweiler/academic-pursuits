@@ -1,0 +1,2 @@
+#!/bin/bash
+perl ~/c/program4/test.pl calc

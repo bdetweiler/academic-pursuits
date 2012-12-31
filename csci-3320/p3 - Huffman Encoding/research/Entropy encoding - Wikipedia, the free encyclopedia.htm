@@ -1,0 +1,647 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0045)http://en.wikipedia.org/wiki/Entropy_encoding -->
+<HTML lang=en dir=ltr xml:lang="en" 
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>Entropy encoding - Wikipedia, the free encyclopedia</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<META 
+content="Entropy encoding,CompressionMethods,CompressionMethods,A-law algorithm,Acoustics,Adaptive Huffman coding,Algebraic Code Excited Linear Prediction,Arithmetic coding,Audio codecs,Audio data compression,Audio level compression" 
+name=keywords><LINK href="/favicon.ico" rel="shortcut icon"><LINK 
+title="Wikipedia (English)" href="/w/opensearch_desc.php" 
+type=application/opensearchdescription+xml rel=search><LINK 
+href="http://www.gnu.org/copyleft/fdl.html" rel=copyright>
+<STYLE type=text/css media=screen,projection>@import url( /skins-1.5/common/shared.css?76 );
+@import url( /skins-1.5/monobook/main.css?76 );
+</STYLE>
+<LINK media=print 
+href="Entropy encoding - Wikipedia, the free encyclopedia_files/commonPrint.css" 
+type=text/css rel=stylesheet><LINK media=handheld 
+href="Entropy encoding - Wikipedia, the free encyclopedia_files/handheld.css" 
+type=text/css rel=stylesheet><!--[if lt IE 5.5000]><style type="text/css">@import "/skins-1.5/monobook/IE50Fixes.css?76";</style><![endif]--><!--[if IE 5.5000]><style type="text/css">@import "/skins-1.5/monobook/IE55Fixes.css?76";</style><![endif]--><!--[if IE 6]>
+<STYLE type=text/css>@import url( /skins-1.5/monobook/IE60Fixes.css?76 );
+</STYLE>
+<![endif]--><!--[if IE 7]><style type="text/css">@import "/skins-1.5/monobook/IE70Fixes.css?76";</style><![endif]--><!--[if lt IE 7]>
+<SCRIPT 
+src="Entropy encoding - Wikipedia, the free encyclopedia_files/IEFixes.js" 
+type=text/javascript></SCRIPT>
+
+<META http-equiv=imagetoolbar content=no><![endif]-->
+<SCRIPT type=text/javascript>/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/skins-1.5";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/w";
+var wgServer = "http://en.wikipedia.org";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Entropy_encoding";
+var wgTitle = "Entropy encoding";
+var wgAction = "view";
+var wgRestrictionEdit = [];
+var wgRestrictionMove = [];
+var wgArticleId = "46680";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "en";
+var wgContentLanguage = "en";
+var wgBreakFrames = false;
+var wgCurRevisionId = "136483071";
+/*]]>*/</SCRIPT>
+
+<SCRIPT 
+src="Entropy encoding - Wikipedia, the free encyclopedia_files/wikibits.js" 
+type=text/javascript><!-- wikibits js --></SCRIPT>
+
+<SCRIPT 
+src="Entropy encoding - Wikipedia, the free encyclopedia_files/index.php" 
+type=text/javascript><!-- site js --></SCRIPT>
+
+<STYLE type=text/css>@import url( /w/index.php?title=MediaWiki:Common.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=2678400 );
+@import url( /w/index.php?title=MediaWiki:Monobook.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=2678400 );
+@import url( /w/index.php?title=-&action=raw&gen=css&maxage=2678400 );
+</STYLE>
+<!-- Head Scripts -->
+<SCRIPT src="Entropy encoding - Wikipedia, the free encyclopedia_files/ajax.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2900.3132" name=GENERATOR></HEAD>
+<BODY class="mediawiki ns-0 ltr page-Entropy_encoding">
+<DIV id=globalWrapper>
+<DIV id=column-content>
+<DIV id=content><A id=top name=top></A>
+<DIV id=siteNotice>
+<SCRIPT language=JavaScript type=text/javascript>
+<!--
+document.writeln("\x3cdiv style=\"position:absolute; z-index:100; right:100px; top:-0px;\" class=\"metadata\" id=\"donate\"\x3e\n\x3cdiv style=\"text-align:right; font-size:80%\"\x3e\x3ci\x3eYour \x3cb\x3e\x3ca href=\"http://wikimediafoundation.org/wiki/Fundraising\" class=\"extiw\" title=\"wikimedia:Fundraising\"\x3econtinued donations\x3c/a\x3e\x3c/b\x3e keep Wikipedia running!\x3c/i\x3e\n\x3c/div\x3e\x3c/div\x3e\n");
+-->
+</SCRIPT>
+</DIV>
+<H1 class=firstHeading>Entropy encoding</H1>
+<DIV id=bodyContent>
+<H3 id=siteSub>From Wikipedia, the free encyclopedia</H3>
+<DIV id=contentSub></DIV>
+<DIV id=jump-to-nav>Jump to: <A 
+href="http://en.wikipedia.org/wiki/Entropy_encoding#column-one">navigation</A>, 
+<A 
+href="http://en.wikipedia.org/wiki/Entropy_encoding#searchInput">search</A></DIV><!-- start content -->
+<P>In <A title="Information theory" 
+href="http://en.wikipedia.org/wiki/Information_theory">information theory</A> an 
+<B>entropy encoding</B> is a <A title="Data compression" 
+href="http://en.wikipedia.org/wiki/Data_compression">data compression</A> scheme 
+that assigns codes to symbols so as to match code lengths with the <A 
+title=Probability 
+href="http://en.wikipedia.org/wiki/Probability">probabilities</A> of the 
+symbols. Typically, <A title="Entropy (information theory)" 
+href="http://en.wikipedia.org/wiki/Entropy_(information_theory)">entropy</A> 
+encoders are used to compress data by replacing symbols represented by 
+equal-length codes with symbols represented by codes where the length of each 
+codeword is <A title="Proportionality (mathematics)" 
+href="http://en.wikipedia.org/wiki/Proportionality_(mathematics)">proportional</A> 
+to the negative <A title=Logarithm 
+href="http://en.wikipedia.org/wiki/Logarithm">logarithm</A> of the probability. 
+Therefore, the most common symbols use the shortest codes.</P>
+<P>According to <A title="Claude Shannon" 
+href="http://en.wikipedia.org/wiki/Claude_Shannon">Shannon's</A> <A 
+title="Source coding theorem" 
+href="http://en.wikipedia.org/wiki/Source_coding_theorem">source coding 
+theorem</A>, the optimal code length for a symbol is −log<I><SUB>b</SUB>P</I>, 
+where <I>b</I> is the number of symbols used to make output codes and <I>P</I> 
+is the probability of the input symbol.</P>
+<P>Two of the most common entropy encoding techniques are <A 
+title="Huffman coding" 
+href="http://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</A> and <A 
+title="Arithmetic coding" 
+href="http://en.wikipedia.org/wiki/Arithmetic_coding">arithmetic coding</A>. If 
+the approximate entropy characteristics of a data stream are known in advance 
+(especially for <A title="Signal compression" 
+href="http://en.wikipedia.org/wiki/Signal_compression">signal compression</A>), 
+a simpler static code such as <A title="Unary coding" 
+href="http://en.wikipedia.org/wiki/Unary_coding">unary coding</A>, <A 
+title="Elias gamma coding" 
+href="http://en.wikipedia.org/wiki/Elias_gamma_coding">Elias gamma coding</A>, 
+<A title="Fibonacci coding" 
+href="http://en.wikipedia.org/wiki/Fibonacci_coding">Fibonacci coding</A>, <A 
+title="Golomb coding" href="http://en.wikipedia.org/wiki/Golomb_coding">Golomb 
+coding</A>, or <A title="Rice coding" 
+href="http://en.wikipedia.org/wiki/Rice_coding">Rice coding</A> may be 
+useful.</P>
+<P><A id=Entropy_as_a_measure_of_similarity 
+name=Entropy_as_a_measure_of_similarity></A></P>
+<H2><SPAN class=editsection>[<A 
+title="Edit section: Entropy as a measure of similarity" 
+href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;action=edit&amp;section=1">edit</A>]</SPAN> 
+<SPAN class=mw-headline>Entropy as a measure of similarity</SPAN></H2>
+<P>Besides using entropy encoding as a way to compress (and losslessly recover) 
+digital data, an entropy encoder can also be used to measure the amount of 
+similarity between streams of data. This is done by generating an entropy 
+coder/compressor for each class of data; unknown data is then classified by 
+feeding the uncompressed data to each compressor and seeing which compressor 
+yields the highest compression. The coder with the best compression is probably 
+the coder trained on the data that was most similar to the unknown data.</P>
+<P><A id=See_also name=See_also></A></P>
+<H2><SPAN class=editsection>[<A title="Edit section: See also" 
+href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;action=edit&amp;section=2">edit</A>]</SPAN> 
+<SPAN class=mw-headline>See also</SPAN></H2>
+<UL>
+  <LI><A title="Universal code (data compression)" 
+  href="http://en.wikipedia.org/wiki/Universal_code_(data_compression)">Universal 
+  code</A> 
+  <LI><A title="Data compression" 
+  href="http://en.wikipedia.org/wiki/Data_compression">Data compression</A> 
+  <LI><A title="Information theory" 
+  href="http://en.wikipedia.org/wiki/Information_theory">Information theory</A> 
+  </LI></UL>
+<P><A id=External_links name=External_links></A></P>
+<H2><SPAN class=editsection>[<A title="Edit section: External links" 
+href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;action=edit&amp;section=3">edit</A>]</SPAN> 
+<SPAN class=mw-headline>External links</SPAN></H2>
+<UL>
+  <LI><A class="external text" 
+  title=http://www.inference.phy.cam.ac.uk/mackay/itila/ 
+  href="http://www.inference.phy.cam.ac.uk/mackay/itila/" rel=nofollow>On-line 
+  textbook: Information Theory, Inference, and Learning Algorithms</A>, by <A 
+  title="David MacKay" href="http://en.wikipedia.org/wiki/David_MacKay">David 
+  MacKay</A> - gives an accessible introduction to Shannon theory and data 
+  compression, including the <A title="Huffman coding" 
+  href="http://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</A> and <A 
+  title="Arithmetic coding" 
+  href="http://en.wikipedia.org/wiki/Arithmetic_coding">arithmetic coding</A>. 
+  <LI><A class="external text" 
+  title=http://ai.ijs.si/andrej/papers/jmlr2006.html 
+  href="http://ai.ijs.si/andrej/papers/jmlr2006.html" rel=nofollow>Spam 
+  Filtering using Statistical Data Compression Models</A> by Andrej Bratko, 
+  Gordon V. Cormack, Bogdan Filipic, Thomas R. Lynam and Blaz Zupan, Journal of 
+  Machine Learning Research, Vol 7(Dec), 2006. </LI></UL>
+<HR>
+
+<P><I>An earlier (open content) version of the above article was posted on <A 
+class="external text" 
+title=http://planetmath.org/encyclopedia/EntropyEncoding.html 
+href="http://planetmath.org/encyclopedia/EntropyEncoding.html" 
+rel=nofollow>PlanetMath</A>.</I></P>
+<DIV class=NavFrame style="CLEAR: both">
+<DIV class=NavHead style="BACKGROUND-COLOR: #ccccff"><A title="Data compression" 
+href="http://en.wikipedia.org/wiki/Data_compression">Data compression</A> 
+<DIV class="noprint plainlinksneverexpand" 
+style="PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: normal; FONT-SIZE: xx-small; LEFT: 3px; PADDING-BOTTOM: 0px; COLOR: #000; PADDING-TOP: 0px; WHITE-SPACE: nowrap; POSITION: absolute; TOP: 0px; BACKGROUND-COLOR: transparent"><A 
+title=Template:CompressionMethods 
+href="http://en.wikipedia.org/wiki/Template:CompressionMethods"><SPAN 
+title="View this template">v</SPAN></A>&nbsp;<SPAN 
+style="FONT-SIZE: 80%">•</SPAN>&nbsp;<A class=new 
+title="Template talk:CompressionMethods" 
+href="http://en.wikipedia.org/w/index.php?title=Template_talk:CompressionMethods&amp;action=edit"><SPAN 
+title="Discussion about this template" 
+style="COLOR: #002bb8">d</SPAN></A>&nbsp;<SPAN 
+style="FONT-SIZE: 80%">•</SPAN>&nbsp;<A class="external text" 
+title=http://en.wikipedia.org/w/index.php?title=Template:CompressionMethods&amp;action=edit 
+href="http://en.wikipedia.org/w/index.php?title=Template:CompressionMethods&amp;action=edit" 
+rel=nofollow><SPAN 
+title="You can edit this template. Please use the preview button before saving." 
+style="COLOR: #002bb8">e</SPAN></A></DIV></DIV>
+<DIV class=NavContent>
+<TABLE class=toccolours 
+style="BORDER-TOP-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; MARGIN: auto; BORDER-RIGHT-WIDTH: 0px">
+  <TBODY>
+  <TR>
+    <TH style="BACKGROUND: #ddddff"><A title="Lossless data compression" 
+      href="http://en.wikipedia.org/wiki/Lossless_data_compression">Lossless 
+      compression methods</A></TH>
+    <TD>
+      <TABLE style="WIDTH: 100%">
+        <TBODY>
+        <TR>
+          <TD vAlign=top><B><A title="Information theory" 
+            href="http://en.wikipedia.org/wiki/Information_theory">Theory</A></B> 
+
+            <HR>
+            <A title="Information entropy" 
+            href="http://en.wikipedia.org/wiki/Information_entropy">Entropy</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Kolmogorov complexity" 
+            href="http://en.wikipedia.org/wiki/Kolmogorov_complexity">Complexity</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Redundancy (information theory)" 
+            href="http://en.wikipedia.org/wiki/Redundancy_(information_theory)">Redundancy</A></TD>
+          <TD vAlign=top><B><STRONG class=selflink>Entropy 
+            encoding</STRONG></B> 
+            <HR>
+            <A title="Huffman coding" 
+            href="http://en.wikipedia.org/wiki/Huffman_coding">Huffman</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Adaptive Huffman coding" 
+            href="http://en.wikipedia.org/wiki/Adaptive_Huffman_coding">Adaptive 
+            Huffman</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Arithmetic coding" 
+            href="http://en.wikipedia.org/wiki/Arithmetic_coding">Arithmetic</A> 
+            (<A title="Shannon-Fano coding" 
+            href="http://en.wikipedia.org/wiki/Shannon-Fano_coding">Shannon-Fano</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Range encoding" 
+            href="http://en.wikipedia.org/wiki/Range_encoding">Range</A>)<SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Golomb coding" 
+            href="http://en.wikipedia.org/wiki/Golomb_coding">Golomb</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Exponential-Golomb coding" 
+            href="http://en.wikipedia.org/wiki/Exponential-Golomb_coding">Exp-Golomb</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Universal code (data compression)" 
+            href="http://en.wikipedia.org/wiki/Universal_code_(data_compression)">Universal</A> 
+            (<A title="Elias gamma coding" 
+            href="http://en.wikipedia.org/wiki/Elias_gamma_coding">Elias</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Fibonacci coding" 
+            href="http://en.wikipedia.org/wiki/Fibonacci_coding">Fibonacci</A>)</TD>
+          <TD vAlign=top><B><A title="Dictionary coder" 
+            href="http://en.wikipedia.org/wiki/Dictionary_coder">Dictionary</A></B> 
+
+            <HR>
+            <A title="LZ77 and LZ78" 
+            href="http://en.wikipedia.org/wiki/LZ77_and_LZ78">LZ77/78</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title=Lempel-Ziv-Welch 
+            href="http://en.wikipedia.org/wiki/Lempel-Ziv-Welch">LZW</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title=Lempel-Ziv-Oberhumer 
+            href="http://en.wikipedia.org/wiki/Lempel-Ziv-Oberhumer">LZO</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title=DEFLATE 
+            href="http://en.wikipedia.org/wiki/DEFLATE">DEFLATE</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Lempel-Ziv-Markov algorithm" 
+            href="http://en.wikipedia.org/wiki/Lempel-Ziv-Markov_algorithm">LZMA</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="LZX (algorithm)" 
+            href="http://en.wikipedia.org/wiki/LZX_(algorithm)">LZX</A></TD>
+          <TD vAlign=top><B>Others</B> 
+            <HR>
+            <A title="Run-length encoding" 
+            href="http://en.wikipedia.org/wiki/Run-length_encoding">RLE</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Burrows-Wheeler transform" 
+            href="http://en.wikipedia.org/wiki/Burrows-Wheeler_transform">BWT</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Prediction by partial matching" 
+            href="http://en.wikipedia.org/wiki/Prediction_by_partial_matching">PPM</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Dynamic Markov Compression" 
+            href="http://en.wikipedia.org/wiki/Dynamic_Markov_Compression">DMC</A></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TH style="BACKGROUND: #ddddff"><A title="Audio data compression" 
+      href="http://en.wikipedia.org/wiki/Audio_data_compression">Audio 
+      compression methods</A></TH>
+    <TD>
+      <TABLE style="WIDTH: 100%">
+        <TBODY>
+        <TR>
+          <TD vAlign=top><B><A title=Acoustics 
+            href="http://en.wikipedia.org/wiki/Acoustics">Theory</A></B> 
+            <HR>
+            <A title=Convolution 
+            href="http://en.wikipedia.org/wiki/Convolution">Convolution</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Sampling (signal processing)" 
+            href="http://en.wikipedia.org/wiki/Sampling_(signal_processing)">Sampling</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Nyquist–Shannon sampling theorem" 
+            href="http://en.wikipedia.org/wiki/NyquistâShannon_sampling_theorem">Nyquist–Shannon 
+            theorem</A></TD>
+          <TD vAlign=top><B><A title="Audio codecs" 
+            href="http://en.wikipedia.org/wiki/Audio_codecs">Audio codecs 
+            parts</A></B> 
+            <HR>
+            <A title="Linear predictive coding" 
+            href="http://en.wikipedia.org/wiki/Linear_predictive_coding">LPC</A> 
+            (<A title="Log Area Ratios" 
+            href="http://en.wikipedia.org/wiki/Log_Area_Ratios">LAR</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Line spectral pairs" 
+            href="http://en.wikipedia.org/wiki/Line_spectral_pairs">LSP</A>)<SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Warped Linear Predictive Coding" 
+            href="http://en.wikipedia.org/wiki/Warped_Linear_Predictive_Coding">WLPC</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Code Excited Linear Prediction" 
+            href="http://en.wikipedia.org/wiki/Code_Excited_Linear_Prediction">CELP</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Algebraic Code Excited Linear Prediction" 
+            href="http://en.wikipedia.org/wiki/Algebraic_Code_Excited_Linear_Prediction">ACELP</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="A-law algorithm" 
+            href="http://en.wikipedia.org/wiki/A-law_algorithm">A-law</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Μ-law algorithm" 
+            href="http://en.wikipedia.org/wiki/Î-law_algorithm">μ-law</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Modified discrete cosine transform" 
+            href="http://en.wikipedia.org/wiki/Modified_discrete_cosine_transform">MDCT</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Fourier transform" 
+            href="http://en.wikipedia.org/wiki/Fourier_transform">Fourier 
+            transform</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Psychoacoustic model" 
+            href="http://en.wikipedia.org/wiki/Psychoacoustic_model">Psychoacoustic 
+            model</A></TD>
+          <TD vAlign=top><B>Others</B> 
+            <HR>
+            <A title="Audio level compression" 
+            href="http://en.wikipedia.org/wiki/Audio_level_compression">Dynamic 
+            range compression</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Speech encoding" 
+            href="http://en.wikipedia.org/wiki/Speech_encoding">Speech 
+            compression</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Sub-band coding" 
+            href="http://en.wikipedia.org/wiki/Sub-band_coding">Sub-band 
+            coding</A></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TH style="BACKGROUND: #ddddff"><A title="Image compression" 
+      href="http://en.wikipedia.org/wiki/Image_compression">Image compression 
+      methods</A></TH>
+    <TD>
+      <TABLE style="WIDTH: 100%">
+        <TBODY>
+        <TR>
+          <TD vAlign=top><B>Terms</B> 
+            <HR>
+            <A title="Color space" 
+            href="http://en.wikipedia.org/wiki/Color_space">Color space</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title=Pixel href="http://en.wikipedia.org/wiki/Pixel">Pixel</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Chroma subsampling" 
+            href="http://en.wikipedia.org/wiki/Chroma_subsampling">Chroma 
+            subsampling</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Compression artifact" 
+            href="http://en.wikipedia.org/wiki/Compression_artifact">Compression 
+            artifact</A></TD>
+          <TD vAlign=top><B>Methods</B> 
+            <HR>
+            <A title="Run-length encoding" 
+            href="http://en.wikipedia.org/wiki/Run-length_encoding">RLE</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Fractal compression" 
+            href="http://en.wikipedia.org/wiki/Fractal_compression">Fractal</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Wavelet compression" 
+            href="http://en.wikipedia.org/wiki/Wavelet_compression">Wavelet</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Set partitioning in hierarchical trees" 
+            href="http://en.wikipedia.org/wiki/Set_partitioning_in_hierarchical_trees">SPIHT</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Discrete cosine transform" 
+            href="http://en.wikipedia.org/wiki/Discrete_cosine_transform">DCT</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Karhunen-Loève transform" 
+            href="http://en.wikipedia.org/wiki/Karhunen-LoÃ¨ve_transform">KLT</A></TD>
+          <TD vAlign=top><B>Others</B> 
+            <HR>
+            <A title="Bit rate" href="http://en.wikipedia.org/wiki/Bit_rate">Bit 
+            rate</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Standard test image" 
+            href="http://en.wikipedia.org/wiki/Standard_test_image">Test 
+            images</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Peak signal-to-noise ratio" 
+            href="http://en.wikipedia.org/wiki/Peak_signal-to-noise_ratio">PSNR 
+            quality measure</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Quantization (image processing)" 
+            href="http://en.wikipedia.org/wiki/Quantization_(image_processing)">Quantization</A></TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TH style="BACKGROUND: #ddddff"><A title="Video compression" 
+      href="http://en.wikipedia.org/wiki/Video_compression">Video 
+    compression</A></TH>
+    <TD>
+      <TABLE style="WIDTH: 100%">
+        <TBODY>
+        <TR>
+          <TD vAlign=top><B>Terms</B> 
+            <HR>
+            <A title=Video 
+            href="http://en.wikipedia.org/wiki/Video#Characteristics_of_video_streams">Video 
+            Characteristics</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Film frame" 
+            href="http://en.wikipedia.org/wiki/Film_frame">Frame</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Video compression picture types" 
+            href="http://en.wikipedia.org/wiki/Video_compression_picture_types">Frame 
+            types</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Video quality" 
+            href="http://en.wikipedia.org/wiki/Video_quality">Video 
+          quality</A></TD>
+          <TD vAlign=top><B><A title="Video codec" 
+            href="http://en.wikipedia.org/wiki/Video_codec">Video codec 
+            parts</A></B> 
+            <HR>
+            <A title="Motion compensation" 
+            href="http://en.wikipedia.org/wiki/Motion_compensation">Motion 
+            compensation</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Discrete cosine transform" 
+            href="http://en.wikipedia.org/wiki/Discrete_cosine_transform">DCT</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Quantization (signal processing)" 
+            href="http://en.wikipedia.org/wiki/Quantization_(signal_processing)">Quantization</A></TD>
+          <TD vAlign=top><B>Others</B> 
+            <HR>
+            <A title="Video codec" 
+            href="http://en.wikipedia.org/wiki/Video_codec">Video 
+            codecs</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Rate distortion theory" 
+            href="http://en.wikipedia.org/wiki/Rate_distortion_theory">Rate 
+            distortion theory</A> (<A title="Constant bitrate" 
+            href="http://en.wikipedia.org/wiki/Constant_bitrate">CBR</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Average bit rate" 
+            href="http://en.wikipedia.org/wiki/Average_bit_rate">ABR</A><SPAN 
+            style="FONT-WEIGHT: bold; WHITE-SPACE: nowrap">&nbsp;·</SPAN> <A 
+            title="Variable bit rate" 
+            href="http://en.wikipedia.org/wiki/Variable_bit_rate">VBR</A>)</TD></TR></TBODY></TABLE></TD></TR>
+  <TR>
+    <TH style="BACKGROUND: #ddddff" colSpan=2><B><A 
+      title="Timeline of information theory" 
+      href="http://en.wikipedia.org/wiki/Timeline_of_information_theory">Timeline 
+      of information theory, data compression, and error-correcting 
+    codes</A></B></TH></TR></TBODY></TABLE></DIV></DIV><!-- 
+Pre-expand include size: 20398 bytes
+Post-expand include size: 13272 bytes
+Template argument size: 335 bytes
+Maximum: 2048000 bytes
+--><!-- Saved in parser cache with key enwiki:pcache:idhash:46680-0!1!0!default!!en!2 and timestamp 20070619202100 -->
+<DIV class=printfooter>Retrieved from "<A 
+href="http://en.wikipedia.org/wiki/Entropy_encoding">http://en.wikipedia.org/wiki/Entropy_encoding</A>"</DIV>
+<DIV id=catlinks>
+<P class=catlinks><A title=Special:Categories 
+href="http://en.wikipedia.org/wiki/Special:Categories">Categories</A>: <SPAN 
+dir=ltr><A title="Category:Lossless compression algorithms" 
+href="http://en.wikipedia.org/wiki/Category:Lossless_compression_algorithms">Lossless 
+compression algorithms</A></SPAN> | <SPAN dir=ltr><A 
+title="Category:Entropy and information" 
+href="http://en.wikipedia.org/wiki/Category:Entropy_and_information">Entropy and 
+information</A></SPAN></P></DIV><!-- end content -->
+<DIV class=visualClear></DIV></DIV></DIV></DIV>
+<DIV id=column-one>
+<DIV class=portlet id=p-cactions>
+<H5>Views</H5>
+<DIV class=pBody>
+<UL>
+  <LI class=selected id=ca-nstab-main><A title="View the content page [c]" 
+  accessKey=c href="http://en.wikipedia.org/wiki/Entropy_encoding">Article</A> 
+  <LI id=ca-talk><A title="Discussion about the content page [t]" accessKey=t 
+  href="http://en.wikipedia.org/wiki/Talk:Entropy_encoding">Discussion</A> 
+  <LI id=ca-edit><A 
+  title="You can edit this page. Please use the preview button before saving. [e]" 
+  accessKey=e 
+  href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;action=edit">Edit 
+  this page</A> 
+  <LI id=ca-history><A title="Past versions of this page. [h]" accessKey=h 
+  href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;action=history">History</A> 
+  </LI></UL></DIV></DIV>
+<DIV class=portlet id=p-personal>
+<H5>Personal tools</H5>
+<DIV class=pBody>
+<UL>
+  <LI id=pt-login><A 
+  title="You are encouraged to log in, it is not mandatory however. [o]" 
+  accessKey=o 
+  href="http://en.wikipedia.org/w/index.php?title=Special:Userlogin&amp;returnto=Entropy_encoding">Sign 
+  in / create account</A> </LI></UL></DIV></DIV>
+<DIV class=portlet id=p-logo><A title="Visit the Main Page [z]" 
+style="BACKGROUND-IMAGE: url(/images/wiki-en.png)" accessKey=z 
+href="http://en.wikipedia.org/wiki/Main_Page"></A></DIV>
+<SCRIPT type=text/javascript> if (window.isMSIE55) fixalpha(); </SCRIPT>
+
+<DIV class=portlet id=p-navigation>
+<H5>Navigation</H5>
+<DIV class=pBody>
+<UL>
+  <LI id=n-Main-page><A href="http://en.wikipedia.org/wiki/Main_Page">Main 
+  page</A> 
+  <LI id=n-Contents><A 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Contents">Contents</A> 
+  <LI id=n-Featured-content><A 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Featured_content">Featured 
+  content</A> 
+  <LI id=n-currentevents><A 
+  title="Find background information on current events" 
+  href="http://en.wikipedia.org/wiki/Portal:Current_events">Current events</A> 
+  <LI id=n-randompage><A title="Load a random page [x]" accessKey=x 
+  href="http://en.wikipedia.org/wiki/Special:Random">Random article</A> 
+</LI></UL></DIV></DIV>
+<DIV class=portlet id=p-interaction>
+<H5>interaction</H5>
+<DIV class=pBody>
+<UL>
+  <LI id=n-About-Wikipedia><A 
+  href="http://en.wikipedia.org/wiki/Wikipedia:About">About Wikipedia</A> 
+  <LI id=n-portal><A 
+  title="About the project, what you can do, where to find things" 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Community_Portal">Community 
+  portal</A> 
+  <LI id=n-recentchanges><A title="The list of recent changes in the wiki. [r]" 
+  accessKey=r href="http://en.wikipedia.org/wiki/Special:Recentchanges">Recent 
+  changes</A> 
+  <LI id=n-uploadwizard><A 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Upload">File upload wizard</A> 
+  <LI id=n-contact><A 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Contact_us">Contact us</A> 
+  <LI id=n-sitesupport><A title="Support us" 
+  href="http://wikimediafoundation.org/wiki/Fundraising">Make a donation</A> 
+  <LI id=n-help><A title="The place to find out." 
+  href="http://en.wikipedia.org/wiki/Help:Contents">Help</A> 
+</LI></UL></DIV></DIV>
+<DIV class=portlet id=p-search>
+<H5><LABEL for=searchInput>Search</LABEL></H5>
+<DIV class=pBody id=searchBody>
+<FORM id=searchform action=/wiki/Special:Search>
+<DIV><INPUT id=searchInput title="Search Wikipedia [f]" accessKey=f name=search> 
+<INPUT class=searchButton id=searchGoButton type=submit value=Go name=go>&nbsp; <INPUT class=searchButton id=mw-searchButton type=submit value=Search name=fulltext> 
+</DIV></FORM></DIV></DIV>
+<DIV class=portlet id=p-tb>
+<H5>Toolbox</H5>
+<DIV class=pBody>
+<UL>
+  <LI id=t-whatlinkshere><A title="List of all wiki pages that link here [j]" 
+  accessKey=j 
+  href="http://en.wikipedia.org/wiki/Special:Whatlinkshere/Entropy_encoding">What 
+  links here</A> 
+  <LI id=t-recentchangeslinked><A 
+  title="Recent changes in pages linked from this page [k]" accessKey=k 
+  href="http://en.wikipedia.org/wiki/Special:Recentchangeslinked/Entropy_encoding">Related 
+  changes</A> 
+  <LI id=t-upload><A title="Upload images or media files [u]" accessKey=u 
+  href="http://en.wikipedia.org/wiki/Special:Upload">Upload file</A> 
+  <LI id=t-specialpages><A title="List of all special pages [q]" accessKey=q 
+  href="http://en.wikipedia.org/wiki/Special:Specialpages">Special pages</A> 
+  <LI id=t-print><A title="Printable version of this page [p]" accessKey=p 
+  href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;printable=yes">Printable 
+  version</A> 
+  <LI id=t-permalink><A title="Permanent link to this version of the page" 
+  href="http://en.wikipedia.org/w/index.php?title=Entropy_encoding&amp;oldid=136483071">Permanent 
+  link</A>
+  <LI id=t-cite><A 
+  href="http://en.wikipedia.org/w/index.php?title=Special:Cite&amp;page=Entropy_encoding&amp;id=136483071">Cite 
+  this article</A> </LI></UL></DIV></DIV>
+<DIV class=portlet id=p-lang>
+<H5>In other languages</H5>
+<DIV class=pBody>
+<UL>
+  <LI class=interwiki-de><A 
+  href="http://de.wikipedia.org/wiki/Entropiekodierung">Deutsch</A> 
+  <LI class=interwiki-fr><A 
+  href="http://fr.wikipedia.org/wiki/Codage_de_source">Français</A> 
+  <LI class=interwiki-ko><A 
+  href="http://ko.wikipedia.org/wiki/ìí¸ë¡í¼_ë¶í¸í">한국어</A> 
+  <LI class=interwiki-ja><A 
+  href="http://ja.wikipedia.org/wiki/ã¨ã³ãã&shy;ãã¼ç¬¦å·">日本語</A> 
+  <LI class=interwiki-ru><A 
+  href="http://ru.wikipedia.org/wiki/Ð&shy;Ð½ÑÑÐ¾Ð¿Ð¸Ð¹Ð½Ð¾Ðµ_ÐºÐ¾Ð´Ð¸ÑÐ¾Ð²Ð°Ð½Ð¸Ðµ">Русский</A> 
+
+  <LI class=interwiki-zh><A 
+  href="http://zh.wikipedia.org/wiki/çµç·¨ç¢¼æ³">中文</A> 
+</LI></UL></DIV></DIV></DIV><!-- end of the left (by default at least) column -->
+<DIV class=visualClear></DIV>
+<DIV id=footer>
+<DIV id=f-poweredbyico><A href="http://www.mediawiki.org/"><IMG 
+alt="Powered by MediaWiki" 
+src="Entropy encoding - Wikipedia, the free encyclopedia_files/poweredby_mediawiki_88x31.png"></A></DIV>
+<DIV id=f-copyrightico><A href="http://wikimediafoundation.org/"><IMG 
+alt="Wikimedia Foundation" 
+src="Entropy encoding - Wikipedia, the free encyclopedia_files/wikimedia-button.png" 
+border=0></A></DIV>
+<UL id=f-list>
+  <LI id=lastmod>This page was last modified 00:07, 7 June 2007. 
+  <LI id=copyright>All text is available under the terms of the <A 
+  class=internal title="Wikipedia:Text of the GNU Free Documentation License" 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_the_GNU_Free_Documentation_License">GNU 
+  Free Documentation License</A>. (See <B><A class=internal 
+  title=Wikipedia:Copyrights 
+  href="http://en.wikipedia.org/wiki/Wikipedia:Copyrights">Copyrights</A></B> 
+  for details.) <BR>Wikipedia® is a registered trademark of the <A 
+  href="http://www.wikimediafoundation.org/">Wikimedia Foundation, Inc</A>., a 
+  US-registered <A class=internal title=501(c)(3) 
+  href="http://en.wikipedia.org/wiki/501(c)#501.28c.29.283.29">501(c)(3)</A> <A 
+  href="http://wikimediafoundation.org/wiki/Deductibility_of_donations">tax-deductible</A> 
+  <A class=internal title="Non-profit organization" 
+  href="http://en.wikipedia.org/wiki/Non-profit_organization">nonprofit</A> <A 
+  title="Charitable organization" 
+  href="http://en.wikipedia.org/wiki/Charitable_organization">charity</A>.<BR>
+  <LI id=privacy><A title="wikimedia:Privacy policy" 
+  href="http://wikimediafoundation.org/wiki/Privacy_policy">Privacy policy</A> 
+  <LI id=about><A title=Wikipedia:About 
+  href="http://en.wikipedia.org/wiki/Wikipedia:About">About Wikipedia</A> 
+  <LI id=disclaimer><A title="Wikipedia:General disclaimer" 
+  href="http://en.wikipedia.org/wiki/Wikipedia:General_disclaimer">Disclaimers</A> 
+  </LI></UL></DIV>
+<SCRIPT type=text/javascript>if (window.runOnloadHook) runOnloadHook();</SCRIPT>
+</DIV><!-- Served by srv144 in 0.058 secs. --></BODY></HTML>

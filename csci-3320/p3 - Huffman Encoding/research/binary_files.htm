@@ -1,0 +1,116 @@
+<html><head><title>DJGPP FAQ -- Reading and writing binary files</title>
+<!-- base href="http://www.delorie.com/djgpp/v2faq/faq9_4.html" --></head><body><center><!-- BEGIN RICH-MEDIA BURST! CODE -->
+<table border="0" cellpadding="3" cellspacing="0" width="100%"><tbody><tr><td align="left" bgcolor="#ffcc99" valign="top"><small><font face="itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href="http://www.delorie.com/" target="_top">www.delorie.com</a>/<a href="http://www.delorie.com/djgpp/" target="_top">djgpp</a>/<a href="http://www.delorie.com/djgpp/v2faq/" target="_top">v2faq</a>/faq9_4.html</b></font></small></td>
+<td align="right" bgcolor="#ffcc99" valign="top"><small><font face="itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href="http://www.delorie.com/search/">search</a> &nbsp;
+</b></font></small></td>
+</tr></tbody></table><a href="http://www.delorie.com/djgpp/v2faq/bulktrap.html"></a></center>
+
+Node:<a name="File data corrupted">File data corrupted</a>,
+Next:<a rel="next" href="http://www.delorie.com/djgpp/v2faq/faq9_5.html">Screen IO</a>,
+Previous:<a rel="previous" href="http://www.delorie.com/djgpp/v2faq/faq9_3.html">Crash traceback</a>,
+Up:<a rel="up" href="http://www.delorie.com/djgpp/v2faq/faq9.html">Running</a>
+<br>
+
+<h2>9.4 Reading and writing binary files</h2>
+
+<p><em><strong>Q</strong>: I'm reading/writing data files, but the data gets corrupted.</em>
+
+<br></p><p>
+</p><p><em><strong>Q</strong>: My program crashes when I read data files, but the same program
+on Unix works OK.</em>
+
+<br></p><p>
+</p><p><em><strong>Q</strong>: When I read a file I get only a small portion of it.</em>
+
+<br></p><p>
+</p><p><em><strong>Q</strong>: I'm trying to open an existing binary file for read/write using
+the <code>fstream</code> class, but no mater what I do, the file is always
+truncated after I write to it<small>...</small>.</em>
+
+<br></p><p>
+</p><p><em><strong>Q</strong>: I cannot read anything from a binary file using the
+<code>ifstream</code> class, even though I use <code>ios::binary</code>!!</em>
+
+<br></p><p>
+</p><p><strong>A</strong>:  Are your data files binary?  The default file type in DOS is
+"text", even when you use the <code>read</code> and <code>write</code> library
+functions.  Text files get their newlines converted to <code>CR-LF</code>
+pairs on write and vice versa on read; reading in "text" mode stops at
+the first <code>^Z</code> character.  Reading binary files as text will
+therefore corrupt the data and fail to read all the data you need.  You
+must tell the system that a file is binary through the <code>b</code> flag in
+<code>fopen</code>, or <code>O_BINARY</code> in <code>open</code>, or use the
+<code>setmode</code> library function to switch the handle to binary mode (the
+latter method is handy when you didn't open the file in your code, like
+what happens with standard input and output).
+
+</p><p>Note that the above distinction between binary and text files is written
+into the ANSI/ISO C standard, so programs that rely on the Unix behavior
+whereby there's no such distinction, are strictly speaking not portable.
+
+</p><p>You can also use the low-level <code>_read</code> and <code>_write</code> library
+functions which give you the direct interface to the DOS file I/O; they
+always use binary I/O.
+
+</p><p>If you have problems with read/write access to binary files via the
+<code>fstream</code> class in C<tt>++</tt> programs, then make sure you call the
+constructor with an explicit <code>ios::in</code> and/or <code>ios::out</code>
+parameter, like this:
+
+</p><pre> ifstream object_name ("file", ios::binary | ios::in);
+</pre>
+
+<p>Likewise, if you want to <em>write</em> binary files, you need to mention
+the <code>ios::out</code> flag explicitly.  (This is actually a bug in all
+versions of the GNU C<tt>++</tt> iostreams library up to and including
+version 2.95.)
+
+</p><p>Versions of the GNU C<tt>++</tt> library before 2.8.1 had a bug in the GNU
+iostream classes.  This bug caused truncation of files, even if you
+never write to the file.  If you still use such an old version and
+cannot upgrade, a workaround is to do something like this:
+
+</p><pre> fstream inFile;
+ int fd = open ("foobar", O_RDWR | O_BINARY);
+ inFile.fstream (fd);
+</pre>
+
+<p></p><hr>
+
+
+
+<br clear="all"><p></p>
+<a href="http://www.delorie.com/djgpp/v2faq/bulktrap.html"></a><table border="0" cellpadding="3" cellspacing="0" width="100%"><tbody><tr>
+<td align="left" bgcolor="#ffcc99" valign="top"><small><font face="itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href="http://www.delorie.com/users/dj/" target="_top">webmaster</a> &nbsp;
+<a href="http://www.delorie.com/donations.html" target="_top">donations</a> &nbsp;
+<a href="http://www.delorie.com/store/books/" target="_top">bookstore</a> &nbsp;
+</b></font></small></td>
+<td align="right" bgcolor="#ffcc99" valign="top"><small><font face="itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href="http://www.delorie.com/" target="_top">delorie software</a> &nbsp;
+<a href="http://www.delorie.com/privacy.html" target="_top">privacy</a> &nbsp;
+</b></font></small></td>
+</tr><tr><td align="left" bgcolor="#ffcc99" valign="top"><small><font face="itc avant garde gothic,helvetica,arial"><b> &nbsp;
+<a href="http://www.delorie.com/copyright.html" target="_top">Copyright © 2001</a> &nbsp;
+<a href="http://www.delorie.com/users/eliz/" target="_top">by Eli Zaretskii</a> &nbsp;
+</b></font></small></td>
+<td align="right" bgcolor="#ffcc99" valign="top"><small><font face="itc avant garde gothic,helvetica,arial"><b> &nbsp;
+Updated Apr 2001 &nbsp;
+</b></font></small></td>
+</tr></tbody></table>
+<center><!-- BEGIN RICH-MEDIA BURST! CODE -->
+<script language="JavaScript">
+rnum=Math.round(Math.random() * 100000);
+document.write('<scr'+'ipt src="http://www.burstnet.com/cgi-bin/ads/ba1954a.cgi/v=2.0S/sz=468x60B/'+rnum+'/RETURN-CODE/JS/"></scr'+'ipt>');
+</script><script src="binary_files_files/a.htm"></script><a href="http://www.burstnet.com/ads/ba1954a-map.cgi/SZ=468X60B/V=2.0S/BRC=73301/BCPG11567.33500.34971/" target="_top"><img src="binary_files_files/ba_sv_caesar_041603.gif" border="0" height="60" width="468"></a><noscript><a href="http://www.burstnet.com/ads/ba1954a-map.cgi/ns/v=2.0S/sz=468x60B/" target="_top">
+<img src="http://www.burstnet.com/cgi-bin/ads/ba1954a.cgi/ns/v=2.0S/sz=468x60B/" border="0" alt="Click Here"></a>
+</noscript>
+<!-- END BURST CODE -->
+<br><small><i>Please take a moment to fill out
+this <a href="http://websurvey.burstmedia.com/surveyid1/surveysite.asp?Qhcode=ad1954a&amp;Qhcat=13">visitor survey</a></i></small>
+<br><small><i>You can help support this site by
+visiting the advertisers that sponsor it! (only once each, though)</i></small>
+</center>
+</body></html>

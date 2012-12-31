@@ -1,0 +1,38 @@
+
+
+
+XMP.code { color: blue; }
+PRE.code { color: blue; }
+PRE.run  { color: red; }
+CODE { color:blue; }
+PRE.small { font-size: x-small}
+TABLE {
+   border: 1px solid black;
+   border-collapse: collapse;
+   empty-cells: show;
+}
+
+TABLE.noborder{
+   border: 0px solid white;
+}
+TD.noborder{
+   border: 0px solid white;
+}
+TD{
+   border: 1px solid black;
+   padding: 3px;
+}
+TH{
+   border: 1px solid black;
+   padding: 5px;
+}
+
+.large {
+ width: 25pt;
+ height: 25pt;
+}
+
+.medium{
+ width : 15pt;
+ height: 15pt;
+}
