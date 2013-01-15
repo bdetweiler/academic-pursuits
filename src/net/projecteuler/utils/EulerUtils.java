@@ -306,4 +306,49 @@ public class EulerUtils {
         
         return decimal == 0L;
     }
+   
+    /**
+     * stifel
+     * --
+     * Returns the nth Pythagorean triplet of the Plato family.
+     * We're looking for the series n n/s, where s is the nth odd number, starting with 3
+     * @param n
+     * @return
+     */
+    public static int[] stifelPythagoreanTriplets(int n) {
+        int[] rval = new int[3];
+        int oddSeries = 2 * (1 + n) - 1;
+       
+        rval[0] = oddSeries;
+        rval[1] = (n * oddSeries) + n;
+        rval[2] = (n * oddSeries) + n + 1;
+        
+        return rval;
+    }
+   
+    /**
+     * Euclid's method for generating the nth Pythagorean Triplet.
+     * @param a
+     * @return
+     */
+    public static int[] euclidPythagoreanTriplets(int a) {
+        int[] rval = new int[3];
+        
+        if(a < 3) {
+            rval[0] = 0;
+            rval[1] = 0;
+            rval[2] = 0;
+            return rval;
+        }
+        rval[0] = a;
+        if(a % 2 == 0) {
+            rval[1] = (int)(((float)((a * 2) / 4)) - 1);
+            rval[2] = rval[1] + 2;
+        } else {
+            rval[1] = (int)((float)((a * 2) / 2));
+            rval[2] = rval[1] + 1;
+        }
+        
+        return rval;
+    }
 }
