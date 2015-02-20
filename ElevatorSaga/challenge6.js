@@ -2,7 +2,6 @@
     init: function(elevators, floors) {
 
         function Node(data, priority) {
-            console.log("Node: New Node(): " + data + ", " + priority);
             this.data = data;
             this.priority = priority;
         }
@@ -26,24 +25,19 @@
 
         PriorityQueue.prototype = {
             empty: function() {
-                console.log("PriorityQueue.empty: this.heap === " + this.heap);
-                console.log("PriorityQueue.empty: this.heap.length === " + this.heap.length);
                 return (this.heap === null || this.heap.length === 1);
             },
             push: function(data, priority) {
-                console.log("PriorityQueue.push: push " + data + ", " + priority);
                 var node = new Node(data, priority);
                 this.bubble(this.heap.push(node) - 1);      
             },
             
             pushNode: function(node) {
-                console.log("PriorityQueue.pushNode: " + node);
                 this.bubble(this.heap.push(node) - 1);      
             },
             // removes and returns the data of highest priority
             pop: function() {
                 var topNode = this.heap[1];
-                console.log("PriorityQueue.pop: " + topNode);
                 this.heap[1] = this.heap.pop();
                 this.sink(1); 
                 return topNode;
@@ -109,21 +103,15 @@
 
             // If priorityQueue is empty, just put the node on it
             if (priorityQueue.empty()) {
-                console.log("rebuildPriorityQueueWithNewData: Empty!!!");
                 priorityQueue.pushNode(node);
-                console.log("rebuildPriorityQueueWithNewData: RETURNING!!!");
                 return priorityQueue;
             }
 
             var nodes = [];
             while (!priorityQueue.empty()) {
-                console.log("rebuildPriorityQueueWithNewData: while !empty...");
                 nodes.push(priorityQueue.pop());
                 break;
             }
-
-            console.log("rebuildPriorityQueueWithNewData: nodes list: " + nodes);
-
             for (var i in nodes) {
                 if (nodes[i].data === node.data) {
                     ++nodes[i].priority;
@@ -132,7 +120,6 @@
                 priorityQueue.pushNode(nodes[i]);
             }
 
-            console.log("rebuildPriorityQueueWithNewData: AFTER:");
             return priorityQueue;
         }
 
@@ -144,15 +131,34 @@
 
             var elevator = elevators[i];
 
+            elevator.floorQueue = new PriorityQueue();
+
+            // If you're bored, go pick some people up
             elevator.on("idle", function() {
-                if (floorsPriorityQueue.empty())
+                if (floorsPriorityQueue.empty()) {
+                    console.warn("floorsPriorityQueue is EMPTY!!!");
                     return;
+                }
                 var priorityFloorNode = floorsPriorityQueue.pop();
                 this.goToFloor(priorityFloorNode.data);
             });
 
             elevator.on("floor_button_pressed", function(floorNum) {
-                this.goToFloor(floorNum); 
+                this.floorQueue = rebuildPriorityQueueWithNewData(this.floorQueue, new Node(floorNum, 1));
+                console.log("elevator.floor_button_pressed: " + this.floorQueue);
+                console.log("elevator.floor_button_pressed: loadFactor " + this.loadFactor());
+                if (this.loadFactor() > 0.5) {
+                    console.log("elevator.floor_button_pressed: loadFactor " + this.loadFactor());
+                    if (this.floorQueue.empty()) {
+                        if (floorsPriorityQueue.empty()) {
+                            this.goToFloor(0);
+                        } else {
+                            this.goToFloor(floorsPriorityQueue.pop().data);
+                        }
+                    } else {
+                        this.goToFloor(this.floorQueue.pop().data); 
+                    }
+                }
             });
         }
 
