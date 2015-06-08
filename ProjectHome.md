@@ -1,0 +1,1 @@
+You may benefit from these for various purposes. I benefit mostly from learning by writing this code.
